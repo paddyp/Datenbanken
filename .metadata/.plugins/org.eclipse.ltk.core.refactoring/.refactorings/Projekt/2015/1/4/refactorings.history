@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;gui.gui&apos; to &apos;GUI&apos;&#x0A;- Original project: &apos;Projekt&apos;&#x0A;- Original element: &apos;gui.gui&apos;&#x0A;- Renamed element: &apos;gui.GUI&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;gui&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;gui{gui.java[gui" matchStrategy="1" name="GUI" qualified="false" references="true" similarDeclarations="false" stamp="1422013932135" textual="false" version="1.0"/>
+</session>

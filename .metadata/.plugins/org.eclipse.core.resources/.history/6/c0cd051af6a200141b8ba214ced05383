@@ -1,0 +1,12 @@
+package gui;
+
+import javax.swing.JFrame;
+
+
+public class gui extends JFrame {
+	
+		public gui()
+		{
+		
+		}
+}

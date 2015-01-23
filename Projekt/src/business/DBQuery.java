@@ -31,4 +31,14 @@ public class DBQuery {
 			return rs;
 
 	}
+	
+	public static void toString(ResultSet rs,String collum) throws SQLException{
+	
+			while(rs.next())
+			{
+				System.out.println(rs.getString(collum));
+			}
+
+		
+	}
 }
