@@ -1,0 +1,27 @@
+package business;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+
+public class DBQuery {
+
+	public DBQuery(Connection con){
+		
+		String query = "SELECT * FROM film";
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs= stmt.executeQuery(query);
+			System.out.println("film: ");
+			while(rs.next()){
+				System.out.println(rs.getString("titel"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+	}
+}

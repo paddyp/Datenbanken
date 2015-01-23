@@ -1,0 +1,20 @@
+package business;
+
+import java.sql.*;
+
+public class DBConnection {
+
+	public DBConnection(){
+		try{
+			Class.forName("org.postgresql.Driver");
+			System.out.println("Driver load success");
+		}catch(ClassNotFoundException e){
+			System.out.println("Driver did not load - aborting !!!");
+			System.exit(-1);
+		}
+		
+	}
+	
+
+	
+}

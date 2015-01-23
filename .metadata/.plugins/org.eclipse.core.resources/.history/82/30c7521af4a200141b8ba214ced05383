@@ -1,0 +1,30 @@
+package business;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class DBQuery {
+
+	private Connection con;
+	private Statement stmt;
+
+	// connection errors never throws because connection is tested before in
+	// DBConnection
+
+	public DBQuery(Connection con) throws SQLException {
+
+		this.con = con;
+		this.stmt = this.con.createStatement();
+
+	}
+
+	public ResultSet sendQuery(String query) throws SQLException {
+
+
+			ResultSet rs = stmt.executeQuery(query);
+			return rs;
+
+	}
+}

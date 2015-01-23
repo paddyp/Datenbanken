@@ -1,0 +1,38 @@
+package business;
+
+import java.sql.*;
+
+public class DBConnection {
+
+	private Connection con = null;
+	public DBConnection(){
+		
+		// Load Driver or exit Programm
+		try{
+			Class.forName("org.postgresql.Driver");
+			System.out.println("Driver load success");
+		}catch(ClassNotFoundException e){
+			System.out.println("Driver did not load - aborting !!!");
+			System.exit(-1);
+		}
+		
+		
+			String url = "jdbc;postgresql;//localhost/database";
+			try {
+				con = DriverManager.getConnection(url,"root","");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("Couldn't connect - aborting");
+				System.exit(-1);
+			}
+			
+		
+		
+		
+		
+	}
+	
+
+	
+}

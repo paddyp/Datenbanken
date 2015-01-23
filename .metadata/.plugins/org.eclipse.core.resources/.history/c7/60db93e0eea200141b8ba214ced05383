@@ -1,0 +1,16 @@
+package business;
+
+import java.sql.*;
+
+public class DBConnection {
+
+	public DBConnection(){
+		try{
+			Class.forName("org.postgresql.Driver")M
+		}
+		
+	}
+	
+
+	
+}
