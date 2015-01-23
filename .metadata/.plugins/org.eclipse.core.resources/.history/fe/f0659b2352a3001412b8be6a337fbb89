@@ -1,0 +1,16 @@
+package gui;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+public class ClientFrame extends JFrame {
+
+	private JButton abourt;
+	public ClientFrame() {
+		setSize(500, 700);
+		abourt.setText("abourt");
+		
+		
+		setVisible(true);
+	}
+}

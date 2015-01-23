@@ -1,0 +1,35 @@
+package gui;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+public class ClientFrame extends JFrame {
+
+	private JButton abourt;
+	private JButton save;
+	
+	
+	public ClientFrame() {
+		setSize(500, 700);
+		
+		save = new JButton();
+		
+		abourt = new JButton();
+		abourt.setText("abourt");
+		abourt.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+					dispose();
+			}
+		});
+		
+		add(abourt);
+		add(save);
+		setVisible(true);
+	}
+}

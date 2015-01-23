@@ -1,8 +1,0 @@
-package business;
-
-public class DBQuery {
-
-	public DBQuery(){
-		
-	}
-}
