@@ -9,7 +9,7 @@ public class Application {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-			GUI g = new GUI();
+			
 			
 			DBConnection dbcon = new DBConnection();
 			try {
@@ -20,6 +20,7 @@ public class Application {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			GUI g = new GUI();
 			
 
 	}

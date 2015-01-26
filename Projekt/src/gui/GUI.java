@@ -7,11 +7,15 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+
+import business.DBQuery;
 
 
 public class GUI extends JFrame {
@@ -22,6 +26,8 @@ public class GUI extends JFrame {
 	private JButton newClient;
 	private JButton newMovie;
 	private JButton newKategorie;
+	private JButton newRoom;
+	private JButton newPlace;
 	
 		public GUI()
 		{
@@ -32,6 +38,7 @@ public class GUI extends JFrame {
 			final MovieFrame movieFrame = new MovieFrame();
 			final ClientFrame clientFrame = new ClientFrame();
 			final KategorieFrame kategorieFrame = new KategorieFrame();
+			final PlaceFrame placeFrame = new PlaceFrame();
 			
 			String [][] data = {{"A"},{"B"}};
 			String [] title = {"titel"};
@@ -72,6 +79,39 @@ public class GUI extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					kategorieFrame.setVisible(true);
+					
+				}
+			});
+			
+			newRoom = new JButton("neuer Saal");
+			newRoom.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+						String name =  JOptionPane.showInputDialog("Geben sie einen Bezeichnung für den neuen Saal ein");
+						if(name != null && name != "")
+						{
+							try {
+								DBQuery.sendInsertIntoQuery("saal", name);
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+					
+				}
+			});
+			
+			panel.add(newRoom);
+			
+			newPlace = new JButton("neuer Platz");
+			newPlace.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+						placeFrame.setVisible(true);
 					
 				}
 			});

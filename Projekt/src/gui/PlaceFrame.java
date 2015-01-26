@@ -38,7 +38,7 @@ public class PlaceFrame extends JFrame {
 		
 		try {
 			ResultSet rs = DBQuery.sendQuery("SELECT * FROM saal");
-			System.out.println(rs.toString());
+	
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
