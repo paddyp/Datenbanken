@@ -29,7 +29,6 @@ public class GUI extends JFrame {
 	private JButton newPlace;
 	private JButton newRoom;
 	
-	
 		public GUI()
 		{
 			setSize(new Dimension(1000,1000));
@@ -82,20 +81,8 @@ public class GUI extends JFrame {
 					
 				}
 			});
-			
-			newPlace = new JButton("neuer Platz");
-			newPlace.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
-			
-			panel.add(newPlace);
 	
-		newRoom = new JButton("neuer Saal");
+		newRoom = new JButton();
 		newRoom.addActionListener(new ActionListener() {
 			
 			@Override
@@ -113,8 +100,6 @@ public class GUI extends JFrame {
 				
 			}
 		});
-		
-		panel.add(newRoom);
 			
 			table = new JTable(data,title);
 			

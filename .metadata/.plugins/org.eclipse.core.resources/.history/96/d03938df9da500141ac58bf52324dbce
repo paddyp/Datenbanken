@@ -7,7 +7,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,7 +27,6 @@ public class GUI extends JFrame {
 	private JButton newKategorie;
 	private JButton newPlace;
 	private JButton newRoom;
-	
 	
 		public GUI()
 		{
@@ -82,20 +80,8 @@ public class GUI extends JFrame {
 					
 				}
 			});
-			
-			newPlace = new JButton("neuer Platz");
-			newPlace.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
-			
-			panel.add(newPlace);
 	
-		newRoom = new JButton("neuer Saal");
+		newRoom = new JButton();
 		newRoom.addActionListener(new ActionListener() {
 			
 			@Override
@@ -103,18 +89,11 @@ public class GUI extends JFrame {
 				// TODO Auto-generated method stub
 				String name = JOptionPane.showInputDialog("Bitte geben Sie einen neuen Saal ein");
 				if(name != null && name !=""){
-					try {
-						DBQuery.sendInsertIntoQuery("saal", name);
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+					DBQuery.sendInsertIntoQuery("saal", name);
 				}
 				
 			}
 		});
-		
-		panel.add(newRoom);
 			
 			table = new JTable(data,title);
 			

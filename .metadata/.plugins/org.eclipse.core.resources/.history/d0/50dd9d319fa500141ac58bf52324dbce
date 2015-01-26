@@ -29,7 +29,6 @@ public class GUI extends JFrame {
 	private JButton newPlace;
 	private JButton newRoom;
 	
-	
 		public GUI()
 		{
 			setSize(new Dimension(1000,1000));

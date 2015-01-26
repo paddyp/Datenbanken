@@ -29,7 +29,6 @@ public class GUI extends JFrame {
 	private JButton newPlace;
 	private JButton newRoom;
 	
-	
 		public GUI()
 		{
 			setSize(new Dimension(1000,1000));
@@ -92,8 +91,6 @@ public class GUI extends JFrame {
 					
 				}
 			});
-			
-			panel.add(newPlace);
 	
 		newRoom = new JButton("neuer Saal");
 		newRoom.addActionListener(new ActionListener() {
