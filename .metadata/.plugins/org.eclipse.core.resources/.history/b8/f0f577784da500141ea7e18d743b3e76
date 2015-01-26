@@ -13,10 +13,6 @@ import javax.swing.JTextField;
 
 public class ClientFrame extends JFrame {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	private JButton abourt;
 	private JButton save;
 
@@ -126,12 +122,6 @@ public class ClientFrame extends JFrame {
 		phoneTextField = new JTextField(10);
 		mobilLabel = new JLabel("Mobil :");
 		mobileTextField = new JTextField(10);
-		
-		contactPanel.add(phoneLabel);
-		contactPanel.add(phoneTextField);
-		contactPanel.add(mobilLabel);
-		contactPanel.add(mobileTextField);
-		
 		
 		
 		

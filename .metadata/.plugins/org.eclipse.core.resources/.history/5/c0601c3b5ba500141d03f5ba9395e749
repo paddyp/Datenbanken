@@ -13,10 +13,6 @@ import javax.swing.JTextField;
 
 public class ClientFrame extends JFrame {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	private JButton abourt;
 	private JButton save;
 

@@ -1,9 +1,0 @@
-package gui;
-
-public class gui extends JFrame {
-	
-		public gui()
-		{
-		
-		}
-}
