@@ -132,8 +132,6 @@ public class ClientFrame extends JFrame {
 		contactPanel.add(mobilLabel);
 		contactPanel.add(mobileTextField);
 		
-		add(contactPanel);
-		
 		
 		
 		
