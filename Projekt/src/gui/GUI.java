@@ -21,12 +21,17 @@ public class GUI extends JFrame {
 	
 	private JButton newClient;
 	private JButton newMovie;
+	private JButton newKategorie;
 	
 		public GUI()
 		{
 			setSize(new Dimension(1000,1000));
 			setTitle("DB Projekt");
 			setDefaultCloseOperation(EXIT_ON_CLOSE);
+			
+			final MovieFrame movieFrame = new MovieFrame();
+			final ClientFrame clientFrame = new ClientFrame();
+			final KategorieFrame kategorieFrame = new KategorieFrame();
 			
 			String [][] data = {{"A"},{"B"}};
 			String [] title = {"titel"};
@@ -44,8 +49,7 @@ public class GUI extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-						ClientFrame clientFrame = new ClientFrame();
-						
+						clientFrame.setVisible(true);
 					
 				
 				}
@@ -57,10 +61,21 @@ public class GUI extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
-					MovieFrame movieFrame = new MovieFrame();
+					movieFrame.setVisible(true);
+					
 				}
 			});
-			
+			newKategorie = new JButton("neue Kategorie");
+			newKategorie.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					kategorieFrame.setVisible(true);
+					
+				}
+			});
+	
 		
 			
 			table = new JTable(data,title);
@@ -70,6 +85,7 @@ public class GUI extends JFrame {
 			panel.add(table);
 			panel.add(newClient);
 			panel.add(newMovie);
+			panel.add(newKategorie);
 			add(panel);
 		
 			

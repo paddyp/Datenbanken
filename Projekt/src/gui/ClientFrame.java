@@ -65,7 +65,6 @@ public class ClientFrame extends JFrame {
 	public ClientFrame() {
 		setSize(500, 700);
 		setLayout(new GridLayout(10, 2));
-
 		setBackground(new Color(50, 50, 50));
 
 		// Name eingeben
@@ -216,6 +215,7 @@ public class ClientFrame extends JFrame {
 
 		add(abourt);
 		add(save);
-		setVisible(true);
 	}
+	
+
 }
