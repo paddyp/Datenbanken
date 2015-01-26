@@ -1,0 +1,13 @@
+package gui;
+
+import javax.swing.JFrame;
+
+public class MovieFrame extends JFrame{
+	
+	public MovieFrame(){
+		setSize(500,500);
+		
+		setVisible(true);
+	}
+
+}

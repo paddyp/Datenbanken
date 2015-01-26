@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;gui.movieFrame&apos; to &apos;MovieFrame&apos;&#x0A;- Original project: &apos;Projekt&apos;&#x0A;- Original element: &apos;gui.movieFrame&apos;&#x0A;- Renamed element: &apos;gui.MovieFrame&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;movieFrame&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;gui{movieFrame.java[movieFrame" matchStrategy="1" name="MovieFrame" qualified="false" references="true" similarDeclarations="false" stamp="1422284158212" textual="false" version="1.0"/>
+</session>

@@ -1,0 +1,18 @@
+package gui;
+
+import java.awt.GridLayout;
+
+import javax.swing.JFrame;
+
+public class MovieFrame extends JFrame{
+	
+	private 
+	public MovieFrame(){
+		setSize(500,500);
+		setLayout(new GridLayout());
+		
+		
+		setVisible(true);
+	}
+
+}

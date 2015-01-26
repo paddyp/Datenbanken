@@ -15,7 +15,7 @@ public class Application {
 			try {
 				DBQuery query = new DBQuery(dbcon.getConnection());
 				ResultSet rs = query.sendQuery("SELECT * FROM film");
-				DBQuery.toString(rs,"titel");	
+				DBQuery.toString(rs,"titel","id");	
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

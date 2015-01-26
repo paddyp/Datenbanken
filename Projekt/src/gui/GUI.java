@@ -20,7 +20,7 @@ public class GUI extends JFrame {
 	private JTable table;
 	
 	private JButton newClient;
-	
+	private JButton newMovie;
 	
 		public GUI()
 		{
@@ -45,11 +45,23 @@ public class GUI extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 						ClientFrame clientFrame = new ClientFrame();
+						
 					
 				
 				}
 				
 			});
+			newMovie = new JButton("new Movie");
+			newMovie.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					MovieFrame movieFrame = new MovieFrame();
+				}
+			});
+			
+		
 			
 			table = new JTable(data,title);
 			
@@ -57,6 +69,7 @@ public class GUI extends JFrame {
 			panel.add(table.getTableHeader());
 			panel.add(table);
 			panel.add(newClient);
+			panel.add(newMovie);
 			add(panel);
 		
 			
