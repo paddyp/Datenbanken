@@ -115,7 +115,7 @@ public class GUI extends JFrame {
 					
 				}
 			});
-	
+			panel.add(newPlace);
 		
 			
 			table = new JTable(data,title);
