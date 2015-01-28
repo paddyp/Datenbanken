@@ -28,6 +28,7 @@ public class GUI extends JFrame {
 	private JButton newKategorie;
 	private JButton newRoom;
 	private JButton newPlace;
+	private JButton newPerformance;
 	
 		public GUI()
 		{
@@ -39,6 +40,7 @@ public class GUI extends JFrame {
 			final ClientFrame clientFrame = new ClientFrame();
 			final KategorieFrame kategorieFrame = new KategorieFrame();
 			final PlaceFrame placeFrame = new PlaceFrame();
+			final PerformanceFrame performanceFrame = new PerformanceFrame();
 			
 			String [][] data = {{"A"},{"B"}};
 			String [] title = {"titel"};
@@ -116,6 +118,20 @@ public class GUI extends JFrame {
 				}
 			});
 			panel.add(newPlace);
+			
+			newPerformance = new JButton("neue Vorstellung");
+			newPerformance.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					performanceFrame.setVisible(true);
+					
+					
+				}
+			});
+			
+			panel.add(newPerformance);
 		
 			
 			table = new JTable(data,title);
