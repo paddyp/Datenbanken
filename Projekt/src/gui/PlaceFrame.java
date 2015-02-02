@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -22,9 +24,14 @@ public class PlaceFrame extends JFrame {
 	private JLabel nummerLabel;
 	private JTextField reiheTF;
 	private JTextField nummerTF;
-	private JComboBox box;
+	private JComboBox<String> box;
 	
 	private JButton insert;
+	
+	private JLabel deletLabel;
+	private JComboBox<String> rheiheCB;
+	private JComboBox<String> platzCB;
+	private JComboBox<String> saalCB;
 	
 	public PlaceFrame(){
 		setSize(300,100);
@@ -34,7 +41,7 @@ public class PlaceFrame extends JFrame {
 		reiheTF = new JTextField(5);
 		nummerLabel = new JLabel("Preis :");
 		nummerTF = new JTextField(5);
-		box = new JComboBox();
+		box = new JComboBox<String>();
 		
 		try {
 			ResultSet rs = DBQuery.sendQuery("SELECT * FROM saal");
@@ -72,7 +79,84 @@ public class PlaceFrame extends JFrame {
 		platz.add(nummerTF);
 		platz.add(insert);
 		
+		// delete Session
+		deletLabel = new JLabel("Löschen :");
+		try {
+			setReihePlatz();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		platz.add(deletLabel);
+		platz.add(rheiheCB);
+		
+		
 		add(platz);
+		
+		addWindowListener(new WindowListener() {
+			
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				try {
+					setReihePlatz();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		
+	}
+	
+	private void setReihePlatz() throws SQLException{
+		
+		ResultSet rs = DBQuery.sendQuery("SELECT reihe FROM platz");
+		rheiheCB = new JComboBox<String>();
+		
+		while(rs.next())
+		{
+			rheiheCB.addItem(rs.getString(1));
+		}
+		
 		
 		
 	}

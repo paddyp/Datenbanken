@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -16,6 +18,10 @@ import business.DBQuery;
 
 public class PerformanceFrame extends JFrame{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel performancePanel;
 	private JLabel performanceLabel;
 	
@@ -31,7 +37,6 @@ public class PerformanceFrame extends JFrame{
 	
 	private JButton performance;
 	
-	private ResultSet rs;
 	
 	public PerformanceFrame(){
 		setSize(500,500);
@@ -79,9 +84,54 @@ public class PerformanceFrame extends JFrame{
 		setVisible(true);
 		
 		
+		addWindowListener(new WindowListener() {
+			
+			@Override
+			public void windowOpened(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowIconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeiconified(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowDeactivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowClosed(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void windowActivated(WindowEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 	}
 	
+
 	private void createMovie() throws SQLException{
 		filmCB = new JComboBox<String>();
 		ResultSet rs = DBQuery.sendQuery("SELECT * FROM film");
