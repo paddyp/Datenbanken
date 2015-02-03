@@ -23,6 +23,8 @@ import javax.swing.JTextField;
 import adminGUI.AktuelleSaalbelegung;
 import adminGUI.AktuelleVorstellung;
 import adminGUI.Kunden;
+import adminGUI.Reservieren;
+import adminGUI.beliebtheitFilm;
 import business.DBQuery;
 
 public class GUI extends JFrame {
@@ -166,10 +168,16 @@ public class GUI extends JFrame {
 		anzeige[2].add(kunde,BorderLayout.CENTER);
 		
 		JLabel reservieren = new JLabel("reservieren");
-		anzeige[3].add(reservieren);
+		anzeige[3].setLayout(new BorderLayout());
+		anzeige[3].add(reservieren, BorderLayout.NORTH);
+		Reservieren reservierenPanel = new Reservieren();
+		anzeige[3].add(reservierenPanel,BorderLayout.CENTER);
 		
 		JLabel beliebtesterFilm = new JLabel("beliebtheitsskala Film");
-		anzeige[4].add(beliebtesterFilm);
+		anzeige[4].setLayout(new BorderLayout());
+		anzeige[4].add(beliebtesterFilm,BorderLayout.NORTH);
+		beliebtheitFilm beliebterFilm = new beliebtheitFilm();
+		anzeige[4].add(beliebterFilm, BorderLayout.CENTER);
 		
 		JLabel uhrzeit = new JLabel("uhrzeit oder sowas in der art kp");
 		anzeige[5].add(uhrzeit);

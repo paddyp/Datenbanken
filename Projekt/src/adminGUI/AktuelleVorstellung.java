@@ -1,7 +1,6 @@
 package adminGUI;
 
-import java.awt.GridLayout;
-import java.sql.Array;
+import java.awt.BorderLayout;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class AktuelleVorstellung extends JPanel{
 	private int anzahl;
 	
 	public AktuelleVorstellung(){
-		setLayout(new GridLayout(3,2));
+		setLayout(new BorderLayout());
 		rs = null;
 		
 		try {
@@ -54,7 +53,7 @@ public class AktuelleVorstellung extends JPanel{
 		String[] string = liste.toArray(new String[liste.size()]);
 		
 		vorstellungen.setListData(string);
-		add(vorstellungen);
+		add(vorstellungen,BorderLayout.CENTER);
 	}
 	
 }
