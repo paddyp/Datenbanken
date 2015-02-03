@@ -1,0 +1,72 @@
+package adminGUI;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import business.DBQuery;
+
+
+public class Kunden extends JPanel{
+	private JList<String> vorstellungen;
+	
+	private ResultSet rs;
+	private int anzahl;
+	
+	private JPanel abfragePanel;
+	
+	private JTextField nameFeld;
+	private JTextField emailFeld;
+	
+	private JButton abschicken;
+	
+	public Kunden(){
+		setLayout(new BorderLayout());
+		nameFeld = new JTextField(10);
+		emailFeld = new JTextField(10);
+		abfragePanel = new JPanel();
+
+		abfragePanel.add(nameFeld);
+		abfragePanel.add(emailFeld);
+		
+		add(abfragePanel, BorderLayout.NORTH);
+		
+		rs = null;
+		
+		try {
+			createList();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		
+	}
+	
+	private void createList() throws SQLException{
+		anzahl = 0;
+		//TODO SQL Injection !!!!! sehr möglich :( muss noch unmöglich gemacht werden
+		
+		rs = DBQuery.sendQuery("select * FROM kunde WHERE name like('% "+ nameFeld.getText() +"%')");
+		ArrayList<String> liste= new ArrayList<String>();
+		
+		vorstellungen = new JList<String>();
+		liste.add("id zeit saal_bezeichnung titel");
+		while(rs.next())
+		{
+			liste.add(rs.getString(1));
+		}
+		
+		String[] string = liste.toArray(new String[liste.size()]);
+		
+		vorstellungen.setListData(string);
+		add(vorstellungen,BorderLayout.CENTER);
+	}
+	
+}

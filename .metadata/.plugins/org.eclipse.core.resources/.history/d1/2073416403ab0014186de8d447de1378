@@ -1,0 +1,21 @@
+package adminGUI;
+
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.sql.ResultSet;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+
+public class AktuelleVorstellung extends JPanel{
+	private JLabel[] vorstellungen;
+	private ResultSet rs;
+	
+	public AktuelleVorstellung(){
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		
+	}
+	
+}

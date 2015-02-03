@@ -1,0 +1,9 @@
+package adminGUI;
+
+import javax.swing.JPanel;
+
+private JLabel[] vorstellungen;
+public class AktuelleVorstellung extends JPanel{
+
+	
+}

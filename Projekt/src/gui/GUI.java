@@ -20,6 +20,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import adminGUI.AktuelleSaalbelegung;
+import adminGUI.AktuelleVorstellung;
+import adminGUI.Kunden;
 import business.DBQuery;
 
 public class GUI extends JFrame {
@@ -145,13 +148,31 @@ public class GUI extends JFrame {
 		
 		// adminBereich
 		JLabel aktuelleVorstellungenLabel = new JLabel("aktuelle Vorstellungen");
-		anzeige[0].add(aktuelleVorstellungenLabel);
+		anzeige[0].setLayout(new BorderLayout());
+		anzeige[0].add(aktuelleVorstellungenLabel,BorderLayout.NORTH);
+		AktuelleVorstellung akvor = new AktuelleVorstellung();
+		anzeige[0].add(akvor,BorderLayout.CENTER);
 		
-		JLabel saalBelegung = new JLabel("aktuelle Saalbelegung");
-		anzeige[1].add(saalBelegung);
+		JLabel saalBelegung = new JLabel("aktuelle Saalbelegung basierend auf der Vorstellung");
+		anzeige[1].setLayout(new BorderLayout());
+		anzeige[1].add(saalBelegung, BorderLayout.NORTH);
+		AktuelleSaalbelegung aktsaalbel = new AktuelleSaalbelegung();
+		anzeige[1].add(aktsaalbel,BorderLayout.CENTER);
 		
-		JLabel kundeAnzeigen = new JLabel("Kunde suchen");
-		anzeige[2].add(kundeAnzeigen);
+		JLabel kundeAnzeigen = new JLabel("Kunde suchen/reservierung Stonieren");
+		anzeige[2].setLayout(new BorderLayout());
+		anzeige[2].add(kundeAnzeigen, BorderLayout.NORTH);
+		Kunden kunde = new Kunden();
+		anzeige[2].add(kunde,BorderLayout.CENTER);
+		
+		JLabel reservieren = new JLabel("reservieren");
+		anzeige[3].add(reservieren);
+		
+		JLabel beliebtesterFilm = new JLabel("beliebtheitsskala Film");
+		anzeige[4].add(beliebtesterFilm);
+		
+		JLabel uhrzeit = new JLabel("uhrzeit oder sowas in der art kp");
+		anzeige[5].add(uhrzeit);
 		
 		//
 		

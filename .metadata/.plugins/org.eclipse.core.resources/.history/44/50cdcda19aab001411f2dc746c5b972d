@@ -1,0 +1,59 @@
+package adminGUI;
+
+import java.awt.GridLayout;
+import java.sql.Array;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.swing.JList;
+import javax.swing.JPanel;
+
+import business.DBQuery;
+
+
+public class AktuelleVorstellung extends JPanel{
+	private JList<String> vorstellungen;
+	
+	private ResultSet rs;
+	private int anzahl;
+	
+	public AktuelleVorstellung(){
+		setLayout(new GridLayout(3,2));
+		rs = null;
+		
+		try {
+			createList();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		
+	}
+	
+	private void createList() throws SQLException{
+		anzahl = 0;
+		rs = DBQuery.sendQuery("select v.id, v.zeit, v.saal_bezeichnung, f.titel "
+				+ "from vorstellung v "
+				+ "join vorstellung_film vf "
+				+ "on v.id = vf.vorstellung_id "
+				+ "join film f "
+				+ "on vf.film_id = f.id"
+				+ "ORDER by v.zeit;");
+		ArrayList<String> liste= new ArrayList<String>();
+		
+		vorstellungen = new JList<String>();
+		
+		while(rs.next())
+		{
+			liste.add(rs.getString(1) + " " +rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) );
+		}
+		
+		String[] string = liste.toArray(new String[liste.size()]);
+		
+		vorstellungen.setListData(string);
+		add(vorstellungen);
+	}
+	
+}

@@ -1,0 +1,9 @@
+package adminGUI;
+
+import javax.swing.JPanel;
+
+private JLabel[] filme;
+public class AktuelleVorstellung extends JPanel{
+
+	
+}

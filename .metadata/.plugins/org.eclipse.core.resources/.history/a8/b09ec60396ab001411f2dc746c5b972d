@@ -1,0 +1,54 @@
+package adminGUI;
+
+import java.awt.GridLayout;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import business.DBQuery;
+
+
+public class AktuelleVorstellung extends JPanel{
+	private JLabel[] vorstellungen;
+	private ResultSet rs;
+	private int anzahl;
+	
+	public AktuelleVorstellung(){
+		setLayout(new GridLayout(3,2));
+		rs = null;
+		
+		try {
+			createList();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		
+	}
+	
+	private void createList() throws SQLException{
+		anzahl = 0;
+		rs = DBQuery.sendQuery("select * from kunde");
+		
+		while(rs.next())
+		{
+			anzahl ++;
+		}
+		vorstellungen = new JLabel[anzahl];
+		int i = 0;
+		while(rs.next())
+		{
+			
+			vorstellungen[i] = new JLabel();
+			vorstellungen[i].setText(rs.getString(1));
+			add(vorstellungen[i]);
+			
+			i++;
+		}
+		
+	}
+	
+}

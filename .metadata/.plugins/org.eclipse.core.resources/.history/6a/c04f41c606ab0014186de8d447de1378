@@ -1,0 +1,53 @@
+package adminGUI;
+
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import business.DBConnection;
+import business.DBQuery;
+
+
+public class AktuelleVorstellung extends JPanel{
+	private JLabel[] vorstellungen;
+	private ResultSet rs;
+	
+	public AktuelleVorstellung(){
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		rs = null;
+		
+		try {
+			createList();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		
+	}
+	
+	private void createList() throws SQLException{
+		int anzahl = 0;
+		rs = DBQuery.sendQuery("select * from kunde");
+		
+		while(rs.next())
+		{
+			anzahl ++;
+		}
+		vorstellungen = new JLabel[anzahl];
+		
+		for(int i = 0; i < anzahl; i++)
+		{
+			vorstellungen[i] = new JLabel();
+			vorstellungen[i].setText(rs.getString(1));
+			add(vorstellungen[i]);
+		}
+		
+	}
+	
+}

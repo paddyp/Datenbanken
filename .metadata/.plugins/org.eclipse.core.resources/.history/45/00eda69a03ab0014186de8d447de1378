@@ -1,0 +1,36 @@
+package adminGUI;
+
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import business.DBConnection;
+import business.DBQuery;
+
+
+public class AktuelleVorstellung extends JPanel{
+	private JLabel[] vorstellungen;
+	private ResultSet rs;
+	
+	public AktuelleVorstellung(){
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		rs = null;
+		
+		try {
+			rs = DBQuery.sendQuery("select * from reservierung");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		while(rs.next()){
+			
+		}
+		
+	}
+	
+}

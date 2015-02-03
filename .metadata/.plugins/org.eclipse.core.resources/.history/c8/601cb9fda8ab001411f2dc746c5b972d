@@ -1,0 +1,71 @@
+package adminGUI;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import business.DBQuery;
+
+
+public class Kunden extends JPanel{
+	private JList<String> vorstellungen;
+	
+	private ResultSet rs;
+	private int anzahl;
+	
+	private JPanel abfragePanel;
+	
+	private JTextField nameFeld;
+	
+	
+	public Kunden(){
+		setLayout(new BorderLayout());
+		nameFeld = new JTextField(2);
+		abfragePanel = new JPanel();
+
+		abfragePanel.add(nameFeld);
+		
+		rs = null;
+		
+		try {
+			createList();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		
+	}
+	
+	private void createList() throws SQLException{
+		anzahl = 0;
+		rs = DBQuery.sendQuery("select v.id, v.zeit, v.saal_bezeichnung, f.titel "
+				+ "from vorstellung v "
+				+ "join vorstellung_film vf "
+				+ "on v.id = vf.vorstellung_id "
+				+ "join film f "
+				+ "on vf.film_id = f.id "
+				+ "WHERE zeit>=now() "
+				+ "ORDER by v.zeit;");
+		ArrayList<String> liste= new ArrayList<String>();
+		
+		vorstellungen = new JList<String>();
+		liste.add("id zeit saal_bezeichnung titel");
+		while(rs.next())
+		{
+			liste.add(rs.getString("id") + " " +rs.getString("zeit") + " " + rs.getString("saal_bezeichnung") + " " + rs.getString("titel") );
+		}
+		
+		String[] string = liste.toArray(new String[liste.size()]);
+		
+		vorstellungen.setListData(string);
+		add(vorstellungen,BorderLayout.CENTER);
+	}
+	
+}

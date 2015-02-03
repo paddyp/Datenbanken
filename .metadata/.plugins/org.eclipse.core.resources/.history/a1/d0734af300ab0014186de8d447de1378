@@ -1,0 +1,5 @@
+package adminGUI;
+
+public class AktuelleVorstellung extends JPanel{
+
+}
