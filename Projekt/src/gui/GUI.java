@@ -42,6 +42,7 @@ public class GUI extends JFrame {
 	
 	private JMenu datei;
 	private JMenu hinzufuegen;
+	private JMenu aktualisieren;
 
 	private JMenuItem einstellungen;
 	private JMenuItem neuerKunde;
@@ -77,6 +78,17 @@ public class GUI extends JFrame {
 		
 		datei = new JMenu("Datei");
 		hinzufuegen = new JMenu("Hinzufuegen");
+		aktualisieren = new JMenu("Aktualisieren");
+		
+		aktualisieren.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				revalidate();
+				
+			}
+		});
 
 		benutzerLabel = new JLabel("Benutzername :");
 		benutzername = new JTextField(10);
@@ -282,6 +294,7 @@ public class GUI extends JFrame {
 		datei.add(einstellungen);
 		menuBar.add(datei);
 		menuBar.add(hinzufuegen);
+		menuBar.add(aktualisieren);
 
 		// Anmeldezeile
 		menuBar.add(benutzerLabel);
