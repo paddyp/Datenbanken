@@ -42,9 +42,17 @@ public class GUI extends JFrame {
 	
 	private JMenu datei;
 	private JMenu hinzufuegen;
-	private JMenu aktualisieren;
 
+	
+	private Reservieren reservierenPanel = new Reservieren();
+	private AktuelleVorstellung akvor = new AktuelleVorstellung();
+	private AktuelleSaalbelegung aktsaalbel = new AktuelleSaalbelegung();
+	private Kunden kunde = new Kunden(reservierenPanel);
+	private beliebtheitFilm beliebterFilm = new beliebtheitFilm();
+	
+	
 	private JMenuItem einstellungen;
+	private JMenuItem aktualisieren;
 	private JMenuItem neuerKunde;
 	private JMenuItem neuerFilm;
 	private JMenuItem neueKategorie;
@@ -78,18 +86,26 @@ public class GUI extends JFrame {
 		
 		datei = new JMenu("Datei");
 		hinzufuegen = new JMenu("Hinzufuegen");
-		aktualisieren = new JMenu("Aktualisieren");
+		aktualisieren = new JMenuItem("Aktualisieren");
 		
-		aktualisieren.addActionListener(new ActionListener() {
+	aktualisieren.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				reservierenPanel.update();
+				akvor.update();
+				aktsaalbel.update();
+				kunde.update();
+				beliebterFilm.update();
+				
 				revalidate();
 				
 			}
 		});
 
+		
+	
 		benutzerLabel = new JLabel("Benutzername :");
 		benutzername = new JTextField(10);
 		passwortLabel = new JLabel("Kennwort :");
@@ -164,34 +180,31 @@ public class GUI extends JFrame {
 		JLabel aktuelleVorstellungenLabel = new JLabel("aktuelle Vorstellungen");
 		anzeige[0].setLayout(new BorderLayout());
 		anzeige[0].add(aktuelleVorstellungenLabel,BorderLayout.NORTH);
-		AktuelleVorstellung akvor = new AktuelleVorstellung();
 		anzeige[0].add(akvor,BorderLayout.CENTER);
 		
 		JLabel saalBelegung = new JLabel("aktuelle Saalbelegung basierend auf der Vorstellung");
 		anzeige[1].setLayout(new BorderLayout());
 		anzeige[1].add(saalBelegung, BorderLayout.NORTH);
-		AktuelleSaalbelegung aktsaalbel = new AktuelleSaalbelegung();
 		anzeige[1].add(aktsaalbel,BorderLayout.CENTER);
-		
-		JLabel kundeAnzeigen = new JLabel("Kunde suchen/reservierung Stonieren");
-		anzeige[2].setLayout(new BorderLayout());
-		anzeige[2].add(kundeAnzeigen, BorderLayout.NORTH);
-		Kunden kunde = new Kunden();
-		anzeige[2].add(kunde,BorderLayout.CENTER);
 		
 		JLabel reservieren = new JLabel("reservieren");
 		anzeige[3].setLayout(new BorderLayout());
 		anzeige[3].add(reservieren, BorderLayout.NORTH);
-		Reservieren reservierenPanel = new Reservieren();
 		anzeige[3].add(reservierenPanel,BorderLayout.CENTER);
+		
+		JLabel kundeAnzeigen = new JLabel("Kunde suchen");
+		anzeige[2].setLayout(new BorderLayout());
+		anzeige[2].add(kundeAnzeigen, BorderLayout.NORTH);
+		anzeige[2].add(kunde,BorderLayout.CENTER);
+		
+		
 		
 		JLabel beliebtesterFilm = new JLabel("beliebtheitsskala Film");
 		anzeige[4].setLayout(new BorderLayout());
 		anzeige[4].add(beliebtesterFilm,BorderLayout.NORTH);
-		beliebtheitFilm beliebterFilm = new beliebtheitFilm();
-		anzeige[4].add(beliebterFilm, BorderLayout.CENTER);
+	anzeige[4].add(beliebterFilm, BorderLayout.CENTER);
 		
-		JLabel uhrzeit = new JLabel("uhrzeit oder sowas in der art kp");
+		JLabel uhrzeit = new JLabel("Kategoriebelegung pro Saal");
 		anzeige[5].add(uhrzeit);
 		
 		//
@@ -281,6 +294,7 @@ public class GUI extends JFrame {
 			}
 		});
 
+		
 
 		// Hinzufuegen
 		hinzufuegen.add(neuerKunde);
@@ -292,9 +306,10 @@ public class GUI extends JFrame {
 		
 		// Einstellungen
 		datei.add(einstellungen);
+		datei.add(aktualisieren);
 		menuBar.add(datei);
 		menuBar.add(hinzufuegen);
-		menuBar.add(aktualisieren);
+		
 
 		// Anmeldezeile
 		menuBar.add(benutzerLabel);

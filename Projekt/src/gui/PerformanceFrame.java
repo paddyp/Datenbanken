@@ -81,7 +81,6 @@ public class PerformanceFrame extends JFrame{
 		performancePanel.add(performance);
 		
 		add(performancePanel);
-		setVisible(true);
 		
 		
 		addWindowListener(new WindowListener() {

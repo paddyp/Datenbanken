@@ -50,6 +50,13 @@ public class DBQuery {
 		
 	}
 	
+	public static boolean sendTransaktion(String query) throws SQLException{
+		query = "BEGIN;" + query + ";COMMIT;";
+		return stmt.execute(query);
+		
+		
+	}
+	
 	public static void toString(ResultSet rs,String... collums) throws SQLException{
 	
 			while(rs.next())

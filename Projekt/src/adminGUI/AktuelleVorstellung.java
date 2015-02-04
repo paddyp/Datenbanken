@@ -55,5 +55,13 @@ public class AktuelleVorstellung extends JPanel{
 		vorstellungen.setListData(string);
 		add(vorstellungen,BorderLayout.CENTER);
 	}
+	public void update(){
+		try {
+			createList();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 }
