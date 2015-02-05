@@ -75,7 +75,7 @@ public class GUI extends JFrame {
 	
 	public GUI() {
 		setSize(new Dimension(1000, 1000));
-		setTitle("DB Projekt");
+		setTitle("Kino Datenbank Benutzungsoberfläche");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		// Erzeugen der einzelnen Frames

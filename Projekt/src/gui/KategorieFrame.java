@@ -1,6 +1,6 @@
 package gui;
 
-import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import business.DBQuery;
@@ -21,34 +20,29 @@ public class KategorieFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel bezeichnungPanel;
 	private JLabel bezeichnungLabel;
 	private JTextField bezeichnungTextField;
 
-	private JPanel preisPanel;
 	private JLabel preisLabel;
 	private JTextField preisTextField;
 
-	private JPanel knopfPanel;
 	private JButton speichern;
 	private JButton abbrechen;
 
 	public KategorieFrame() {
-		setSize(300, 150);
-		setLayout(new BorderLayout());
+		setSize(400, 110);
+		setTitle("Neue Kategorie hinzufügen");
+		setLayout(new GridLayout(3, 2));
 
 		// Bezeichnung
-		bezeichnungPanel = new JPanel();
 		bezeichnungLabel = new JLabel("Bezeichnung :");
 		bezeichnungTextField = new JTextField(10);
 
-		bezeichnungPanel.add(bezeichnungLabel);
-		bezeichnungPanel.add(bezeichnungTextField);
+		add(bezeichnungLabel);
+		add(bezeichnungTextField);
 
-		add(bezeichnungPanel, BorderLayout.NORTH);
 
 		// Preis
-		preisPanel = new JPanel();
 		preisLabel = new JLabel("Preis :");
 		preisTextField = new JTextField(5);
 		preisLabel
@@ -56,10 +50,8 @@ public class KategorieFrame extends JFrame {
 		preisTextField
 				.setToolTipText("Geldbetraege durch Punkt . trennen(kein Komma)!");
 
-		preisPanel.add(preisLabel);
-		preisPanel.add(preisTextField);
-
-		add(preisPanel, BorderLayout.CENTER);
+		add(preisLabel);
+		add(preisTextField);
 
 		// Hinzufuegen
 		speichern = new JButton("Hinzufuegen");
@@ -113,12 +105,10 @@ public class KategorieFrame extends JFrame {
 		});
 
 		// Buttons am Schluss
-		knopfPanel = new JPanel();
 
-		knopfPanel.add(speichern);
-		knopfPanel.add(abbrechen);
+		add(speichern);
+		add(abbrechen);
 
-		add(knopfPanel, BorderLayout.SOUTH);
 	}
 
 }

@@ -35,16 +35,18 @@ public class KundeBuchen extends JPanel {
 	
 	public KundeBuchen(String email){
 		this.email = email;
-		setLayout(new GridLayout(3, 1));
+		setLayout(new GridLayout(2, 1));
 		
-		hinweis = new JLabel("Bitte eine Vorstellung links oben ausw√§hlen");
+		hinweis = new JLabel("Bitte eine Vorstellung links oben ausw‰hlen", JLabel.CENTER);
 		add(hinweis);
 		
 		buchunspanel = new JPanel();
+		buchunspanel.setLayout(new GridLayout(3, 2));
 		add(buchunspanel);
 		
-		reihelbl = new JLabel("Reihe: ");
+		reihelbl = new JLabel(" Reihe: ");
 		buchunspanel.add(reihelbl);
+<<<<<<< HEAD
 		reiheCB = new JComboBox<String>();
 		nummerCB = new JComboBox<String>();
 		reiheCB.addItemListener(new ItemListener() {
@@ -63,6 +65,12 @@ public class KundeBuchen extends JPanel {
 		buchunspanel.add(nummerCB);
 		reihelbl = new JLabel("Nummer: ");
 		buchunspanel.add(reihelbl);
+=======
+		reihe = new JTextField(6);
+		buchunspanel.add(reihe);
+		nummerlbl = new JLabel(" Nummer: ");
+		buchunspanel.add(nummerlbl);
+>>>>>>> FETCH_HEAD
 		nummer = new JTextField(6);
 		buchunspanel.add(nummer);
 		
@@ -88,6 +96,7 @@ public class KundeBuchen extends JPanel {
 				}
 			}
 		});
+		buchunspanel.add(new JLabel(""));
 		buchunspanel.add(buchenbtn);
 		
 	}

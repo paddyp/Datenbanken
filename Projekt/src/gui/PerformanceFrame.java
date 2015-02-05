@@ -40,6 +40,7 @@ public class PerformanceFrame extends JFrame{
 	
 	public PerformanceFrame(){
 		setSize(500,500);
+		setTitle("Neue Vorstellung hinzufügen");
 		
 		performancePanel = new JPanel();
 		performanceLabel = new JLabel("Vorstellung Datum und zeit");

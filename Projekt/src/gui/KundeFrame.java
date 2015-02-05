@@ -27,19 +27,15 @@ public class KundeFrame extends JFrame {
 	private JButton abbrechen;
 
 
-	private JPanel namePanel;
 	private JLabel nameLabel;
 	private JTextField nameTextField;
 
-	private JPanel vornamePanel;
 	private JLabel vornameLabel;
 	private JTextField vornameTextField;
 
-	private JPanel emailPanel;
 	private JLabel emailLabel;
 	private JTextField emailTextField;
 
-	private JPanel passwordPanel;
 	private JLabel passwordLabel;
 	private JPasswordField passwordTextField;
 
@@ -49,7 +45,6 @@ public class KundeFrame extends JFrame {
 	private JTextField birthmonthTextField;
 	private JTextField birthyearTextField;
 
-	private JPanel adressPanel;
 	private JLabel placeLabel;
 	private JLabel plzLabel;
 	private JLabel streetLabel;
@@ -57,114 +52,101 @@ public class KundeFrame extends JFrame {
 	private JTextField plzTextField;
 	private JTextField streetTextField;
 
-	private JPanel contactPanel;
 	private JLabel mobilLabel;
 	private JLabel phoneLabel;
 	private JTextField mobileTextField;
 	private JTextField phoneTextField;
 
 	public KundeFrame() {
-		setSize(500, 700);
-		setLayout(new GridLayout(9, 2));
+		setSize(400, 300);
+		setTitle("Neuen Kunden hinzufügen");
+		setLayout(new GridLayout(11, 2));
 		setBackground(new Color(50, 50, 50));
 
 		// Name eingeben
-		namePanel = new JPanel();
 		nameLabel = new JLabel();
 		nameTextField = new JTextField(10);
 
-		nameLabel.setText("Name: ");
+		nameLabel.setText(" Name: ");
 
-		namePanel.add(nameLabel);
-		namePanel.add(nameTextField);
+		add(nameLabel);
+		add(nameTextField);
 
-		add(namePanel);
 
 		// Vorname eingeben
 
-		vornamePanel = new JPanel();
 		vornameLabel = new JLabel();
 		vornameTextField = new JTextField(10);
 
-		vornameLabel.setText("Vorname :");
+		vornameLabel.setText(" Vorname :");
 
-		vornamePanel.add(vornameLabel);
-		vornamePanel.add(vornameTextField);
+		add(vornameLabel);
+		add(vornameTextField);
 
-		add(vornamePanel);
 		//
 		// email eingeben
 
-		emailPanel = new JPanel();
-		emailLabel = new JLabel("E-mail :");
+		emailLabel = new JLabel(" E-mail :");
 		emailTextField = new JTextField(10);
 
-		emailPanel.add(emailLabel);
-		emailPanel.add(emailTextField);
+		add(emailLabel);
+		add(emailTextField);
 
-		add(emailPanel);
 		//
 		// Password
-		passwordPanel = new JPanel();
-		passwordLabel = new JLabel("Password :");
+		passwordLabel = new JLabel(" Password :");
 		passwordTextField = new JPasswordField(10);
 
-		passwordPanel.add(passwordLabel);
-		passwordPanel.add(passwordTextField);
+		add(passwordLabel);
+		add(passwordTextField);
 
-		add(passwordPanel);
 		//
 		// Geburtstag eingeben
 
 		birthPanel = new JPanel();
+		birthPanel.setLayout(new GridLayout(1, 3));
 		birthLabel = new JLabel();
+		birthLabel.setText(" Geburtstag (Tag|Monat|Jahr) :");
 		birthdayTextField = new JTextField(2);
 		birthmonthTextField = new JTextField(2);
 		birthyearTextField = new JTextField(4);
 
-		// Limit have to me programmed
-
-		birthLabel.setText("Geburtstag :");
-
-		birthPanel.add(birthLabel);
+		add(birthLabel);
 		birthPanel.add(birthdayTextField);
 		birthPanel.add(birthmonthTextField);
 		birthPanel.add(birthyearTextField);
-
+		
 		add(birthPanel);
 
+
 		// Adresse
-		adressPanel = new JPanel();
-		adressPanel.setLayout(new GridLayout(2, 2));
 		plzTextField = new JTextField(6);
 		placeTextField = new JTextField(10);
 		streetTextField = new JTextField(10);
-		plzLabel = new JLabel("PLZ :");
-		placeLabel = new JLabel("Ort :");
-		streetLabel = new JLabel("Strasse :");
+		plzLabel = new JLabel(" PLZ :");
+		placeLabel = new JLabel(" Ort :");
+		streetLabel = new JLabel(" Strasse :");
 
-		adressPanel.add(streetLabel);
-		adressPanel.add(plzLabel);
-		adressPanel.add(placeLabel);
+		add(streetLabel);
+		add(streetTextField);
 
-		adressPanel.add(streetTextField);
-		adressPanel.add(plzTextField);
-		adressPanel.add(placeTextField);
+		add(plzLabel);
+		add(plzTextField);
 
-		add(adressPanel);
+		add(placeLabel);
+		add(placeTextField);
 
-		contactPanel = new JPanel();
-		phoneLabel = new JLabel("Telefon :");
+
+		phoneLabel = new JLabel(" Telefon :");
 		phoneTextField = new JTextField(10);
-		mobilLabel = new JLabel("Mobil :");
+		mobilLabel = new JLabel(" Mobil :");
 		mobileTextField = new JTextField(10);
 
-		contactPanel.add(phoneLabel);
-		contactPanel.add(phoneTextField);
-		contactPanel.add(mobilLabel);
-		contactPanel.add(mobileTextField);
+		add(phoneLabel);
+		add(phoneTextField);
+		add(mobilLabel);
+		add(mobileTextField);
 
-		add(contactPanel);
 
 		//
 		speichern = new JButton();
