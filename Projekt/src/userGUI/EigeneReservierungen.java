@@ -1,22 +1,16 @@
 package userGUI;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import Objekte.KundeObjekt;
 import Objekte.ReservierungObjekt;
 import business.DBQuery;
 
@@ -88,7 +82,7 @@ public class EigeneReservierungen extends JPanel{
 	
 	
 	public void zeigeReservierungen() throws SQLException{
-		rs = DBQuery.sendQuery("select r.id,f.titel, f.fsk, v.saal_bezeichnung, v.zeit, "
+		rs = DBQuery.sendQuery(DBQuery.fillPlaceholders("select r.id,f.titel, f.fsk, v.saal_bezeichnung, v.zeit, "
 				+ "(SELECT count(*) AS plaetze "
 				+ "FROM reservierung res "
 				+ "join platz_reservierung pr "
@@ -101,7 +95,22 @@ public class EigeneReservierungen extends JPanel{
 				+ "on (vf.vorstellung_id = v.id) "
 					+ "join film f "
 					+ "on (f.id = vf.film_id) "
-				+ "WHERE r.kunde_email='"+this.email+"'");
+				+ "WHERE r.kunde_email='%1%'",this.email));
+		System.out.println(DBQuery.fillPlaceholders("select r.id,f.titel, f.fsk, v.saal_bezeichnung, v.zeit, "
+				+ "(SELECT count(*) AS plaetze "
+				+ "FROM reservierung res "
+				+ "join platz_reservierung pr "
+				+ "on res.id = pr.reservierung_id "
+				+ "WHERE res.id = r.id) "
+			+ "from reservierung r "
+			+ "join vorstellung v "
+			+ "on (r.vorstellung_id = v.id) "
+				+ "join vorstellung_film vf "
+				+ "on (vf.vorstellung_id = v.id) "
+					+ "join film f "
+					+ "on (f.id = vf.film_id) "
+				+ "WHERE r.kunde_email='%1%'",this.email));
+		
 		
 		ArrayList<ReservierungObjekt> liste= new ArrayList<ReservierungObjekt>();
 		
@@ -109,7 +118,7 @@ public class EigeneReservierungen extends JPanel{
 		
 		while(rs.next())
 		{
-			System.out.println(rs.toString());
+		
 			liste.add(new ReservierungObjekt(rs.getString("id"), rs.getString("titel"), rs.getString("fsk"), rs.getString("saal_bezeichnung"), rs.getString("zeit"), rs.getString("plaetze")));
 			}
 		

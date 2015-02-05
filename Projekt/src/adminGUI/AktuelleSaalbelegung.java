@@ -48,18 +48,13 @@ public class AktuelleSaalbelegung extends JPanel{
 				+ "on b.saal_bezeichnung = c.saal_bezeichnung "
 				+ "WHERE zeit>=now() "
 				+ "ORDER BY saal_bezeichnung ;");
-		ArrayList<String> liste= new ArrayList<String>();
-		liste.add("belegt/gesamt zeit saal");
+		
 		vorstellungen = new JList<String>();
 		
-		while(rs.next())
-		{
-			liste.add(rs.getString("belegt") + "/" +rs.getString("gesamt") + " " + rs.getString("zeit") + " " + rs.getString("saal_bezeichnung") );
-		}
 		
-		String[] string = liste.toArray(new String[liste.size()]);
 		
-		vorstellungen.setListData(string);
+	
+		vorstellungen.setListData(DBQuery.toString(rs, "belegt","gesamt","zeit","saal_bezeichnung"));
 		add(vorstellungen,BorderLayout.CENTER);
 	}
 	

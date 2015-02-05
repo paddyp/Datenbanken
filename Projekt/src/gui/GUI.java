@@ -228,6 +228,11 @@ public class GUI extends JFrame {
 			EigeneReservierungen eigeneReservierungen = new EigeneReservierungen("hans@peter.de");
 			anzeige[1].add(eigeneReservierungen,BorderLayout.CENTER);
 			
+			JLabel updateDaten = new JLabel("Eigene angaben ändern");
+			anzeige[2].setLayout(new BorderLayout());
+			anzeige[2].add(updateDaten,BorderLayout.NORTH);
+			
+			
 		}
 		
 		

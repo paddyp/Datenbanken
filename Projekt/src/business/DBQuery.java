@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class DBQuery {
 
@@ -64,20 +65,26 @@ public class DBQuery {
 	 * @param collums The collums to use
 	 * @throws SQLException when a database error occures
 	 */
-	public static String toString(ResultSet rs,String... collums) throws SQLException{
+	public static String[] toString(ResultSet rs,String... collums) throws SQLException{
 	
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb;
+		ArrayList<String> strings= new ArrayList<String>();
 		
 		while(rs.next())
 		{
+			sb = new StringBuilder();
 			sb.append(rs.getString(collums[0]));
 			for(int i=1;i<collums.length;i++)
 			{
 				sb.append(" | " + rs.getString(collums[i]));
 			}
+			
+			strings.add(sb.toString());
 		}
 		
-		return sb.toString();
+		String[] output = strings.toArray(new String[strings.size()]);
+		
+		return output;
 	}
 	
 	/**
@@ -87,9 +94,9 @@ public class DBQuery {
 	 * @return Returns the query with replacements
 	 * @throws SQLException 
 	 */
-	public String fillPlaceholders(String query, String... replacements) throws SQLException{
-		for(int i = 1; i<replacements.length; i++){
-			query.replaceAll("%"+i+"%", replacements[i]);
+	public static String fillPlaceholders(String query, String... replacements) throws SQLException{
+		for(int i = 0; i<replacements.length; i++){
+			query = query.replaceAll("%"+(i+1) + "%", replacements[i]);
 		}
 		return query;
 	}
