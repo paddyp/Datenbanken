@@ -7,17 +7,22 @@ import java.util.ArrayList;
 
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
+import Objekte.VorstellungObjekt;
 import business.DBQuery;
 
 
 public class AlleVorstellungen extends JPanel{
-	private JList<String> vorstellungen;
+	private JList<VorstellungObjekt> vorstellungen;
+	private KundeBuchen kundebuchen;
 	
 	private ResultSet rs;
 	private int anzahl;
 	
-	public AlleVorstellungen(){
+	public AlleVorstellungen(KundeBuchen kundebuchen){
+		this.kundebuchen = kundebuchen;
 		setLayout(new BorderLayout());
 		rs = null;
 		
@@ -41,16 +46,25 @@ public class AlleVorstellungen extends JPanel{
 				+ "on vf.film_id = f.id "
 				+ "WHERE zeit>=now() "
 				+ "ORDER by v.zeit;");
-		ArrayList<String> liste= new ArrayList<String>();
+		ArrayList<VorstellungObjekt> liste= new ArrayList<VorstellungObjekt>();
 		
-		vorstellungen = new JList<String>();
-		liste.add("id zeit saal_bezeichnung titel");
+		vorstellungen = new JList<VorstellungObjekt>();
+		vorstellungen.addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(!e.getValueIsAdjusting()){
+					
+				}
+			}
+		});
+		
 		while(rs.next())
 		{
-			liste.add(rs.getString("id") + " " +rs.getString("zeit") + " " + rs.getString("saal_bezeichnung") + " " + rs.getString("titel") );
+			liste.add(new VorstellungObjekt(rs.getString("id"), rs.getString("zeit"), rs.getString("saal_bezeichnung"), rs.getString("titel")));
 		}
 		
-		String[] string = liste.toArray(new String[liste.size()]);
+		VorstellungObjekt[] string = liste.toArray(new VorstellungObjekt[0]);
 		
 		vorstellungen.setListData(string);
 		add(vorstellungen,BorderLayout.CENTER);
