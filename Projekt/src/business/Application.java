@@ -2,7 +2,6 @@ package business;
 
 import gui.GUI;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Application {
@@ -14,13 +13,12 @@ public class Application {
 			DBConnection dbcon = new DBConnection();
 			try {
 				DBQuery query = new DBQuery(dbcon.getConnection());
-				ResultSet rs = query.sendQuery("SELECT * FROM film");
-				DBQuery.toString(rs,"titel","id");	
+				GUI g = new GUI();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e.printStackTrace();	
+				System.exit(1);
 			}
-			GUI g = new GUI();
 			
 
 	}

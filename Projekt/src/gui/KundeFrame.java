@@ -134,7 +134,6 @@ public class KundeFrame extends JFrame {
 		add(birthPanel);
 
 		// Adresse
-
 		adressPanel = new JPanel();
 		adressPanel.setLayout(new GridLayout(2, 2));
 		plzTextField = new JTextField(6);

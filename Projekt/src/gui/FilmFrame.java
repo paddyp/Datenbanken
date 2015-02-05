@@ -112,11 +112,14 @@ public class FilmFrame extends JFrame {
 				// TODO Auto-generated method stub
 
 				try {
-					DBQuery.sendInsertIntoQuery("Film",
+					String [] spaltennamen = {"bewertung", "titel", "fsk", "genre"};
+					DBQuery.sendInsertIntoQueryID("Film",
+							spaltennamen,
 							bewertungTextField.getText(),
-							titelTextField.getText(), fskTextField.getText(),
+							titelTextField.getText(),
+							fskTextField.getText(),
 							genreTextField.getText());
-
+					
 					String[] alleDarsteller = darstellerTextField.getText()
 							.split(",");
 					for (int i = 0; i < alleDarsteller.length; i++) {
