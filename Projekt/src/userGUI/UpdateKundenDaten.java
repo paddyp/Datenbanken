@@ -25,5 +25,6 @@ public class UpdateKundenDaten extends JPanel {
 		
 		ResultSet rs = DBQuery.sendQuery(DBQuery.fillPlaceholders("SELECT * FROM kunde WHERE email='%1%'",this.email));
 		
+		
 	}
 }

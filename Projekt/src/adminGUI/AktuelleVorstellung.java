@@ -33,26 +33,13 @@ public class AktuelleVorstellung extends JPanel{
 	
 	private void createList() throws SQLException{
 		anzahl = 0;
-		rs = DBQuery.sendQuery("select v.id, v.zeit, v.saal_bezeichnung, f.titel "
-				+ "from vorstellung v "
-				+ "join vorstellung_film vf "
-				+ "on v.id = vf.vorstellung_id "
-				+ "join film f "
-				+ "on vf.film_id = f.id "
-				+ "WHERE zeit>=now() "
-				+ "ORDER by v.zeit;");
-		ArrayList<String> liste= new ArrayList<String>();
+		rs = DBQuery.sendQuery("select * "
+				+ "from aktuellevorstellungen "
+				+ ";");
 		
 		vorstellungen = new JList<String>();
-		liste.add("id zeit saal_bezeichnung titel");
-		while(rs.next())
-		{
-			liste.add(rs.getString("id") + " " +rs.getString("zeit") + " " + rs.getString("saal_bezeichnung") + " " + rs.getString("titel") );
-		}
-		
-		String[] string = liste.toArray(new String[liste.size()]);
-		
-		vorstellungen.setListData(string);
+	
+		vorstellungen.setListData(DBQuery.toString(rs, "id","zeit","saal_bezeichnung","titel"));
 		add(vorstellungen,BorderLayout.CENTER);
 	}
 	public void update(){
