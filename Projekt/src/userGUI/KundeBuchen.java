@@ -3,11 +3,14 @@ package userGUI;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import business.DBQuery;
 
 public class KundeBuchen extends JPanel {
 
@@ -46,14 +49,21 @@ public class KundeBuchen extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!vorstellungs_id.isEmpty()){
-					
+				if(!vorstellungs_id.isEmpty() && 
+						!reihe.getText().isEmpty() &&
+						!nummer.getText().isEmpty()){
+					try {
+						DBQuery.sendTransaktion(DBQuery.fillPlaceholders("INSERT INTO Reservierung VALUES (DEFAULT, %1%,%2%);"
+								+"INSERT INTO Platz_Reservierung VALUES ((SELECT id FROM Reservierung WHERE kunde_email = %1% "
+								+ "AND vorstellung_id = %2%),%3%, %4%, (SELECT saal_bezeichnung FROM vorstellung v WHERE v.id = %2%));", KundeBuchen.this.email, KundeBuchen.this.vorstellungs_id, reihe.getText(), nummer.getText()));
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
 		buchunspanel.add(buchenbtn);
-		
-		update("1","15-12-12","Saal nope");
 		
 	}
 	
