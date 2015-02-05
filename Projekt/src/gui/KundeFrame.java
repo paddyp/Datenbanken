@@ -4,27 +4,28 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import business.DBQuery;
 
-public class ClientFrame extends JFrame {
+public class KundeFrame extends JFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JButton abourt;
-	private JButton save;
+	private JButton speichern;
+	private JButton abbrechen;
+
 
 	private JPanel namePanel;
 	private JLabel nameLabel;
@@ -62,7 +63,7 @@ public class ClientFrame extends JFrame {
 	private JTextField mobileTextField;
 	private JTextField phoneTextField;
 
-	public ClientFrame() {
+	public KundeFrame() {
 		setSize(500, 700);
 		setLayout(new GridLayout(10, 2));
 		setBackground(new Color(50, 50, 50));
@@ -79,8 +80,7 @@ public class ClientFrame extends JFrame {
 
 		add(namePanel);
 
-		//
-		// Vorname eingabe
+		// Vorname eingeben
 
 		vornamePanel = new JPanel();
 		vornameLabel = new JLabel();
@@ -106,7 +106,7 @@ public class ClientFrame extends JFrame {
 		//
 		// Password
 		passwordPanel = new JPanel();
-		passwordLabel = new JLabel("Password");
+		passwordLabel = new JLabel("Password :");
 		passwordTextField = new JPasswordField(10);
 
 		passwordPanel.add(passwordLabel);
@@ -142,14 +142,15 @@ public class ClientFrame extends JFrame {
 		streetTextField = new JTextField(10);
 		plzLabel = new JLabel("PLZ :");
 		placeLabel = new JLabel("Ort :");
-		streetLabel = new JLabel("Straße :");
+		streetLabel = new JLabel("Strasse :");
 
 		adressPanel.add(streetLabel);
-		adressPanel.add(streetTextField);
-		adressPanel.add(placeLabel);
-		adressPanel.add(placeTextField);
 		adressPanel.add(plzLabel);
+		adressPanel.add(placeLabel);
+
+		adressPanel.add(streetTextField);
 		adressPanel.add(plzTextField);
+		adressPanel.add(placeTextField);
 
 		add(adressPanel);
 
@@ -167,19 +168,17 @@ public class ClientFrame extends JFrame {
 		add(contactPanel);
 
 		//
-		save = new JButton();
-		save.setText("Hinzufügen");
-		save.addActionListener(new ActionListener() {
+		speichern = new JButton();
+		speichern.setText("Hinzufuegen");
+		speichern.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Date date = new Date(Integer.parseInt(birthyearTextField
-						.getText()), Integer.parseInt(birthmonthTextField
-						.getText()), Integer.parseInt(birthdayTextField
-						.getText()));
-				
-				
+				String date = birthyearTextField.getText() + "-"
+						+ birthmonthTextField.getText() + "-"
+						+ birthdayTextField.getText();
+
 				try {
 					DBQuery.sendInsertIntoQuery("Kunde",
 							emailTextField.getText(), nameTextField.getText(),
@@ -188,13 +187,33 @@ public class ClientFrame extends JFrame {
 							plzTextField.getText(), streetTextField.getText(),
 							phoneTextField.getText(), mobileTextField.getText());
 
+					JOptionPane.showMessageDialog(null,
+							"Kunde wurde hinzugefuegt!");
+
+					emailTextField.setText("");
+					nameTextField.setText("");
+					vornameTextField.setText("");
+					birthdayTextField.setText("");
+					birthmonthTextField.setText("");
+					birthyearTextField.setText("");
+					passwordTextField.setText("");
+					streetTextField.setText("");
+					plzTextField.setText("");
+					placeTextField.setText("");
+					phoneTextField.setText("");
+					mobileTextField.setText("");
+
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+
+					JOptionPane.showMessageDialog(null,
+							"Fehler!\nKunde konnte nicht hinzugefuegt werden!");
 				}
+
 				try {
 					ResultSet rs = DBQuery.sendQuery("SELECT * FROM Kunde");
-					DBQuery.toString(rs, "email","name","vorname","passwort");
+					DBQuery.toString(rs, "email", "name", "vorname", "passwort");
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -202,9 +221,10 @@ public class ClientFrame extends JFrame {
 			}
 		});
 
-		abourt = new JButton();
-		abourt.setText("abourt");
-		abourt.addActionListener(new ActionListener() {
+		// Kunde hinzuf�gen - Abbruch
+		abbrechen = new JButton();
+		abbrechen.setText("Abbrechen");
+		abbrechen.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -213,9 +233,8 @@ public class ClientFrame extends JFrame {
 			}
 		});
 
-		add(abourt);
-		add(save);
+		add(speichern);
+		add(abbrechen);
 	}
-	
 
 }

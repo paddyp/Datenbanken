@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 
 import business.DBQuery;
 
-public class MovieFrame extends JFrame{
+public class FilmFrame extends JFrame{
 	
 	/**
 	 * 
@@ -38,7 +38,7 @@ public class MovieFrame extends JFrame{
 	private JButton abourt;
 	
 	
-	public MovieFrame(){
+	public FilmFrame(){
 		setSize(500,500);
 		setLayout(new GridLayout(3,2));
 		titelPanel = new JPanel();

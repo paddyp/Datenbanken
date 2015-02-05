@@ -77,8 +77,8 @@ public class GUI extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		// Erzeugen der einzelnen Frames
-		final MovieFrame movieFrame = new MovieFrame();
-		final ClientFrame clientFrame = new ClientFrame();
+		final FilmFrame movieFrame = new FilmFrame();
+		final KundeFrame clientFrame = new KundeFrame();
 		final KategorieFrame kategorieFrame = new KategorieFrame();
 		final PlaceFrame placeFrame = new PlaceFrame();
 		final PerformanceFrame performanceFrame = new PerformanceFrame();
