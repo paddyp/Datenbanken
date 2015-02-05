@@ -22,6 +22,8 @@ import javax.swing.JTextField;
 
 import userGUI.AlleVorstellungen;
 import userGUI.EigeneReservierungen;
+import userGUI.KundeBuchen;
+import userGUI.UpdateKundenDaten;
 import adminGUI.AktuelleSaalbelegung;
 import adminGUI.AktuelleVorstellung;
 import adminGUI.Kunden;
@@ -35,8 +37,8 @@ public class GUI extends JFrame {
 
 	private JPanel panel;
 
-	private boolean angemeldet = false;
-	private boolean admin = true;
+	private boolean angemeldet = true;
+	private boolean admin = false;
 
 	private JMenuBar menuBar;
 	
@@ -231,6 +233,15 @@ public class GUI extends JFrame {
 			JLabel updateDaten = new JLabel("Eigene angaben ändern");
 			anzeige[2].setLayout(new BorderLayout());
 			anzeige[2].add(updateDaten,BorderLayout.NORTH);
+			UpdateKundenDaten updatekundendaten = new UpdateKundenDaten("hans@peter.de");
+			anzeige[2].add(updatekundendaten,BorderLayout.CENTER);
+			
+			JLabel buchen = new JLabel("Buchen");
+			anzeige[3].setLayout(new BorderLayout());
+			anzeige[3].add(buchen,BorderLayout.NORTH);
+			KundeBuchen kundeBuchen = new KundeBuchen("hans@peter.de");
+			anzeige[3].add(kundeBuchen,BorderLayout.CENTER);
+			
 			
 			
 		}
