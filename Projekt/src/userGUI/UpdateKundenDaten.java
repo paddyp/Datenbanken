@@ -51,16 +51,16 @@ public class UpdateKundenDaten extends JPanel {
 				// Update
 		        //email         |     name     | vorname  | geburtsdatum |     passwort      |  plz   |          strasse           |    handy     |   festnetz 
 				try {
-					DBQuery.sendQuery(DBQuery.fillPlaceholders("UPDATE kunde SET name='%1%', vorname='%2%',geburtsdatum='%3%',passwort='%4%',plz='%5%',strasse='%6%',handy='%7%',festnetz='%8%' WHERE email='%9%' ", 
-							UpdateKundenDaten.this.nameTF.getText(), 
-							UpdateKundenDaten.this.vornameTF.getText(), 
-							UpdateKundenDaten.this.geb.getText(), 
-							UpdateKundenDaten.this.passwortTF.getText(), 
-							UpdateKundenDaten.this.plz.getText(),
-							UpdateKundenDaten.this.strasse.getText(),
-							UpdateKundenDaten.this.mobil.getText(),
-							UpdateKundenDaten.this.tel.getText(),
-							UpdateKundenDaten.this.email));
+					
+					DBQuery.sendUpdateQuery("kunde", UpdateKundenDaten.this.email, "name=" + UpdateKundenDaten.this.nameTF.getText(), 
+							"vorname="+ UpdateKundenDaten.this.vornameTF.getText(),
+							"geburtsdatum=" + UpdateKundenDaten.this.geb.getText(),
+							"passwort=" + UpdateKundenDaten.this.passwortTF.getText(),
+							"plz=" + UpdateKundenDaten.this.plz.getText(),
+							"strasse=" + UpdateKundenDaten.this.strasse.getText(),
+							"handy=" + UpdateKundenDaten.this.mobil.getText(),
+							"festnetz=" + UpdateKundenDaten.this.tel.getText());
+					
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
