@@ -68,6 +68,18 @@ public class DBQuery {
 
 		return stmt.execute(query);
 	}
+	
+	public static boolean sendUpdateQuery(String table,String where,String... values) throws SQLException{
+		String query = "UPDATE " + table + " SET";
+		
+		for(int i =0;i < values.length;i++){
+			query += " " + values[i];
+		}
+		
+		query += " WHERE email='" + where + "'";
+		
+		return stmt.execute(query);
+	}
 
 	public static boolean sendTransaktion(String query) throws SQLException {
 		query = "BEGIN;" + query + ";COMMIT;";
