@@ -234,10 +234,10 @@ public class GUI extends JFrame {
 			anzeige[2].add(updateDaten,BorderLayout.NORTH);
 			
 			JLabel buchen = new JLabel("Buchen");
-			anzeige[4].setLayout(new BorderLayout());
-			anzeige[4].add(buchen,BorderLayout.NORTH);
+			anzeige[3].setLayout(new BorderLayout());
+			anzeige[3].add(buchen,BorderLayout.NORTH);
 			KundeBuchen kundeBuchen = new KundeBuchen();
-			anzeige[4].add(buchen,BorderLayout.CENTER);
+			anzeige[3].add(kundeBuchen,BorderLayout.CENTER);
 			
 			
 			
