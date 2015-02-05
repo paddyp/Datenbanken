@@ -22,28 +22,26 @@ import business.DBQuery;
 
 
 public class EigeneReservierungen extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private JList<ReservierungObjekt> reservierungListe;
 	
 	private ResultSet rs;
 	
 	private JPanel abfragePanel;
+	private String email;
 	
-	private JLabel sucheLabel;
 	
-	private JTextField sucheFeld;
 	
-	private JButton abschicken;
 	
-	public EigeneReservierungen(){
+	public EigeneReservierungen(String email){
+		this.email = email;
 		setLayout(new BorderLayout());
-		sucheFeld = new JTextField(6);
 		abfragePanel = new JPanel();
-		abschicken = new JButton("Suchen");
-		sucheLabel = new JLabel("Reservierungsid :");
 
-		abfragePanel.add(sucheLabel);
-		abfragePanel.add(sucheFeld);
-		abfragePanel.add(abschicken);
 		
 		reservierungListe = new JList<ReservierungObjekt>();
 		
@@ -52,79 +50,44 @@ public class EigeneReservierungen extends JPanel{
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				// TODO Auto-generated method stub
+				if(reservierungListe.getSelectedValue() != null){
 				int abfrage = JOptionPane.showConfirmDialog(null, "Wollen sie diese Reservieren stonieren ?");
 				if(abfrage == JOptionPane.YES_OPTION){
 					
 					try {
 						DBQuery.sendTransaktion("DELETE FROM Platz_Reservierung WHERE reservierung_id =" + reservierungListe.getSelectedValue().getId());
 						DBQuery.sendTransaktion("DELETE FROM Reservierung WHERE id =" + reservierungListe.getSelectedValue().getId());
+						update();
+						JOptionPane.showMessageDialog(null, "Ihre Reservierung wurde gelöscht");
+						
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
+						JOptionPane.showMessageDialog(null,"Beim löschen ist ein Fehler aufgetreten. Bitte wenden Sie sich an useren Support ");
 					}
 					
 							
 				}
 			}
+				}
 		});
 		add(abfragePanel, BorderLayout.NORTH);
+		try {
+			zeigeReservierungen();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		rs = null;
-		abschicken.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					createList(Integer.parseInt(sucheFeld.getText()));
-					revalidate();
-					
-				} catch (SQLException fehler) {
-					// TODO Auto-generated catch block
-					fehler.printStackTrace();
-				
-				}
-				
-			}
-		});
+		
 		add(reservierungListe,BorderLayout.CENTER);
 	
 		
 	}
 	
-	private void createList(int id) throws SQLException{
-		//TODO SQL Injection !!!!! sehr möglich :( muss noch unmöglich gemacht werden
-		
-		rs = DBQuery.sendQuery("select r.id,f.titel, f.fsk, v.saal_bezeichnung, v.zeit, "
-					+ "(SELECT count(*) AS plaetze "
-					+ "FROM reservierung res "
-					+ "join platz_reservierung pr "
-					+ "on res.id = pr.reservierung_id "
-					+ "WHERE res.id = r.id) "
-				+ "from reservierung r "
-				+ "join vorstellung v "
-				+ "on (r.vorstellung_id = v.id) "
-					+ "join vorstellung_film vf "
-					+ "on (vf.vorstellung_id = v.id) "
-						+ "join film f "
-						+ "on (f.id = vf.film_id) "
-				+ "WHERE r.id = "+ id +" ;");
-ArrayList<ReservierungObjekt> liste= new ArrayList<ReservierungObjekt>();
-		
-		
-		
-		while(rs.next())
-		{
-			System.out.println(rs.toString());
-			liste.add(new ReservierungObjekt(rs.getString("id"), rs.getString("titel"), rs.getString("fsk"), rs.getString("saal_bezeichnung"), rs.getString("zeit"), rs.getString("plaetze")));
-			}
-		
-		ReservierungObjekt[] string = liste.toArray(new ReservierungObjekt[liste.size()]);
-		
-		reservierungListe.setListData(string);
-		
-	}
 	
-	public void zeigeReservierungen(KundeObjekt kundeObjekt) throws SQLException{
+	public void zeigeReservierungen() throws SQLException{
 		rs = DBQuery.sendQuery("select r.id,f.titel, f.fsk, v.saal_bezeichnung, v.zeit, "
 				+ "(SELECT count(*) AS plaetze "
 				+ "FROM reservierung res "
@@ -138,7 +101,7 @@ ArrayList<ReservierungObjekt> liste= new ArrayList<ReservierungObjekt>();
 				+ "on (vf.vorstellung_id = v.id) "
 					+ "join film f "
 					+ "on (f.id = vf.film_id) "
-				+ "WHERE r.kunde_email='"+ kundeObjekt.getEmail()+"'");
+				+ "WHERE r.kunde_email='"+this.email+"'");
 		
 		ArrayList<ReservierungObjekt> liste= new ArrayList<ReservierungObjekt>();
 		
@@ -157,8 +120,11 @@ ArrayList<ReservierungObjekt> liste= new ArrayList<ReservierungObjekt>();
 	}
 	
 	public void update(){
-		
-		reservierungListe.setListData(new ReservierungObjekt[0]);
-		sucheFeld.setText("");
+		try {
+			zeigeReservierungen();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

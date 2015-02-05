@@ -35,8 +35,8 @@ public class GUI extends JFrame {
 
 	private JPanel panel;
 
-	private boolean angemeldet = false;
-	private boolean admin = true;
+	private boolean angemeldet = true;
+	private boolean admin = false;
 
 	private JMenuBar menuBar;
 	
@@ -225,7 +225,7 @@ public class GUI extends JFrame {
 			JLabel reservierungen = new JLabel("Eigene Reservierungen");
 			anzeige[1].setLayout(new BorderLayout());
 			anzeige[1].add(reservierungen,BorderLayout.NORTH);
-			EigeneReservierungen eigeneReservierungen = new EigeneReservierungen();
+			EigeneReservierungen eigeneReservierungen = new EigeneReservierungen("hans@peter.de");
 			anzeige[1].add(eigeneReservierungen,BorderLayout.CENTER);
 			
 		}
