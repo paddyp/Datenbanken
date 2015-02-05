@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -25,7 +24,7 @@ public class KategorieFrame extends JFrame {
 	private JPanel bezeichnungPanel;
 	private JLabel bezeichnungLabel;
 	private JTextField bezeichnungTextField;
-	
+
 	private JPanel preisPanel;
 	private JLabel preisLabel;
 	private JTextField preisTextField;
@@ -42,22 +41,24 @@ public class KategorieFrame extends JFrame {
 		bezeichnungPanel = new JPanel();
 		bezeichnungLabel = new JLabel("Bezeichnung :");
 		bezeichnungTextField = new JTextField(10);
-		
+
 		bezeichnungPanel.add(bezeichnungLabel);
 		bezeichnungPanel.add(bezeichnungTextField);
-		
-		add(bezeichnungPanel,BorderLayout.NORTH);
-		
+
+		add(bezeichnungPanel, BorderLayout.NORTH);
+
 		// Preis
 		preisPanel = new JPanel();
 		preisLabel = new JLabel("Preis :");
 		preisTextField = new JTextField(5);
-		preisLabel.setToolTipText("Geldbetraege durch Punkt . trennen(kein Komma)!");
-		preisTextField.setToolTipText("Geldbetraege durch Punkt . trennen(kein Komma)!");
-		
+		preisLabel
+				.setToolTipText("Geldbetraege durch Punkt . trennen(kein Komma)!");
+		preisTextField
+				.setToolTipText("Geldbetraege durch Punkt . trennen(kein Komma)!");
+
 		preisPanel.add(preisLabel);
 		preisPanel.add(preisTextField);
-		
+
 		add(preisPanel, BorderLayout.CENTER);
 
 		// Hinzufuegen
@@ -86,9 +87,10 @@ public class KategorieFrame extends JFrame {
 							.showMessageDialog(null,
 									"Fehler!\nKategorie konnte nicht hinzugefuegt werden!");
 				}
-				
+
 				try {
-					ResultSet rs = DBQuery.sendQuery("SELECT * FROM Sitzplatzkategorie");
+					ResultSet rs = DBQuery
+							.sendQuery("SELECT * FROM Sitzplatzkategorie");
 					DBQuery.toString(rs, "bezeichnung", "preis");
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -109,10 +111,10 @@ public class KategorieFrame extends JFrame {
 				dispose();
 			}
 		});
-		
+
 		// Buttons am Schluss
 		knopfPanel = new JPanel();
-			
+
 		knopfPanel.add(speichern);
 		knopfPanel.add(abbrechen);
 

@@ -19,7 +19,7 @@ public class DBQuery {
 		this.con = con;
 		this.stmt = con.createStatement();
 	}
-	
+
 	/**
 	 * Send String Query and get the result back
 	 * 
@@ -29,76 +29,101 @@ public class DBQuery {
 	 */
 
 	public static ResultSet sendQuery(String query) throws SQLException {
-			ResultSet rs = stmt.executeQuery(query);
-			System.out.println("rs" + rs);
-			return rs;
+		ResultSet rs = stmt.executeQuery(query);
+		System.out.println("rs" + rs);
+		return rs;
 
 	}
 
-	public static boolean sendInsertIntoQuery(String table, String... values) throws SQLException
-	{
+	public static boolean sendInsertIntoQuery(String table, String... values)
+			throws SQLException {
 		String insertValues = "";
-		String query = "INSERT INTO " + table +" VALUES(";
-		
-		for(int i = 0; i < values.length; i++)
-		{
-			insertValues += "'" + values[i] + "'" + ((i==values.length-1)?"":",");
+		String query = "INSERT INTO " + table + " VALUES(";
+
+		for (int i = 0; i < values.length; i++) {
+			insertValues += "'" + values[i] + "'"
+					+ ((i == values.length - 1) ? "" : ",");
 		}
 		query += insertValues + ");";
 		System.out.println(query);
-		
-		
+
 		return stmt.execute(query);
-		
+
 	}
-	
-	public static boolean sendTransaktion(String query) throws SQLException{
+
+	public static boolean sendInsertIntoQueryID(String table,
+			String[] spaltennamen, String... values) throws SQLException {
+		String insertValues = "";
+		String query = "INSERT INTO " + table + " (";
+		for (int i = 0; i < spaltennamen.length; i++) {
+			insertValues += "'" + spaltennamen[i] + "'"
+					+ ((i == values.length - 1) ? "" : ",");
+		}
+		query += insertValues + " )" + " VALUES(";
+		for (int i = 0; i < values.length; i++) {
+			insertValues += "'" + values[i] + "'"
+					+ ((i == values.length - 1) ? "" : ",");
+		}
+		query += insertValues + ");";
+
+		return stmt.execute(query);
+	}
+
+	public static boolean sendTransaktion(String query) throws SQLException {
 		query = "BEGIN;" + query + ";COMMIT;";
 		return stmt.execute(query);
-		
-		
+
 	}
-	
+
 	/**
-	 * Takes a resultset and formats a string with the given columns on the console
-	 * @param rs The resultset to format
-	 * @param collums The collums to use
-	 * @throws SQLException when a database error occures
+	 * Takes a resultset and formats a string with the given columns on the
+	 * console
+	 * 
+	 * @param rs
+	 *            The resultset to format
+	 * @param collums
+	 *            The collums to use
+	 * @throws SQLException
+	 *             when a database error occures
 	 */
-	public static String[] toString(ResultSet rs,String... collums) throws SQLException{
-	
+	public static String[] toString(ResultSet rs, String... collums)
+			throws SQLException {
+
 		StringBuilder sb;
-		ArrayList<String> strings= new ArrayList<String>();
-		
-		while(rs.next())
-		{
+		ArrayList<String> strings = new ArrayList<String>();
+
+		while (rs.next()) {
 			sb = new StringBuilder();
 			sb.append(rs.getString(collums[0]));
-			for(int i=1;i<collums.length;i++)
-			{
+			for (int i = 1; i < collums.length; i++) {
 				sb.append(" | " + rs.getString(collums[i]));
 			}
-			
+
 			strings.add(sb.toString());
 		}
-		
+
 		String[] output = strings.toArray(new String[strings.size()]);
-		
+
 		return output;
 	}
-	
+
 	/**
 	 * This fills placeholders in a query with the actual data
-	 * @param query The query with placeholders
-	 * @param replacements The replacements. The first one replaces %1%, the second one %2% and so on
+	 * 
+	 * @param query
+	 *            The query with placeholders
+	 * @param replacements
+	 *            The replacements. The first one replaces %1%, the second one
+	 *            %2% and so on
 	 * @return Returns the query with replacements
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
-	public static String fillPlaceholders(String query, String... replacements) throws SQLException{
-		for(int i = 0; i<replacements.length; i++){
-			query = query.replaceAll("%"+(i+1) + "%", replacements[i]);
+	public static String fillPlaceholders(String query, String... replacements)
+			throws SQLException {
+		for (int i = 0; i < replacements.length; i++) {
+			query = query.replaceAll("%" + (i + 1) + "%", replacements[i]);
 		}
 		return query;
 	}
-	
+
 }

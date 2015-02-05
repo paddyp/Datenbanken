@@ -65,7 +65,7 @@ public class KundeFrame extends JFrame {
 
 	public KundeFrame() {
 		setSize(500, 700);
-		setLayout(new GridLayout(10, 2));
+		setLayout(new GridLayout(9, 2));
 		setBackground(new Color(50, 50, 50));
 
 		// Name eingeben
