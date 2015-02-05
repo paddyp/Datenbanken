@@ -221,7 +221,7 @@ public class KundeFrame extends JFrame {
 			}
 		});
 
-		// Kunde hinzufügen - Abbruch
+		// Kunde hinzufï¿½gen - Abbruch
 		abbrechen = new JButton();
 		abbrechen.setText("Abbrechen");
 		abbrechen.addActionListener(new ActionListener() {
