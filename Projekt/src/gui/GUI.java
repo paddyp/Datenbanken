@@ -20,6 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import userGUI.AlleVorstellungen;
+import userGUI.EigeneReservierungen;
 import adminGUI.AktuelleSaalbelegung;
 import adminGUI.AktuelleVorstellung;
 import adminGUI.Kunden;
@@ -34,7 +36,7 @@ public class GUI extends JFrame {
 	private JPanel panel;
 
 	private boolean angemeldet = false;
-	private boolean admin = false;
+	private boolean admin = true;
 
 	private JMenuBar menuBar;
 	
@@ -177,6 +179,9 @@ public class GUI extends JFrame {
 		
 		
 		// adminBereich
+		if(admin){
+			
+		
 		JLabel aktuelleVorstellungenLabel = new JLabel("aktuelle Vorstellungen");
 		anzeige[0].setLayout(new BorderLayout());
 		anzeige[0].add(aktuelleVorstellungenLabel,BorderLayout.NORTH);
@@ -206,8 +211,25 @@ public class GUI extends JFrame {
 		
 		JLabel uhrzeit = new JLabel("Kategoriebelegung pro Saal");
 		anzeige[5].add(uhrzeit);
-		
+		}
 		//
+		//user
+		if(angemeldet)
+		{
+			JLabel alleVorstellungen = new JLabel("Alle Vorstellungen");
+			anzeige[0].setLayout(new BorderLayout());
+			anzeige[0].add(alleVorstellungen, BorderLayout.NORTH);
+			AlleVorstellungen alleVorstellungenPanel = new AlleVorstellungen();
+			anzeige[0].add(alleVorstellungenPanel,BorderLayout.CENTER);
+			
+			JLabel reservierungen = new JLabel("Eigene Reservierungen");
+			anzeige[1].setLayout(new BorderLayout());
+			anzeige[1].add(reservierungen,BorderLayout.NORTH);
+			EigeneReservierungen eigeneReservierungen = new EigeneReservierungen();
+			anzeige[1].add(eigeneReservierungen,BorderLayout.CENTER);
+			
+		}
+		
 		
 		
 
