@@ -20,9 +20,11 @@ public class UpdateKundenDaten extends JPanel {
 	private JTextField passwortTF;
 	private JTextField geb;
 	private JTextField plz;
+	private JTextField strasse;
 	private JTextField ort;
 	private JTextField mobil;
 	private JTextField tel;
+	
 	
 	private JLabel emailL;
 	
@@ -47,6 +49,22 @@ public class UpdateKundenDaten extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				// Update
+		        //email         |     name     | vorname  | geburtsdatum |     passwort      |  plz   |          strasse           |    handy     |   festnetz 
+				try {
+					DBQuery.sendQuery(DBQuery.fillPlaceholders("UPDATE kunde SET name='%1%', vorname='%2%',geburtsdatum='%3%',passwort='%4%',plz='%5%',strasse='%6%',handy='%7%',festnetz='%8%' WHERE email='%9%' ", 
+							UpdateKundenDaten.this.nameTF.getText(), 
+							UpdateKundenDaten.this.vornameTF.getText(), 
+							UpdateKundenDaten.this.geb.getText(), 
+							UpdateKundenDaten.this.passwortTF.getText(), 
+							UpdateKundenDaten.this.plz.getText(),
+							UpdateKundenDaten.this.strasse.getText(),
+							UpdateKundenDaten.this.mobil.getText(),
+							UpdateKundenDaten.this.tel.getText(),
+							UpdateKundenDaten.this.email));
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				System.out.println("aendern");
 				
 			}
@@ -72,6 +90,8 @@ public class UpdateKundenDaten extends JPanel {
 		geb.setText(rs.getString("geburtsdatum"));
 		plz = new JTextField(6);
 		plz.setText(rs.getString("plz"));
+		strasse = new JTextField(10);
+		strasse.setText(rs.getString("strasse"));
 		// ort merge mit plz
 		//
 		mobil = new JTextField(6);
