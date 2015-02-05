@@ -239,7 +239,7 @@ public class GUI extends JFrame {
 			JLabel buchen = new JLabel("Buchen");
 			anzeige[3].setLayout(new BorderLayout());
 			anzeige[3].add(buchen,BorderLayout.NORTH);
-			KundeBuchen kundeBuchen = new KundeBuchen();
+			KundeBuchen kundeBuchen = new KundeBuchen("hans@peter.de");
 			anzeige[3].add(kundeBuchen,BorderLayout.CENTER);
 			
 			
