@@ -218,11 +218,6 @@ public class GUI extends JFrame {
 		//user
 		if(angemeldet)
 		{
-			JLabel alleVorstellungen = new JLabel("Alle Vorstellungen");
-			anzeige[0].setLayout(new BorderLayout());
-			anzeige[0].add(alleVorstellungen, BorderLayout.NORTH);
-			AlleVorstellungen alleVorstellungenPanel = new AlleVorstellungen();
-			anzeige[0].add(alleVorstellungenPanel,BorderLayout.CENTER);
 			
 			JLabel reservierungen = new JLabel("Eigene Reservierungen");
 			anzeige[1].setLayout(new BorderLayout());
@@ -241,6 +236,12 @@ public class GUI extends JFrame {
 			anzeige[3].add(buchen,BorderLayout.NORTH);
 			KundeBuchen kundeBuchen = new KundeBuchen("hans@peter.de");
 			anzeige[3].add(kundeBuchen,BorderLayout.CENTER);
+			
+			JLabel alleVorstellungen = new JLabel("Alle Vorstellungen");
+			anzeige[0].setLayout(new BorderLayout());
+			anzeige[0].add(alleVorstellungen, BorderLayout.NORTH);
+			AlleVorstellungen alleVorstellungenPanel = new AlleVorstellungen(kundeBuchen);
+			anzeige[0].add(alleVorstellungenPanel,BorderLayout.CENTER);
 			
 			
 			
