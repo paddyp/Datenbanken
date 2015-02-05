@@ -54,14 +54,11 @@ public class Reservieren extends JPanel{
 				// TODO Auto-generated method stub
 				int abfrage = JOptionPane.showConfirmDialog(null, "Wollen sie diese Reservieren stonieren ?");
 				if(abfrage == JOptionPane.YES_OPTION){
+				
 					
-					try {
 						DBQuery.sendTransaktion("DELETE FROM Platz_Reservierung WHERE reservierung_id =" + reservierungListe.getSelectedValue().getId());
 						DBQuery.sendTransaktion("DELETE FROM Reservierung WHERE id =" + reservierungListe.getSelectedValue().getId());
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+				
 					
 							
 				}

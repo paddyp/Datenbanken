@@ -73,7 +73,7 @@ public class DBQuery {
 		String query = "UPDATE " + table + " SET";
 		
 		for(int i =0;i < values.length;i++){
-			query += " " + values[i];
+			query += " " + values[i] + ((i == values.length - 1) ? "" : ",");
 		}
 		
 		query += " WHERE email='" + where + "'";
@@ -81,9 +81,23 @@ public class DBQuery {
 		return stmt.execute(query);
 	}
 
-	public static boolean sendTransaktion(String query) throws SQLException {
-		query = "BEGIN;" + query + ";COMMIT;";
-		return stmt.execute(query);
+	public static boolean sendTransaktion(String query){
+		query = "BEGIN;" + query + ";";
+		try {
+			 stmt.execute(query);
+			 stmt.execute("COMMIT;");
+			 return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				stmt.execute("ROLLBACK;");
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return false;
+		}
 
 	}
 

@@ -48,18 +48,13 @@ public class EigeneReservierungen extends JPanel{
 				int abfrage = JOptionPane.showConfirmDialog(null, "Wollen sie diese Reservieren stonieren ?");
 				if(abfrage == JOptionPane.YES_OPTION){
 					
-					try {
+					
 						DBQuery.sendTransaktion("DELETE FROM Platz_Reservierung WHERE reservierung_id =" + reservierungListe.getSelectedValue().getId());
 						DBQuery.sendTransaktion("DELETE FROM Reservierung WHERE id =" + reservierungListe.getSelectedValue().getId());
 						update();
 						JOptionPane.showMessageDialog(null, "Ihre Reservierung wurde gelöscht");
 						
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-						JOptionPane.showMessageDialog(null,"Beim löschen ist ein Fehler aufgetreten. Bitte wenden Sie sich an useren Support ");
-					}
-					
+				
 							
 				}
 			}

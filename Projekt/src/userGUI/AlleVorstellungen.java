@@ -54,7 +54,7 @@ public class AlleVorstellungen extends JPanel{
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if(!e.getValueIsAdjusting()){
-					
+					kundebuchen.update(vorstellungen.getSelectedValue());
 				}
 			}
 		});
