@@ -65,6 +65,7 @@ public class KundeFrame extends JFrame {
 
 	public KundeFrame() {
 		setSize(500, 700);
+		setTitle("Neuen Kunden hinzufügen");
 		setLayout(new GridLayout(9, 2));
 		setBackground(new Color(50, 50, 50));
 

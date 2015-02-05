@@ -35,6 +35,7 @@ public class PlaceFrame extends JFrame {
 	
 	public PlaceFrame(){
 		setSize(300,100);
+		setTitle("Neuen Platz hinzufügen");
 		
 		platz = new JPanel();
 		reiheLabel = new JLabel("Bezeichnung :");

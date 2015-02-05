@@ -35,6 +35,7 @@ public class KategorieFrame extends JFrame {
 
 	public KategorieFrame() {
 		setSize(300, 150);
+		setTitle("Neue Kategorie hinzufügen");
 		setLayout(new BorderLayout());
 
 		// Bezeichnung

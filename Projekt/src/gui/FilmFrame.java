@@ -46,6 +46,7 @@ public class FilmFrame extends JFrame {
 
 	public FilmFrame() {
 		setSize(500, 500);
+		setTitle("Neuen Film hinzufügen");
 		setLayout(new GridLayout(7, 2));
 
 		// Bewertung
