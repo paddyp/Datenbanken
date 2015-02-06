@@ -132,8 +132,7 @@ public class PerformanceFrame extends JFrame {
 				try {
 					String[] spaltennamen = { "zeit", "saal_bezeichnung" };
 					DBQuery.sendInsertIntoQueryID("Vorstellung", spaltennamen,
-							timestep, saalComboBox.getSelectedItem()
-									.toString());
+							timestep, saalComboBox.getSelectedItem().toString());
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -142,9 +141,15 @@ public class PerformanceFrame extends JFrame {
 
 				// Vorstellung_Film einfuegen
 				try {
-					ResultSet rsV = DBQuery.sendQuery(DBQuery.fillPlaceholders("SELECT id FROM vorstellung WHERE zeit"
-							+ "='%1%' AND saal_bezeichnung='%2%';", timestep, saalComboBox.getSelectedItem().toString()));
-					ResultSet rsF = DBQuery.sendQuery(DBQuery.fillPlaceholders("SELECT id FROM film WHERE titel = '%1%';", filmComboBox.getSelectedItem().toString()));
+					ResultSet rsV = DBQuery.sendQuery(DBQuery
+							.fillPlaceholders(
+									"SELECT id FROM vorstellung WHERE zeit"
+											+ "='%1%' AND saal_bezeichnung='%2%';",
+									timestep, saalComboBox.getSelectedItem()
+											.toString()));
+					ResultSet rsF = DBQuery.sendQuery(DBQuery.fillPlaceholders(
+							"SELECT id FROM film WHERE titel = '%1%';",
+							filmComboBox.getSelectedItem().toString()));
 					rsV.next();
 					rsF.next();
 					DBQuery.sendInsertIntoQuery("Vorstellung_Film",
@@ -152,6 +157,24 @@ public class PerformanceFrame extends JFrame {
 				} catch (SQLException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
+					funktioniert = false;
+				}
+				
+				// Vorstellung_Preisaufschlag einfuegen
+				try{
+					ResultSet rsV = DBQuery.sendQuery(DBQuery
+							.fillPlaceholders(
+									"SELECT id FROM vorstellung WHERE zeit"
+											+ "='%1%' AND saal_bezeichnung='%2%';",
+									timestep, saalComboBox.getSelectedItem()
+											.toString()));
+					rsV.next();
+					DBQuery.sendInsertIntoQuery("Vorstellung_Preisaufschlag",
+							preisaufschlagComboBox.getSelectedItem().toString(),
+							rsV.getString("id"));
+				} catch (SQLException e3) {
+					// TODO Auto-generated catch block
+					e3.printStackTrace();
 					funktioniert = false;
 				}
 
@@ -236,8 +259,9 @@ public class PerformanceFrame extends JFrame {
 		for (int i = 1; i < 13; i++) {
 			if (i < 10) {
 				monatComboBox.addItem(("0" + i));
-			}else {
-			monatComboBox.addItem("" + i);}
+			} else {
+				monatComboBox.addItem("" + i);
+			}
 		}
 
 		Calendar kalender = Calendar.getInstance();
