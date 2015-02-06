@@ -34,6 +34,9 @@ public class DBQuery {
 
 	}
 
+	public static boolean executeQuery(String query) throws SQLException{
+		return stmt.execute(query);
+	}
 	public static boolean sendInsertIntoQuery(String table, String... values)
 			throws SQLException {
 		String insertValues = "";

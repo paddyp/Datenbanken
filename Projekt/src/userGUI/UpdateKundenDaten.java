@@ -53,7 +53,7 @@ public class UpdateKundenDaten extends JPanel {
 				// Update
 		        //email         |     name     | vorname  | geburtsdatum |     passwort      |  plz   |          strasse           |    handy     |   festnetz 
 				try {
-					DBQuery.sendQuery(DBQuery.fillPlaceholders("UPDATE kunde SET name='%1%', vorname='%2%',geburtsdatum='%3%',passwort='%4%',plz='%5%',strasse='%6%',handy='%7%',festnetz='%8%' WHERE email='%9%' ", 
+					DBQuery.executeQuery(DBQuery.fillPlaceholders("UPDATE kunde SET name='%1%', vorname='%2%',geburtsdatum='%3%',passwort='%4%',plz='%5%',strasse='%6%',handy='%7%',festnetz='%8%' WHERE email='%9%' ", 
 							UpdateKundenDaten.this.nameTF.getText(), 
 							UpdateKundenDaten.this.vornameTF.getText(), 
 							UpdateKundenDaten.this.geb.getText(), 
