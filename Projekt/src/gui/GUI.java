@@ -159,6 +159,8 @@ public class GUI extends JFrame {
 							admin = false;
 							createView();
 							
+							
+							
 							anmelden.setVisible(false);
 							abmelden.setVisible(true);
 
@@ -413,7 +415,7 @@ public class GUI extends JFrame {
 		anzeige[2].setLayout(new BorderLayout());
 		anzeige[2].add(updateDaten, BorderLayout.NORTH);
 		UpdateKundenDaten updatekundendaten = new UpdateKundenDaten(
-				"hans@peter.de");
+				email);
 		anzeige[2].add(updatekundendaten, BorderLayout.CENTER);
 
 		JLabel buchen = new JLabel("Buchen");
