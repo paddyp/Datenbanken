@@ -74,16 +74,13 @@ public class Reservieren extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					createList(Integer.parseInt(sucheFeld.getText()));
+					try {
+						createList(sucheFeld.getText());
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					revalidate();
-					
-				} catch (SQLException fehler) {
-					// TODO Auto-generated catch block
-					fehler.printStackTrace();
-				
-				}
-				
 			}
 		});
 		add(reservierungListe,BorderLayout.CENTER);
@@ -91,7 +88,7 @@ public class Reservieren extends JPanel{
 		
 	}
 	
-	private void createList(int id) throws SQLException{
+	private void createList(String id) throws SQLException{
 		//TODO SQL Injection !!!!! sehr möglich :( muss noch unmöglich gemacht werden
 		
 		rs = DBQuery.sendQuery("select r.id,f.titel, f.fsk, v.saal_bezeichnung, v.zeit, "

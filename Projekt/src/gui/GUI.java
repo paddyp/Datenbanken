@@ -60,7 +60,8 @@ public class GUI extends JFrame {
 	private AktuelleVorstellung akvor = new AktuelleVorstellung(
 			saalkategoriebelegung);
 	private AktuelleSaalbelegung aktsaalbel = new AktuelleSaalbelegung();
-
+	private EigeneReservierungen eigeneReservierungen;
+	
 	private JMenuItem einstellungen;
 	private JMenuItem aktualisieren;
 	private JMenuItem neuerKunde;
@@ -114,6 +115,7 @@ public class GUI extends JFrame {
 				aktsaalbel.update();
 				kunde.update();
 				beliebterFilm.update();
+				
 
 				revalidate();
 
@@ -409,7 +411,7 @@ public class GUI extends JFrame {
 		JLabel reservierungen = new JLabel("Eigene Reservierungen");
 		anzeige[1].setLayout(new BorderLayout());
 		anzeige[1].add(reservierungen, BorderLayout.NORTH);
-		EigeneReservierungen eigeneReservierungen = new EigeneReservierungen(
+		eigeneReservierungen = new EigeneReservierungen(
 				email);
 		anzeige[1].add(eigeneReservierungen, BorderLayout.CENTER);
 

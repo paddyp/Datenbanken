@@ -53,8 +53,8 @@ public class AlleVorstellungen extends JPanel{
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				if(!e.getValueIsAdjusting()){
-					
+				if(!e.getValueIsAdjusting() && vorstellungen.getSelectedValue() != null){
+					kundebuchen.update(vorstellungen.getSelectedValue());
 				}
 			}
 		});
@@ -69,6 +69,7 @@ public class AlleVorstellungen extends JPanel{
 		vorstellungen.setListData(string);
 		add(vorstellungen,BorderLayout.CENTER);
 	}
+	
 	public void update(){
 		try {
 			createList();
