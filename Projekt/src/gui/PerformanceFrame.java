@@ -1,10 +1,8 @@
 package gui;
 
-import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -24,8 +22,9 @@ public class PerformanceFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel vorstellungPanel;
 	
+	private JPanel datumPanel;
+	private JLabel datumLabel;
 	private JPanel zeitPanel;
 	private JLabel zeitLabel;
 	private JComboBox<String> tagComboBox;
@@ -45,25 +44,43 @@ public class PerformanceFrame extends JFrame {
 	private JButton abbrechen;
 
 	public PerformanceFrame() {
-		setSize(500, 500);
-		setTitle("Neue Vorstellung hinzufügen");
+		setSize(400, 300);
+		setTitle("Neue Vorstellung hinzufï¿½gen");
 
-		vorstellungPanel = new JPanel();
-		setLayout(new BorderLayout());
+		setLayout(new GridLayout(10, 2));
 		
 		// Datum & Zeit
+		datumPanel = new JPanel();
+		datumPanel.setLayout(new GridLayout(1,3));
+		datumLabel = new JLabel("Datum:");
+		filmComboBox = new JComboBox<String>();
+		saalComboBox = new JComboBox<String>();
+		tagComboBox = new JComboBox<String>();
+		monatComboBox = new JComboBox<String>();
+		jahrComboBox = new JComboBox<String>();
+		stundeComboBox = new JComboBox<String>();
+		minuteComboBox = new JComboBox<String>();
 		zeitPanel = new JPanel();
-		zeitLabel = new JLabel("Datum & Zeit :");
+		zeitPanel.setLayout(new GridLayout(1, 2));
+		zeitLabel = new JLabel("Zeit:");
 
 		waehleDatumComboBox();
 		waehleZeitComboBox();
 		
-		zeitPanel.add(zeitLabel);
-		zeitPanel.add(tagComboBox);
-		zeitPanel.add(monatComboBox);
-		zeitPanel.add(jahrComboBox);
+		add(datumLabel);
+		
+		datumPanel.add(tagComboBox);
+		datumPanel.add(monatComboBox);
+		datumPanel.add(jahrComboBox);
+		
+		add(datumPanel);
+		
+		add(zeitLabel);
+		
 		zeitPanel.add(stundeComboBox);
 		zeitPanel.add(minuteComboBox);
+		
+		add(zeitPanel);
 		
 		// Film & Saal
 		filmSaalPanel = new JPanel();
@@ -78,13 +95,13 @@ public class PerformanceFrame extends JFrame {
 			e.printStackTrace();
 		}
 		
-		filmSaalPanel.add(filmLabel);
-		filmSaalPanel.add(filmComboBox);
-		filmSaalPanel.add(saalLabel);
-		filmSaalPanel.add(saalComboBox);
+		add(filmLabel);
+		add(filmComboBox);
+		add(saalLabel);
+		add(saalComboBox);
+		
 		
 		// Buttons - Hinzufuegen
-		knopfPanel = new JPanel();
 		speichern = new JButton("Hinzufuegen");
 		speichern.addActionListener(new ActionListener() {
 			
@@ -119,7 +136,7 @@ public class PerformanceFrame extends JFrame {
 							"Fehler!\nVorstellung konnte nicht hinzugefuegt werden!");
 				}
 
-				// Testausgabe, ob das Einfügen funktioniert hat
+				// Testausgabe, ob das Einfï¿½gen funktioniert hat
 				try {
 					ResultSet rs1 = DBQuery.sendQuery("SELECT * FROM Vorstellung");
 					DBQuery.toString(rs1, "id", "zeit", "saal_bezeichnung");
@@ -146,64 +163,14 @@ public class PerformanceFrame extends JFrame {
 			}
 		});
 
-		knopfPanel.add(speichern);
-		knopfPanel.add(abbrechen);
+		add(speichern);
+		add(abbrechen);
 		
-		vorstellungPanel.add(zeitPanel, BorderLayout.NORTH);
-		vorstellungPanel.add(filmSaalPanel, BorderLayout.CENTER);
-		vorstellungPanel.add(knopfPanel, BorderLayout.SOUTH);
-
-		add(vorstellungPanel);
-
-		addWindowListener(new WindowListener() {
-
-			@Override
-			public void windowOpened(WindowEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void windowClosing(WindowEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
 
 	}
 
 	private void waehleFilm() throws SQLException {
-		filmComboBox = new JComboBox<String>();
+		filmComboBox.removeAllItems();
 		ResultSet rs = DBQuery.sendQuery("SELECT * FROM film");
 		while (rs.next()) {
 			filmComboBox.addItem(rs.getString("titel"));
@@ -211,7 +178,7 @@ public class PerformanceFrame extends JFrame {
 	}
 
 	private void waehleSaal() throws SQLException {
-		saalComboBox = new JComboBox<String>();
+		saalComboBox.removeAllItems();
 		ResultSet rs = DBQuery.sendQuery("SELECT * FROM saal");
 		while (rs.next()) {
 			saalComboBox.addItem(rs.getString("bezeichnung"));
@@ -219,7 +186,7 @@ public class PerformanceFrame extends JFrame {
 	}
 
 	private void waehleDatumComboBox() {
-		tagComboBox = new JComboBox<String>();
+		tagComboBox.removeAllItems();
 		for (int i = 1; i < 32; i++) {
 			if (i < 10) {
 				tagComboBox.addItem("0" + i);
@@ -228,20 +195,20 @@ public class PerformanceFrame extends JFrame {
 			}
 
 		}
-		monatComboBox = new JComboBox<String>();
+		monatComboBox.removeAllItems();
 		for (int i = 1; i < 13; i++) {
 			monatComboBox.addItem("" + i);
 		}
 
 		Calendar kalender = Calendar.getInstance();
-		jahrComboBox = new JComboBox<String>();
+		jahrComboBox.removeAllItems();
 		for (int i = kalender.get(Calendar.YEAR); i < kalender.get(Calendar.YEAR) + 100; i++) {
 			jahrComboBox.addItem("" + i);
 		}
 	}
 
 	private void waehleZeitComboBox() {
-		stundeComboBox = new JComboBox<String>();
+		stundeComboBox.removeAllItems();
 		for (int i = 0; i < 25; i++) {
 			if (i < 10) {
 				stundeComboBox.addItem("0" + i);
@@ -250,7 +217,7 @@ public class PerformanceFrame extends JFrame {
 			}
 		}
 
-		minuteComboBox = new JComboBox<String>();
+		minuteComboBox.removeAllItems();
 		for (int i = 0; i < 60; i++) {
 			if (i < 10) {
 				minuteComboBox.addItem("0" + i);
