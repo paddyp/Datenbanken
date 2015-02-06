@@ -69,7 +69,6 @@ public class FilmFrame extends JFrame {
 
 
 		// Genre
-
 		try {
 			waehleGenre();
 		} catch (SQLException e2) {
@@ -191,7 +190,7 @@ public class FilmFrame extends JFrame {
 		genreComboBox = new JComboBox<String>();
 		ResultSet rs = DBQuery.sendQuery("SELECT * FROM genre");
 		while (rs.next()) {
-			genreComboBox.addItem(rs.getString("titel"));
+			genreComboBox.addItem(rs.getString("name"));
 		}
 	}
 

@@ -22,7 +22,6 @@ public class PlaceFrame extends JFrame {
 	private JLabel saalLabel;
 	private JComboBox<String> saalComboBox;
 	
-	private JPanel platzPanel;
 	private JLabel reiheLabel;
 	private JTextField reiheTextField;
 	private JLabel nummerLabel;
@@ -36,7 +35,7 @@ public class PlaceFrame extends JFrame {
 	
 	public PlaceFrame(){
 		setSize(300,100);
-		setTitle("Neuen Platz hinzufügen");
+		setTitle("Neuen Platz hinzufuegen");
 		
 		// Saal
 		saalLabel = new JLabel("Saal :");
@@ -50,17 +49,16 @@ public class PlaceFrame extends JFrame {
 		add(saalComboBox);
 		
 		// Reihe & Nummer
-		platzPanel = new JPanel();
 		reiheLabel = new JLabel("Reihe :");
 		reiheTextField = new JTextField(5);
 		nummerLabel = new JLabel("Nummer :");
 		nummerTextField = new JTextField(5);
 		
-		platzPanel.add(reiheLabel);
-		platzPanel.add(reiheTextField);
-		platzPanel.add(nummerLabel);
-		platzPanel.add(nummerTextField);
-		
+//		platzPanel.add(reiheLabel);
+//		platzPanel.add(reiheTextField);
+//		platzPanel.add(nummerLabel);
+//		platzPanel.add(nummerTextField);
+//		
 		// Kategorie
 		kategorieLabel = new JLabel("Kategorie :");
 		kategorieComboBox = new JComboBox<String>();
@@ -75,7 +73,7 @@ public class PlaceFrame extends JFrame {
 			e2.printStackTrace();
 		}
 		
-		platzPanel.add(kategorieComboBox);
+//		platzPanel.add(kategorieComboBox);
 		
 		
 		speichern = new JButton("Hinzufuegen");
@@ -97,7 +95,7 @@ public class PlaceFrame extends JFrame {
 		
 			
 		
-		add(platzPanel);
+//		add(platzPanel);
 		
 		addWindowListener(new WindowListener() {
 			
