@@ -142,16 +142,13 @@ public class PerformanceFrame extends JFrame {
 
 				// Vorstellung_Film einfuegen
 				try {
-					System.out.println(DBQuery.fillPlaceholders("SELECT id FROM vorstellung WHERE zeit"
-							+ "='%1%' AND saal_bezeichnung='%2%';", timestep, saalComboBox.getSelectedItem().toString()));
 					ResultSet rsV = DBQuery.sendQuery(DBQuery.fillPlaceholders("SELECT id FROM vorstellung WHERE zeit"
 							+ "='%1%' AND saal_bezeichnung='%2%';", timestep, saalComboBox.getSelectedItem().toString()));
-					ResultSet rsF = DBQuery
-							.sendQuery("SELECT id FROM film WHERE titel = "
-									+ filmComboBox.getSelectedItem().toString()
-									+ ";");
+					ResultSet rsF = DBQuery.sendQuery(DBQuery.fillPlaceholders("SELECT id FROM film WHERE titel = '%1%';", filmComboBox.getSelectedItem().toString()));
+					rsV.next();
+					rsF.next();
 					DBQuery.sendInsertIntoQuery("Vorstellung_Film",
-							rsV.toString(), rsF.toString());
+							rsV.getString("id"), rsF.getString("id"));
 				} catch (SQLException e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
