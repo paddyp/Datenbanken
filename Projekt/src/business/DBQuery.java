@@ -1,7 +1,6 @@
 package business;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -106,9 +105,21 @@ public class DBQuery {
 
 		while (rs.next()) {
 			sb = new StringBuilder();
-			sb.append(rs.getString(collums[0]));
+			
+			if((rs.getString(collums[0]) == null)){
+				sb.append("0");
+				System.out.println("da steht null");
+			}else{
+				sb.append(rs.getString(collums[0]));
+			}
+			//sb.append(rs.getString(((rs.getString(collums[0]).equalsIgnoreCase("null"))?"0":rs.getString(collums[0]))));
 			for (int i = 1; i < collums.length; i++) {
-				sb.append(" | " + rs.getString(collums[i]));
+				if((rs.getString(collums[i]) == null)){
+					sb.append( " | " + "0");
+					System.out.println("da steht null");
+				}else{
+					sb.append(" | " + rs.getString(collums[i]));
+				}
 			}
 
 			strings.add(sb.toString());
