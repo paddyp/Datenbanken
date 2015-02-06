@@ -1,9 +1,8 @@
 package gui;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -11,7 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import business.DBQuery;
@@ -19,137 +18,127 @@ import business.DBQuery;
 public class PlaceFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JLabel saalLabel;
 	private JComboBox<String> saalComboBox;
-	
+
 	private JLabel reiheLabel;
 	private JTextField reiheTextField;
 	private JLabel nummerLabel;
 	private JTextField nummerTextField;
-	
-	private JLabel kategorieLabel;
+
 	private JComboBox<String> kategorieComboBox;
-	
+
 	private JButton speichern;
 	private JButton abbrechen;
-	
-	public PlaceFrame(){
-		setSize(300,100);
+
+	public PlaceFrame() {
+		setSize(300, 200);
 		setTitle("Neuen Platz hinzufuegen");
-		
+		setLayout(new GridLayout(5, 2));
+
 		// Saal
-		saalLabel = new JLabel("Saal :");
 		try {
 			waehleSaal();
 		} catch (SQLException e3) {
 			// TODO Auto-generated catch block
 			e3.printStackTrace();
 		}
-		add(saalLabel);
+
+		add(new JLabel("Saal :"));
 		add(saalComboBox);
-		
+
 		// Reihe & Nummer
 		reiheLabel = new JLabel("Reihe :");
 		reiheTextField = new JTextField(5);
 		nummerLabel = new JLabel("Nummer :");
 		nummerTextField = new JTextField(5);
-		
-//		platzPanel.add(reiheLabel);
-//		platzPanel.add(reiheTextField);
-//		platzPanel.add(nummerLabel);
-//		platzPanel.add(nummerTextField);
-//		
+
+		add(reiheLabel);
+		add(reiheTextField);
+		add(nummerLabel);
+		add(nummerTextField);
+
 		// Kategorie
-		kategorieLabel = new JLabel("Kategorie :");
-		kategorieComboBox = new JComboBox<String>();
-		
 		try {
-			ResultSet rs = DBQuery.sendQuery("SELECT * FROM Sitzplatzkategorie");
-			while(rs.next()){
-				kategorieComboBox.addItem(rs.getString("bezeichnung"));
-			}
+			waehleKategorie();
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-		
-//		platzPanel.add(kategorieComboBox);
-		
-		
+
+		add(new JLabel("Kategorie :"));
+		add(kategorieComboBox);
+
+		// Buttons
 		speichern = new JButton("Hinzufuegen");
 		speichern.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 				try {
-					DBQuery.sendInsertIntoQuery("platz", reiheTextField.getText(), nummerTextField.getText());
+					// Platz einfuegen
+					DBQuery.sendInsertIntoQuery("Platz", reiheTextField
+							.getText(), nummerTextField.getText(), saalComboBox
+							.getSelectedItem().toString(), kategorieComboBox
+							.getSelectedItem().toString());
+
+					// Platz_Reservierung einfuegen
+					String[] spaltennamen = { "platz_reihe", "platz_nummer",
+							"platz_saal_bezeichnung" };
+					DBQuery.sendInsertIntoQueryID("Platz_Reservierung",
+							spaltennamen, reiheTextField.getText(),
+							nummerTextField.getText(), saalComboBox
+									.getSelectedItem().toString());
+
+					JOptionPane.showMessageDialog(null,
+							"Platz wurde hinzugefuegt!");
+
+					// Zuruecksetzten aller Felder
+					reiheTextField.setText("");
+					nummerTextField.setText("");
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+
+					JOptionPane.showMessageDialog(null,
+							"Fehler!\nPlatz konnte nicht hinzugefuegt werden!");
+				}
+
+				// Testausgabe, ob das Einfuegen funktioniert hat
+				try {
+					ResultSet rs1 = DBQuery.sendQuery("SELECT * FROM Platz");
+					DBQuery.toString(rs1, "reihe", "nummer",
+							"saal_bezeichnung", "kategorie_bezeichnung");
+
+					ResultSet rs2 = DBQuery
+							.sendQuery("SELECT * FROM Platz_Reservierung");
+					DBQuery.toString(rs2, "reservierung_id", "platz_reihe",
+							"platz_nummer", "platz_saal_bezeichnung");
+
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+
 			}
 		});
-		
-			
-		
-//		add(platzPanel);
-		
-		addWindowListener(new WindowListener() {
-			
+
+		abbrechen = new JButton("Abbrechen");
+		abbrechen.addActionListener(new ActionListener() {
+
 			@Override
-			public void windowOpened(WindowEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowIconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowDeiconified(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowDeactivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowClosing(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void windowActivated(WindowEvent e) {
-				// TODO Auto-generated method stub
-				try {
-					setReihePlatz();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
+				dispose();
 			}
 		});
+
+		add(speichern);
+		add(abbrechen);
 		
 	}
-	
+
 	private void waehleSaal() throws SQLException {
 		// TODO Auto-generated method stub
 		saalComboBox = new JComboBox<String>();
@@ -159,19 +148,13 @@ public class PlaceFrame extends JFrame {
 		}
 	}
 
-	private void setReihePlatz() throws SQLException{
-		
-		ResultSet rs = DBQuery.sendQuery("SELECT reihe FROM platz");
-//		reiheCB = new JComboBox<String>();
-//		
-//		while(rs.next())
-//		{
-//			reiheCB.addItem(rs.getString(1));
-//		}
-		
-		
-		
+	private void waehleKategorie() throws SQLException {
+		// TODO Auto-generated method stub
+		kategorieComboBox = new JComboBox<String>();
+		ResultSet rs = DBQuery.sendQuery("SELECT * FROM Sitzplatzkategorie");
+		while (rs.next()) {
+			kategorieComboBox.addItem(rs.getString("bezeichnung"));
+		}
 	}
-	
-	
+
 }

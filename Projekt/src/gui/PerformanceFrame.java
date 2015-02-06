@@ -33,13 +33,11 @@ public class PerformanceFrame extends JFrame {
 	private JComboBox<String> stundeComboBox;
 	private JComboBox<String> minuteComboBox;
 
-	private JPanel filmSaalPanel;
 	private JLabel filmLabel;
 	private JLabel saalLabel;
 	private JComboBox<String> filmComboBox;
 	private JComboBox<String> saalComboBox;
 
-	private JPanel knopfPanel;
 	private JButton speichern;
 	private JButton abbrechen;
 
@@ -83,7 +81,6 @@ public class PerformanceFrame extends JFrame {
 		add(zeitPanel);
 		
 		// Film & Saal
-		filmSaalPanel = new JPanel();
 		filmLabel = new JLabel("Film :");
 		saalLabel = new JLabel("Saal :");
 		

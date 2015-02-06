@@ -11,7 +11,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import business.DBQuery;
@@ -133,7 +132,7 @@ public class FilmFrame extends JFrame {
 					JOptionPane.showMessageDialog(null,
 							"Film wurde hinzugefuegt!");
 
-					// Zur�cksetzten aller Felder
+					// Zuruecksetzten aller Felder
 					bewertungTextField.setText("");
 					titelTextField.setText("");
 					fskTextField.setText("");
@@ -147,7 +146,7 @@ public class FilmFrame extends JFrame {
 							"Fehler!\nFilm konnte nicht hinzugefuegt werden!");
 				}
 
-				// Testausgabe, ob das Einf�gen funktioniert hat
+				// Testausgabe, ob das Einfuegen funktioniert hat
 				try {
 					ResultSet rs1 = DBQuery.sendQuery("SELECT * FROM Film");
 					DBQuery.toString(rs1, "id", "bewertung", "titel", "fsk",
