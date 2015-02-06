@@ -23,7 +23,7 @@ public class FilmFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JLabel idLabel;
 	private JTextField idTextField;
-	
+
 	private JLabel bewertungLabel;
 	private JTextField bewertungTextField;
 
@@ -49,18 +49,16 @@ public class FilmFrame extends JFrame {
 		// ID
 		idLabel = new JLabel("Film-ID :");
 		idTextField = new JTextField(2);
-		
+
 		add(idLabel);
 		add(idTextField);
-		
-		
+
 		// Bewertung
 		bewertungLabel = new JLabel("Bewertung :");
 		bewertungTextField = new JTextField(2);
 
 		add(bewertungLabel);
 		add(bewertungTextField);
-
 
 		// Titel
 		titelLabel = new JLabel("Titel :");
@@ -69,14 +67,12 @@ public class FilmFrame extends JFrame {
 		add(titelLabel);
 		add(titelTextField);
 
-
 		// FSK
 		fskLabel = new JLabel("FSK :");
 		fskTextField = new JTextField(2);
 
 		add(fskLabel);
 		add(fskTextField);
-
 
 		// Genre
 		try {
@@ -101,7 +97,6 @@ public class FilmFrame extends JFrame {
 		add(darstellerLabel);
 		add(darstellerTextField);
 
-
 		// Buttons
 		speichern = new JButton("Hinzufuegen");
 		speichern.addActionListener(new ActionListener() {
@@ -110,17 +105,24 @@ public class FilmFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 
+				boolean funktioniert = true;
+
+				// Film einfuegen
 				try {
-					// Film einfuegen
-					DBQuery.sendInsertIntoQuery("Film", 
-							idTextField.getText(),
+					DBQuery.sendInsertIntoQuery("Film", idTextField.getText(),
 							bewertungTextField.getText(),
 							titelTextField.getText(), fskTextField.getText(),
 							genreComboBox.getSelectedItem().toString());
-
-					// Hauptdarsteller einfuegen
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				// Hauptdarsteller einfuegen
+				try {
 					String[] alleDarsteller = darstellerTextField.getText()
 							.split(",");
+
 					for (int i = 0; i < alleDarsteller.length; i++) {
 						String[] darstellerName = alleDarsteller[i].split(" ");
 						DBQuery.sendInsertIntoQuery("Hauptdarsteller",
@@ -128,7 +130,17 @@ public class FilmFrame extends JFrame {
 								darstellerName[0].toString());
 					}
 
-					// Film_Hauptdarsteller einfuegen
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+					funktioniert = false;
+				}
+
+				// Film_Hauptdarsteller einfuegen
+				try {
+					String[] alleDarsteller = darstellerTextField.getText()
+							.split(",");
+
 					for (int i = 0; i < alleDarsteller.length; i++) {
 						String[] darstellerName = alleDarsteller[i].split(" ");
 						DBQuery.sendInsertIntoQuery("Film_Hauptdarsteller",
@@ -136,20 +148,23 @@ public class FilmFrame extends JFrame {
 								darstellerName[1].toString(),
 								darstellerName[0].toString());
 					}
+				} catch (SQLException e3) {
+					// TODO Auto-generated catch block
+					e3.printStackTrace();
+					funktioniert = false;
+				}
 
+				if (funktioniert = true) {
 					JOptionPane.showMessageDialog(null,
 							"Film wurde hinzugefuegt!");
 
-					// Zuruecksetzten aller Felder
+					// Zuruecksetzten aller Eingebafelder
+					idTextField.setText("");
 					bewertungTextField.setText("");
 					titelTextField.setText("");
 					fskTextField.setText("");
 					darstellerTextField.setText("");
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-
+				} else {
 					JOptionPane.showMessageDialog(null,
 							"Fehler!\nFilm konnte nicht hinzugefuegt werden!");
 				}
@@ -169,9 +184,10 @@ public class FilmFrame extends JFrame {
 					DBQuery.toString(rs3, "film_id", "hauptdarsteller_name",
 							"hauptdarsteller_vorname");
 
-				} catch (SQLException e1) {
+				} catch (SQLException e4) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					e4.printStackTrace();
+					funktioniert = false;
 				}
 
 			}
