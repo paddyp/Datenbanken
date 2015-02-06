@@ -28,6 +28,7 @@ import adminGUI.AktuelleSaalbelegung;
 import adminGUI.AktuelleVorstellung;
 import adminGUI.Kunden;
 import adminGUI.Reservieren;
+import adminGUI.SaalKategorieBelegung;
 import adminGUI.beliebtheitFilm;
 import business.DBQuery;
 
@@ -53,6 +54,7 @@ public class GUI extends JFrame {
 	private AktuelleSaalbelegung aktsaalbel = new AktuelleSaalbelegung();
 	private Kunden kunde = new Kunden(reservierenPanel);
 	private beliebtheitFilm beliebterFilm = new beliebtheitFilm();
+	private SaalKategorieBelegung saalkategoriebelegung = new SaalKategorieBelegung();
 	
 	
 	private JMenuItem einstellungen;
@@ -75,7 +77,7 @@ public class GUI extends JFrame {
 	
 	public GUI() {
 		setSize(new Dimension(1000, 1000));
-		setTitle("Kino Datenbank Benutzungsoberfläche");
+		setTitle("Kino Datenbank Benutzungsoberflï¿½che");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		// Erzeugen der einzelnen Frames
@@ -212,7 +214,9 @@ public class GUI extends JFrame {
 	anzeige[4].add(beliebterFilm, BorderLayout.CENTER);
 		
 		JLabel uhrzeit = new JLabel("Kategoriebelegung pro Saal");
-		anzeige[5].add(uhrzeit);
+		anzeige[5].setLayout(new BorderLayout());
+		anzeige[5].add(uhrzeit, BorderLayout.NORTH);
+		anzeige[5].add(saalkategoriebelegung, BorderLayout.CENTER);
 		}
 		//
 		//user
