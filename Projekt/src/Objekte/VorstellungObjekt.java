@@ -39,4 +39,8 @@ public class VorstellungObjekt {
 		this.titel = titel;
 	}
 	
+	public String toString(){
+		return id + " | " + zeit + " | " + saal + " | " + titel;
+	}
+	
 }

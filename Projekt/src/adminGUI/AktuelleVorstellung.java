@@ -8,16 +8,18 @@ import java.util.ArrayList;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
+import Objekte.VorstellungObjekt;
 import business.DBQuery;
 
 
 public class AktuelleVorstellung extends JPanel{
-	private JList<String> vorstellungen;
+	private JList<VorstellungObjekt> vorstellungen;
 	
 	private ResultSet rs;
 	private int anzahl;
 	
 	public AktuelleVorstellung(){
+		vorstellungen = new JList<VorstellungObjekt>();
 		setLayout(new BorderLayout());
 		rs = null;
 		
@@ -37,9 +39,19 @@ public class AktuelleVorstellung extends JPanel{
 				+ "from aktuellevorstellungen "
 				+ ";");
 		
-		vorstellungen = new JList<String>();
+		
+		ArrayList<VorstellungObjekt> liste= new ArrayList<VorstellungObjekt>();
+		
+		while(rs.next())
+		{
+			liste.add(new VorstellungObjekt(rs.getString("id"), rs.getString("zeit"), rs.getString("saal_bezeichnung"), rs.getString("titel")));
+		}
+		
+		VorstellungObjekt[] string = liste.toArray(new VorstellungObjekt[0]);
+		
+		vorstellungen.setListData(string);
 	
-		vorstellungen.setListData(DBQuery.toString(rs, "id","zeit","saal_bezeichnung","titel"));
+		
 		add(vorstellungen,BorderLayout.CENTER);
 	}
 	public void update(){
