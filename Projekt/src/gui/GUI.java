@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.BorderFactory;
@@ -19,6 +20,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import org.postgresql.util.PSQLException;
 
 import userGUI.AlleVorstellungen;
 import userGUI.EigeneReservierungen;
@@ -75,6 +78,8 @@ public class GUI extends JFrame {
 
 	private JButton anmelden;
 	private JButton abmelden;
+	
+	private String email;
 
 	public GUI() {
 		setSize(new Dimension(1000, 1000));
@@ -100,7 +105,6 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				reservierenPanel.update();
 				akvor.update();
 				aktsaalbel.update();
@@ -135,14 +139,57 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				angemeldet = true;
-				anmelden.setVisible(false);
-				abmelden.setVisible(true);
+				if(benutzername.getText().equalsIgnoreCase("admin") && new String(passwort.getPassword()).equalsIgnoreCase("admin")){
+					admin = true;
+					angemeldet = false;
+					createView();
+				}else{
+					ResultSet rs;
+				try {
+					System.out.println(benutzername.getText());
+					rs = DBQuery.sendQuery(DBQuery.fillPlaceholders("SELECT passwort FROM kunde WHERE email='%1%'", benutzername.getText()));
+					rs.next();
+					try{
+						String passwort  = rs.getString("passwort");
+						System.out.println("GUI" + new String(GUI.this.passwort.getPassword()));
+						System.out.println("passwort" + passwort);
+						if(passwort.equals(new String(GUI.this.passwort.getPassword()))){
+							System.out.println("angemeldet");
+							angemeldet = true;
+							admin = false;
+							createView();
+							
+							anmelden.setVisible(false);
+							abmelden.setVisible(true);
 
-				benutzerLabel.setVisible(false);
-				benutzername.setVisible(false);
-				passwortLabel.setVisible(false);
-				passwort.setVisible(false);
+							benutzerLabel.setVisible(false);
+							benutzername.setVisible(false);
+							passwortLabel.setVisible(false);
+							GUI.this.passwort.setVisible(false);
+						}else{
+							JOptionPane.showMessageDialog(null, "Das Passwort ist falsch");
+						}
+					
+					}catch(PSQLException e1)
+					{
+						JOptionPane.showMessageDialog(null, "Benutzername ist falsch");
+						return;
+					}
+				
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					
+					e1.printStackTrace();
+					
+					
+				}
+				
+					
+				}
+				
+				
+				
+		
 
 				getContentPane().repaint();
 
@@ -179,75 +226,10 @@ public class GUI extends JFrame {
 			anzeige[i].setBorder(BorderFactory.createLineBorder(Color.black));
 
 		}
+		
+		createView();
 
-		// adminBereich
-		if (admin) {
-
-			JLabel aktuelleVorstellungenLabel = new JLabel(
-					"aktuelle Vorstellungen");
-			anzeige[0].setLayout(new BorderLayout());
-			anzeige[0].add(aktuelleVorstellungenLabel, BorderLayout.NORTH);
-			anzeige[0].add(akvor, BorderLayout.CENTER);
-
-			JLabel saalBelegung = new JLabel(
-					"Saalbelegung");
-			anzeige[1].setLayout(new BorderLayout());
-			anzeige[1].add(saalBelegung, BorderLayout.NORTH);
-			anzeige[1].add(aktsaalbel, BorderLayout.CENTER);
-
-			JLabel reservieren = new JLabel("reservieren");
-			anzeige[3].setLayout(new BorderLayout());
-			anzeige[3].add(reservieren, BorderLayout.NORTH);
-			anzeige[3].add(reservierenPanel, BorderLayout.CENTER);
-
-			JLabel kundeAnzeigen = new JLabel("Kunde suchen");
-			anzeige[2].setLayout(new BorderLayout());
-			anzeige[2].add(kundeAnzeigen, BorderLayout.NORTH);
-			anzeige[2].add(kunde, BorderLayout.CENTER);
-
-			JLabel beliebtesterFilm = new JLabel("Filme nach Beliebtheit sortiert");
-			anzeige[4].setLayout(new BorderLayout());
-			anzeige[4].add(beliebtesterFilm, BorderLayout.NORTH);
-			anzeige[4].add(beliebterFilm, BorderLayout.CENTER);
-
-			JLabel uhrzeit = new JLabel("Kategoriebelegung (Vorstellung wählen) [belegt|gesamt|kategorie]");
-			anzeige[5].setLayout(new BorderLayout());
-			anzeige[5].add(uhrzeit, BorderLayout.NORTH);
-			anzeige[5].add(saalkategoriebelegung, BorderLayout.CENTER);
-		}
-		//
-		// user
-		if (angemeldet) {
-
-			JLabel reservierungen = new JLabel("Eigene Reservierungen");
-			anzeige[1].setLayout(new BorderLayout());
-			anzeige[1].add(reservierungen, BorderLayout.NORTH);
-			EigeneReservierungen eigeneReservierungen = new EigeneReservierungen(
-					"hans@peter.de");
-			anzeige[1].add(eigeneReservierungen, BorderLayout.CENTER);
-
-			JLabel updateDaten = new JLabel("Eigene angaben ändern");
-			anzeige[2].setLayout(new BorderLayout());
-			anzeige[2].add(updateDaten, BorderLayout.NORTH);
-			UpdateKundenDaten updatekundendaten = new UpdateKundenDaten(
-					"hans@peter.de");
-			anzeige[2].add(updatekundendaten, BorderLayout.CENTER);
-
-			JLabel buchen = new JLabel("Buchen");
-			anzeige[3].setLayout(new BorderLayout());
-			anzeige[3].add(buchen, BorderLayout.NORTH);
-			KundeBuchen kundeBuchen = new KundeBuchen("hans@peter.de");
-			anzeige[3].add(kundeBuchen, BorderLayout.CENTER);
-
-			JLabel alleVorstellungen = new JLabel("Alle Vorstellungen");
-			anzeige[0].setLayout(new BorderLayout());
-			anzeige[0].add(alleVorstellungen, BorderLayout.NORTH);
-			AlleVorstellungen alleVorstellungenPanel = new AlleVorstellungen(
-					kundeBuchen);
-			anzeige[0].add(alleVorstellungenPanel, BorderLayout.CENTER);
-
-		}
-
+		
 		for (int i = 0; i < anzeige.length; i++) {
 			panel.add(anzeige[i]);
 		}
@@ -257,7 +239,6 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				clientFrame.setVisible(true);
 			}
 
@@ -268,7 +249,6 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				movieFrame.setVisible(true);
 
 			}
@@ -279,7 +259,6 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				kategorieFrame.setVisible(true);
 
 			}
@@ -290,14 +269,12 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				String name = JOptionPane
 						.showInputDialog("Saal_Bezeichnung :");
 				if (name != null && name != "") {
 					try {
 						DBQuery.sendInsertIntoQuery("Saal", name);
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
@@ -310,7 +287,6 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				placeFrame.setVisible(true);
 
 			}
@@ -321,7 +297,6 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				performanceFrame.setVisible(true);
 
 			}
@@ -332,7 +307,6 @@ public class GUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				preisaufschlagFrame.setVisible(true);
 
 			}
@@ -387,6 +361,95 @@ public class GUI extends JFrame {
 		add(panel);
 
 		setVisible(true);
+	}
+	
+	private void createAdminView(){
+
+
+		JLabel aktuelleVorstellungenLabel = new JLabel(
+				"aktuelle Vorstellungen");
+	
+		
+		anzeige[0].setLayout(new BorderLayout());
+		anzeige[0].add(aktuelleVorstellungenLabel, BorderLayout.NORTH);
+		anzeige[0].add(akvor, BorderLayout.CENTER);
+
+		JLabel saalBelegung = new JLabel(
+				"Saalbelegung");
+		anzeige[1].setLayout(new BorderLayout());
+		anzeige[1].add(saalBelegung, BorderLayout.NORTH);
+		anzeige[1].add(aktsaalbel, BorderLayout.CENTER);
+
+		JLabel reservieren = new JLabel("reservieren");
+		anzeige[3].setLayout(new BorderLayout());
+		anzeige[3].add(reservieren, BorderLayout.NORTH);
+		anzeige[3].add(reservierenPanel, BorderLayout.CENTER);
+
+		JLabel kundeAnzeigen = new JLabel("Kunde suchen");
+		anzeige[2].setLayout(new BorderLayout());
+		anzeige[2].add(kundeAnzeigen, BorderLayout.NORTH);
+		anzeige[2].add(kunde, BorderLayout.CENTER);
+
+		JLabel beliebtesterFilm = new JLabel("Filme nach Beliebtheit sortiert");
+		anzeige[4].setLayout(new BorderLayout());
+		anzeige[4].add(beliebtesterFilm, BorderLayout.NORTH);
+		anzeige[4].add(beliebterFilm, BorderLayout.CENTER);
+
+		JLabel uhrzeit = new JLabel("Kategoriebelegung (Vorstellung wählen) [belegt|gesamt|kategorie]");
+		anzeige[5].setLayout(new BorderLayout());
+		anzeige[5].add(uhrzeit, BorderLayout.NORTH);
+		anzeige[5].add(saalkategoriebelegung, BorderLayout.CENTER);
+	}
+	
+	private void createUserView(String email){
+		JLabel reservierungen = new JLabel("Eigene Reservierungen");
+		anzeige[1].setLayout(new BorderLayout());
+		anzeige[1].add(reservierungen, BorderLayout.NORTH);
+		EigeneReservierungen eigeneReservierungen = new EigeneReservierungen(
+				"hans@peter.de");
+		anzeige[1].add(eigeneReservierungen, BorderLayout.CENTER);
+
+		JLabel updateDaten = new JLabel("Eigene angaben ändern");
+		anzeige[2].setLayout(new BorderLayout());
+		anzeige[2].add(updateDaten, BorderLayout.NORTH);
+		UpdateKundenDaten updatekundendaten = new UpdateKundenDaten(
+				"hans@peter.de");
+		anzeige[2].add(updatekundendaten, BorderLayout.CENTER);
+
+		JLabel buchen = new JLabel("Buchen");
+		anzeige[3].setLayout(new BorderLayout());
+		anzeige[3].add(buchen, BorderLayout.NORTH);
+		KundeBuchen kundeBuchen = new KundeBuchen(email);
+		anzeige[3].add(kundeBuchen, BorderLayout.CENTER);
+
+		JLabel alleVorstellungen = new JLabel("Alle Vorstellungen");
+		anzeige[0].setLayout(new BorderLayout());
+		anzeige[0].add(alleVorstellungen, BorderLayout.NORTH);
+		AlleVorstellungen alleVorstellungenPanel = new AlleVorstellungen(
+				kundeBuchen);
+		anzeige[0].add(alleVorstellungenPanel, BorderLayout.CENTER);
+	}
+	
+	private void createView(){
+		// adminBereich
+
+		for(int i = 0; i < anzeige.length; i++){
+			anzeige[i].removeAll();
+		}
+		
+				if (admin) {
+					createAdminView();
+				
+				}
+				//
+				// user
+				else if (angemeldet) {
+					createUserView(benutzername.getText());
+				
+				}else{
+					//TODO createGuestView
+				}
+
 	}
 
 }

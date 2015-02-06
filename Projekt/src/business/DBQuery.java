@@ -29,7 +29,7 @@ public class DBQuery {
 
 	public static ResultSet sendQuery(String query) throws SQLException {
 		ResultSet rs = stmt.executeQuery(query);
-		System.out.println("rs" + rs);
+	
 		return rs;
 
 	}
