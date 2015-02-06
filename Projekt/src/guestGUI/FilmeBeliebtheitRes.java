@@ -20,14 +20,10 @@ public class FilmeBeliebtheitRes extends JPanel{
 private JList<String> vorstellungen;
 	
 	private ResultSet rs;
-	private SaalKategorieBelegung saalkat;
-	private GuestKunde guestKunde;
-	private GuestReservierung guestRes;
+
 	
-	public FilmeBeliebtheitRes(SaalKategorieBelegung saalkat,GuestKunde guestKunde, GuestReservierung guestRes){
-		this.saalkat = saalkat;
-		this.guestKunde = guestKunde;
-		this.guestRes = guestRes;
+	public FilmeBeliebtheitRes(){
+
 		vorstellungen = new JList<String>();
 		setLayout(new BorderLayout());
 		rs = null;
@@ -45,21 +41,16 @@ private JList<String> vorstellungen;
 	}
 	
 	private void createList() throws SQLException{
-		rs = DBQuery.sendQuery("select * "
-				+ "from film "
-				+ ";");
+		rs = DBQuery.sendQuery("select count(*) as reservierungen, "
+				+ "f.titel from vorstellung v join vorstellung_film vf "
+				+ "on v.id = vf.vorstellung_id right outer join film "
+				+ "f on vf.film_id = f.id join reservierung r on "
+				+ "r.vorstellung_id = v.id group by f.titel order by count(*) desc;");
+		
+			
 		
 		
-		ArrayList<String[]> liste= new ArrayList<String[]>();
-		
-		while(rs.next())
-		{
-			liste.add(DBQuery.toString(rs, "titel"));
-		}
-		
-		
-	
-		//vorstellungen.setListData(string);
+		vorstellungen.setListData(DBQuery.toString(rs, "reservierungen","titel"));
 	
 		
 		add(vorstellungen,BorderLayout.CENTER);

@@ -10,7 +10,7 @@ public class DBConnection {
 	private Connection con = null;
 
 	public DBConnection() {
-		String url = "jdbc:postgresql://db.intern.mi.hs-rm.de:5432/bring001"; // Local
+		String url = "jdbc:postgresql://localhost:5432/patrikpezelj"; // Local
 		// database
 		// url
 
@@ -26,7 +26,7 @@ public class DBConnection {
 
 		// connection to database
 		try {
-			con = DriverManager.getConnection(url, "bring001", "BRdatenbank");
+			con = DriverManager.getConnection(url, "patrikpezelj", "");
 			System.out.println("--- connection success ---");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

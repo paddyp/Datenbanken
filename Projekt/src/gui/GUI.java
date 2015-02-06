@@ -1,6 +1,7 @@
 package gui;
 
 import guestGUI.AlleVorstell;
+import guestGUI.FilmeBeliebtheitRes;
 import guestGUI.GuestKunde;
 import guestGUI.GuestReservierung;
 
@@ -67,6 +68,8 @@ public class GUI extends JFrame {
 	private GuestReservierung guestReservierung = new GuestReservierung();
 	private GuestKunde guestKunde= new GuestKunde(guestReservierung);
 	private AlleVorstell alleVorstell = new AlleVorstell(saalkategoriebelegung,guestKunde,guestReservierung);
+	
+	private FilmeBeliebtheitRes filmebr = new FilmeBeliebtheitRes();
 	
 	//user
 	private UserBuchen userBuchen;
@@ -442,6 +445,10 @@ public class GUI extends JFrame {
 		anzeige[4].add(editPlaetzeLabel,BorderLayout.NORTH);
 		anzeige[4].add(guestReservierung,BorderLayout.CENTER);
 		
+		JLabel belFilmLabel = new JLabel("Unsere Filmhighligts (Anzahl Reservierungen | Filmtitel)");
+		anzeige[5].setLayout(new BorderLayout());
+		anzeige[5].add(belFilmLabel,BorderLayout.NORTH);
+		anzeige[5].add(filmebr,BorderLayout.CENTER);
 	}
 	
 	private void createUserView(String email){
@@ -482,6 +489,12 @@ public class GUI extends JFrame {
 		anzeige[4].setLayout(new BorderLayout());
 		anzeige[4].add(userhinzugefuegtLabel, BorderLayout.NORTH);
 		anzeige[4].add(userBuchen, BorderLayout.CENTER);
+		
+		JLabel belFilmLabel = new JLabel("Unsere Filmhighligts (Anzahl Reservierungen | Filmtitel)");
+		anzeige[5].setLayout(new BorderLayout());
+		anzeige[5].add(belFilmLabel,BorderLayout.NORTH);
+		anzeige[5].add(filmebr,BorderLayout.CENTER);
+		
 		
 	}
 	

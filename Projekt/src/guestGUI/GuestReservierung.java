@@ -73,6 +73,7 @@ public class GuestReservierung extends JPanel {
 						}
 						
 						datenListe = new ArrayList<PlatzObjekt>();
+						listeAnzeigen();
 						
 						rs = DBQuery.sendQuery(DBQuery.fillPlaceholders("select (sum(k.preis) + (select pa.preis "
 								+ "from reservierung r "
