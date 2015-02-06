@@ -75,6 +75,7 @@ public class GUI extends JFrame {
 
 	private JLabel benutzerLabel;
 	private JLabel passwortLabel;
+	private JLabel willkommenLabel;
 
 	private JButton anmelden;
 	private JButton abmelden;
@@ -116,6 +117,8 @@ public class GUI extends JFrame {
 			}
 		});
 
+		willkommenLabel = new JLabel("");
+		willkommenLabel.setVisible(false);
 		benutzerLabel = new JLabel("Benutzername :");
 		benutzername = new JTextField(10);
 		passwortLabel = new JLabel("Kennwort :");
@@ -145,56 +148,40 @@ public class GUI extends JFrame {
 					createView();
 				}else{
 					ResultSet rs;
-				try {
-					System.out.println(benutzername.getText());
-					rs = DBQuery.sendQuery(DBQuery.fillPlaceholders("SELECT passwort FROM kunde WHERE email='%1%'", benutzername.getText()));
-					rs.next();
-					try{
-						String passwort  = rs.getString("passwort");
-						System.out.println("GUI" + new String(GUI.this.passwort.getPassword()));
-						System.out.println("passwort" + passwort);
-						if(passwort.equals(new String(GUI.this.passwort.getPassword()))){
-							System.out.println("angemeldet");
-							angemeldet = true;
-							admin = false;
-							createView();
-							
-							
-							
-							anmelden.setVisible(false);
-							abmelden.setVisible(true);
-
-							benutzerLabel.setVisible(false);
-							benutzername.setVisible(false);
-							passwortLabel.setVisible(false);
-							GUI.this.passwort.setVisible(false);
-						}else{
-							JOptionPane.showMessageDialog(null, "Das Passwort ist falsch");
+					try {
+						System.out.println(benutzername.getText());
+						rs = DBQuery.sendQuery(DBQuery.fillPlaceholders("SELECT passwort FROM kunde WHERE email='%1%'", benutzername.getText()));
+						rs.next();
+						try{
+							String passwort  = rs.getString("passwort");
+							System.out.println("GUI" + new String(GUI.this.passwort.getPassword()));
+							System.out.println("passwort" + passwort);
+							if(passwort.equals(new String(GUI.this.passwort.getPassword()))){
+								System.out.println("angemeldet");
+								angemeldet = true;
+								admin = false;
+								createView();
+								
+								anmelden.setVisible(false);
+								abmelden.setVisible(true);
+	
+								benutzerLabel.setVisible(false);
+								benutzername.setVisible(false);
+								passwortLabel.setVisible(false);
+								GUI.this.passwort.setVisible(false);
+							}else{
+								JOptionPane.showMessageDialog(null, "Das Passwort ist falsch");
+							}
+						}catch(PSQLException e1)
+						{
+							JOptionPane.showMessageDialog(null, "Benutzername ist falsch");
+							return;
 						}
-					
-					}catch(PSQLException e1)
-					{
-						JOptionPane.showMessageDialog(null, "Benutzername ist falsch");
-						return;
+					} catch (SQLException e1) {
+						e1.printStackTrace();
 					}
-				
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					
-					e1.printStackTrace();
-					
-					
 				}
-				
-					
-				}
-				
-				
-				
-		
-
 				getContentPane().repaint();
-
 			}
 		});
 
@@ -205,6 +192,9 @@ public class GUI extends JFrame {
 				angemeldet = false;
 				abmelden.setVisible(false);
 				anmelden.setVisible(true);
+				
+				willkommenLabel.setText("");
+				willkommenLabel.setVisible(false);
 
 				benutzerLabel.setVisible(true);
 				benutzername.setVisible(true);
@@ -351,6 +341,7 @@ public class GUI extends JFrame {
 		menuBar.add(hinzufuegen);
 
 		// Anmeldezeile
+		menuBar.add(willkommenLabel);
 		menuBar.add(benutzerLabel);
 		menuBar.add(benutzername);
 		menuBar.add(passwortLabel);
@@ -404,6 +395,9 @@ public class GUI extends JFrame {
 	}
 	
 	private void createUserView(String email){
+		willkommenLabel.setText("Willkommen "+email+"! ");
+		willkommenLabel.setVisible(true);
+		
 		JLabel reservierungen = new JLabel("Eigene Reservierungen");
 		anzeige[1].setLayout(new BorderLayout());
 		anzeige[1].add(reservierungen, BorderLayout.NORTH);
