@@ -3,13 +3,16 @@ package guestGUI;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import userGUI.UserPlaetze;
 import Objekte.PlatzObjekt;
 import Objekte.VorstellungObjekt;
 import business.DBQuery;
@@ -20,6 +23,7 @@ public class GuestKunde extends JPanel {
 	private JLabel hinweis;
 	private JPanel buchunspanel;
 	private JButton buchenbtn;
+	private JButton randombtn;
 	private JTextField reihe;
 	private JTextField nummer;
 	private JLabel reihelbl;
@@ -62,8 +66,46 @@ public class GuestKunde extends JPanel {
 				}
 			}
 		});
-		buchunspanel.add(new JLabel());
+		randombtn = new JButton("freier Platz");
+		randombtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (vorstellung != null) {
+					String kat = JOptionPane
+							.showInputDialog("Bitte geben sie die Kategorie ein");
+					ResultSet rs;
+
+					try {
+						rs = DBQuery.sendQuery(DBQuery
+								.fillPlaceholders(
+										"select reihe,nummer from vorstellung v "
+												+ "join platz p on v.saal_bezeichnung = p.saal_bezeichnung "
+												+ "WHERE v.id = %1% AND p.kategorie_bezeichnung = '%2%' EXCEPT select platz_reihe,platz_nummer "
+												+ "from platz_reservierung pr join reservierung r "
+												+ "ON pr.reservierung_id  = r.id join vorstellung v "
+												+ "on v.id = r.vorstellung_id WHERE vorstellung_id = %1% LIMIT 1;",
+										vorstellung.getId(), kat));
+						
+						rs.next();
+						GuestKunde.this.reihe.setText(rs.getString("reihe"));
+						GuestKunde.this.nummer.setText(rs.getString("nummer"));
+						System.out.println("button ist durch ");
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}else{
+					JOptionPane.showMessageDialog(null, "Bitte wählen sie links eine Vorstellung");
+				}
+			}
+		});
+		
+		buchunspanel.add(randombtn);
 		buchunspanel.add(buchenbtn);
+		
+
 		
 	}
 	

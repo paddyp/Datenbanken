@@ -75,21 +75,16 @@ public class GuestReservierung extends JPanel {
 						datenListe = new ArrayList<PlatzObjekt>();
 						listeAnzeigen();
 						
-						rs = DBQuery.sendQuery(DBQuery.fillPlaceholders("select (sum(k.preis) + (select pa.preis "
-								+ "from reservierung r "
+						rs = DBQuery.sendQuery(DBQuery.fillPlaceholders("select (sum(k.preis) + (select pa.preis from reservierung r "
 								+ "join vorstellung_preisaufschlag v "
 								+ "on r.vorstellung_id = v.vorstellung_id "
-								+ "join preisaufschlag pa "
-								+ "on v.preisaufschlag_name = pa.bezeichnung "
-								+ "where r.id = %1%)) "
-								+ "as gesamtpreis from reservierung r "
-								+ "join platz_reservierung pr "
-								+ "on r.id = pr.reservierung_id "
-								+ "join platz p on pr.platz_reihe=p.reihe "
-								+ "and pr.platz_nummer=p.nummer "
-								+ "and pr.platz_saal_bezeichnung=p.saal_bezeichnung "
-								+ "join sitzplatzkategorie k "
-								+ "on p.kategorie_bezeichnung = k.bezeichnung where id = %1%;",reservierungsID));
+								+ "join preisaufschlag pa on v.preisaufschlag_name = pa.bezeichnung "
+								+ "where r.id = 1)) * 1 - (0.05*(select count(*) "
+								+ "from kunde where email = '%2')) as gesamtpreis from reservierung "
+								+ "r join platz_reservierung pr on r.id = pr.reservierung_id join platz p "
+								+ "on pr.platz_reihe=p.reihe and pr.platz_nummer=p.nummer and "
+								+ "pr.platz_saal_bezeichnung=p.saal_bezeichnung join sitzplatzkategorie k "
+								+ "on p.kategorie_bezeichnung = k.bezeichnung where id = 1;",reservierungsID,null));
 						
 						rs.next();
 						JOptionPane.showMessageDialog(null, "Die Buchung wurde erfolgreich ausgefuehrt.Ihre ID lautet: " + reservierungsID + ". Der Preis belauft sich auf " + rs.getString("gesamtpreis"));

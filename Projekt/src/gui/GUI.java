@@ -11,6 +11,9 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -146,7 +149,30 @@ public class GUI extends JFrame {
 		benutzername = new JTextField(10);
 		passwortLabel = new JLabel("Kennwort :");
 		passwort = new JPasswordField(10);
-		einstellungen = new JMenuItem("Einstellungen");
+		einstellungen = new JMenuItem("Datenbank initialisieren");
+		
+		einstellungen.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					BufferedReader br=new BufferedReader(new InputStreamReader(GUI.class.getResourceAsStream("DBS_create_script.sql")));
+					StringBuilder sb = new StringBuilder();
+					String line;
+					while((line=br.readLine())!=null){
+						sb.append(line+System.lineSeparator());
+					}
+					System.out.println(sb.toString());
+					DBQuery.executeQuery(sb.toString());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		anmelden = new JButton("Anmelden");
 		abmelden = new JButton("Abmelden");
 
