@@ -30,7 +30,7 @@ public class beliebtheitFilm extends JPanel {
 		setLayout(new BorderLayout());
 		sucheFeld = new JComboBox<String>();
 		abfragePanel = new JPanel();
-		sucheLabel = new JLabel("Suche :");
+		sucheLabel = new JLabel("Genre :");
 		vorstellungen = new JList<String>();
 	
 		abfragePanel.add(sucheLabel);
