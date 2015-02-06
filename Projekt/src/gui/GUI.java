@@ -408,7 +408,7 @@ public class GUI extends JFrame {
 		anzeige[1].setLayout(new BorderLayout());
 		anzeige[1].add(reservierungen, BorderLayout.NORTH);
 		EigeneReservierungen eigeneReservierungen = new EigeneReservierungen(
-				"hans@peter.de");
+				email);
 		anzeige[1].add(eigeneReservierungen, BorderLayout.CENTER);
 
 		JLabel updateDaten = new JLabel("Eigene angaben ändern");
