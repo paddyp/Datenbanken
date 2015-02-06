@@ -393,8 +393,12 @@ public class GUI extends JFrame {
 		JLabel alleVorstellungen = new JLabel("Alle Vorstellungen");
 		anzeige[0].setLayout(new BorderLayout());
 		anzeige[0].add(alleVorstellungen, BorderLayout.NORTH);
-		AlleVorstell alleVorstellungenPanel = new AlleVorstell();
-		anzeige[0].add(alleVorstellungenPanel, BorderLayout.CENTER);
+		anzeige[0].add(akvor, BorderLayout.CENTER);
+		
+		JLabel uhrzeit = new JLabel("Kategoriebelegung (Vorstellung wählen) [belegt|gesamt|kategorie]");
+		anzeige[1].setLayout(new BorderLayout());
+		anzeige[1].add(uhrzeit, BorderLayout.NORTH);
+		anzeige[1].add(saalkategoriebelegung, BorderLayout.CENTER);
 	}
 	
 	private void createUserView(String email){
