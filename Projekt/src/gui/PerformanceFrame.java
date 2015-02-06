@@ -132,7 +132,7 @@ public class PerformanceFrame extends JFrame {
 				try {
 					String[] spaltennamen = { "zeit", "saal_bezeichnung" };
 					DBQuery.sendInsertIntoQueryID("Vorstellung", spaltennamen,
-							timestep.toString(), saalComboBox.getSelectedItem()
+							timestep, saalComboBox.getSelectedItem()
 									.toString());
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -142,12 +142,10 @@ public class PerformanceFrame extends JFrame {
 
 				// Vorstellung_Film einfuegen
 				try {
-					ResultSet rsV = DBQuery
-							.sendQuery("SELECT id FROM vorstellung WHERE zeit = "
-									+ timestep.toString()
-									+ " AND saal_bezeichnung = "
-									+ saalComboBox.getSelectedItem().toString()
-									+ ";");
+					System.out.println(DBQuery.fillPlaceholders("SELECT id FROM vorstellung WHERE zeit"
+							+ "='%1%' AND saal_bezeichnung='%2%';", timestep, saalComboBox.getSelectedItem().toString()));
+					ResultSet rsV = DBQuery.sendQuery(DBQuery.fillPlaceholders("SELECT id FROM vorstellung WHERE zeit"
+							+ "='%1%' AND saal_bezeichnung='%2%';", timestep, saalComboBox.getSelectedItem().toString()));
 					ResultSet rsF = DBQuery
 							.sendQuery("SELECT id FROM film WHERE titel = "
 									+ filmComboBox.getSelectedItem().toString()
@@ -239,7 +237,10 @@ public class PerformanceFrame extends JFrame {
 		}
 		monatComboBox.removeAllItems();
 		for (int i = 1; i < 13; i++) {
-			monatComboBox.addItem("" + i);
+			if (i < 10) {
+				monatComboBox.addItem(("0" + i));
+			}else {
+			monatComboBox.addItem("" + i);}
 		}
 
 		Calendar kalender = Calendar.getInstance();

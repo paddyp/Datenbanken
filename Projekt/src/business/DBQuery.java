@@ -55,16 +55,16 @@ public class DBQuery {
 		String insertValues = "";
 		String query = "INSERT INTO " + table + " (";
 		for (int i = 0; i < spaltennamen.length; i++) {
-			insertValues += "'" + spaltennamen[i] + "'"
+			insertValues += spaltennamen[i]
 					+ ((i == values.length - 1) ? "" : ",");
 		}
 		query += insertValues + " )" + " VALUES(";
 		for (int i = 0; i < values.length; i++) {
-			insertValues += "'" + values[i] + "'"
+			query += "'" + values[i] + "'"
 					+ ((i == values.length - 1) ? "" : ",");
 		}
-		query += insertValues + ");";
-
+		query += ");";
+		System.out.println(query);
 		return stmt.execute(query);
 	}
 	
