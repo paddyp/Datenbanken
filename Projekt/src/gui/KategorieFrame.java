@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -34,22 +35,19 @@ public class KategorieFrame extends JFrame {
 	private JButton abbrechen;
 
 	public KategorieFrame() {
-		setSize(300, 150);
-		setTitle("Neue Kategorie hinzufügen");
-		setLayout(new BorderLayout());
+		setSize(300, 100);
+		setTitle("Neue Kategorie hinzufï¿½gen");
+		setLayout(new GridLayout(3, 2));
 
 		// Bezeichnung
-		bezeichnungPanel = new JPanel();
 		bezeichnungLabel = new JLabel("Bezeichnung :");
 		bezeichnungTextField = new JTextField(10);
 
-		bezeichnungPanel.add(bezeichnungLabel);
-		bezeichnungPanel.add(bezeichnungTextField);
+		add(bezeichnungLabel);
+		add(bezeichnungTextField);
 
-		add(bezeichnungPanel, BorderLayout.NORTH);
 
 		// Preis
-		preisPanel = new JPanel();
 		preisLabel = new JLabel("Preis :");
 		preisTextField = new JTextField(5);
 		preisLabel
@@ -57,10 +55,9 @@ public class KategorieFrame extends JFrame {
 		preisTextField
 				.setToolTipText("Geldbetraege durch Punkt . trennen(kein Komma)!");
 
-		preisPanel.add(preisLabel);
-		preisPanel.add(preisTextField);
+		add(preisLabel);
+		add(preisTextField);
 
-		add(preisPanel, BorderLayout.CENTER);
 
 		// Buttons - Speichern
 		speichern = new JButton("Hinzufuegen");
@@ -77,7 +74,7 @@ public class KategorieFrame extends JFrame {
 					JOptionPane.showMessageDialog(null,
 							"Kategorie wurde hinzugefuegt!");
 
-					// Zurücksetzten aller Eingabefelder
+					// Zurï¿½cksetzten aller Eingabefelder
 					bezeichnungTextField.setText("");
 					preisTextField.setText("");
 
@@ -90,7 +87,7 @@ public class KategorieFrame extends JFrame {
 									"Fehler!\nKategorie konnte nicht hinzugefuegt werden!");
 				}
 
-				// Testausgabe, ob das Einfügen funktioniert hat
+				// Testausgabe, ob das Einfï¿½gen funktioniert hat
 				try {
 					ResultSet rs = DBQuery
 							.sendQuery("SELECT * FROM Sitzplatzkategorie");
@@ -116,12 +113,10 @@ public class KategorieFrame extends JFrame {
 		});
 
 		// Buttons am Schluss
-		knopfPanel = new JPanel();
 
-		knopfPanel.add(speichern);
-		knopfPanel.add(abbrechen);
+		add(speichern);
+		add(abbrechen);
 
-		add(knopfPanel, BorderLayout.SOUTH);
 	}
 
 }
