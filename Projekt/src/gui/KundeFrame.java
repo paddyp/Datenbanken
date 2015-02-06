@@ -57,7 +57,7 @@ public class KundeFrame extends JFrame {
 
 	public KundeFrame() {
 		setSize(400, 300);
-		setTitle("Neuen Kunden hinzuf�gen");
+		setTitle("Neuen Kunden hinzufügen");
 		setLayout(new GridLayout(11, 2));
 
 		// Name
@@ -143,7 +143,7 @@ public class KundeFrame extends JFrame {
 
 		// Buttons - Speichern
 		speichern = new JButton();
-		speichern.setText("Hinzufuegen");
+		speichern.setText("Hinzufügen");
 		speichern.addActionListener(new ActionListener() {
 
 			@Override

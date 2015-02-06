@@ -1,5 +1,6 @@
 package userGUI;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -33,6 +34,7 @@ public class UpdateKundenDaten extends JPanel {
 	
 	
 	public UpdateKundenDaten(String email){
+		setLayout(new GridLayout(8, 2));
 		
 		this.email = email;
 		try {
@@ -42,7 +44,7 @@ public class UpdateKundenDaten extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		aendern = new JButton("update");
+		aendern = new JButton("Änderung übernehmen");
 		aendern.addActionListener(new ActionListener() {
 			
 			@Override
@@ -70,6 +72,7 @@ public class UpdateKundenDaten extends JPanel {
 			}
 		});
 		
+		add(new JLabel("Hier klicken:"));
 		add(aendern);
 		
 		
@@ -81,35 +84,42 @@ public class UpdateKundenDaten extends JPanel {
 		ResultSet rs = DBQuery.sendQuery(DBQuery.fillPlaceholders("SELECT * FROM kunde WHERE email='%1%'",this.email));
 		nameTF = new JTextField(10);
 		while(rs.next()){
-		nameTF.setText(rs.getString("name"));
-		vornameTF = new JTextField(10);
-		vornameTF.setText(rs.getString("vorname"));
-		passwortTF = new JTextField(10);
-		passwortTF.setText(rs.getString("passwort"));
-		geb = new JTextField(10);
-		geb.setText(rs.getString("geburtsdatum"));
-		plz = new JTextField(6);
-		plz.setText(rs.getString("plz"));
-		strasse = new JTextField(10);
-		strasse.setText(rs.getString("strasse"));
-		// ort merge mit plz
-		//
-		mobil = new JTextField(6);
-		mobil.setText(rs.getString("handy"));
-		tel = new JTextField(6);
-		tel.setText(rs.getString("festnetz"));
+			nameTF.setText(rs.getString("name"));
+			vornameTF = new JTextField(10);
+			vornameTF.setText(rs.getString("vorname"));
+			passwortTF = new JTextField(10);
+			passwortTF.setText(rs.getString("passwort"));
+			geb = new JTextField(10);
+			geb.setText(rs.getString("geburtsdatum"));
+			plz = new JTextField(6);
+			plz.setText(rs.getString("plz"));
+			strasse = new JTextField(10);
+			strasse.setText(rs.getString("strasse"));
+			// ort merge mit plz
+			//
+			mobil = new JTextField(6);
+			mobil.setText(rs.getString("handy"));
+			tel = new JTextField(6);
+			tel.setText(rs.getString("festnetz"));
 		}
 		
 		
 	}
 	
 	private void addToPanel(){
+		add(new JLabel("Name:"));
 		add(nameTF);
+		add(new JLabel("Vorname:"));
 		add(vornameTF);
+		add(new JLabel("Passwort:"));
 		add(passwortTF);
+		add(new JLabel("Geburtsdatum:"));
 		add(geb);
+		add(new JLabel("PLZ:"));
 		add(plz);
+		add(new JLabel("Mobil:"));
 		add(mobil);
+		add(new JLabel("Telefon:"));
 		add(tel);
 	}
 }

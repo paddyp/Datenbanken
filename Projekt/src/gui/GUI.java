@@ -413,7 +413,7 @@ public class GUI extends JFrame {
 				email);
 		anzeige[1].add(eigeneReservierungen, BorderLayout.CENTER);
 
-		JLabel updateDaten = new JLabel("Eigene angaben ändern");
+		JLabel updateDaten = new JLabel("Eigene Daten ändern");
 		anzeige[2].setLayout(new BorderLayout());
 		anzeige[2].add(updateDaten, BorderLayout.NORTH);
 		UpdateKundenDaten updatekundendaten = new UpdateKundenDaten(

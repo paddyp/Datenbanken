@@ -31,7 +31,7 @@ public class PreisaufschlagFrame extends JFrame {
 
 	public PreisaufschlagFrame() {
 		setSize(300, 100);
-		setTitle("Neue Kategorie hinzufuegen");
+		setTitle("Neuen Preisaufschlag hinzufuegen");
 		setLayout(new GridLayout(3, 2));
 
 		// Bezeichnung

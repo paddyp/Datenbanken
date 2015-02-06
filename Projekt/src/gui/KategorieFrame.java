@@ -31,7 +31,7 @@ public class KategorieFrame extends JFrame {
 
 	public KategorieFrame() {
 		setSize(300, 100);
-		setTitle("Neue Kategorie hinzuf�gen");
+		setTitle("Neue Platzkategorie hinzufügen");
 		setLayout(new GridLayout(3, 2));
 
 		// Bezeichnung
