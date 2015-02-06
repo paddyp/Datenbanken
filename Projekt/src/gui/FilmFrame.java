@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,9 +34,8 @@ public class FilmFrame extends JFrame {
 	private JLabel fskLabel;
 	private JTextField fskTextField;
 
+	private JComboBox<String> genreComboBox;
 	private JPanel genrePanel;
-	private JLabel genreLabel;
-	private JTextField genreTextField;
 
 	private JPanel darstellerPanel;
 	private JLabel darstellerLabel;
@@ -46,7 +46,7 @@ public class FilmFrame extends JFrame {
 
 	public FilmFrame() {
 		setSize(500, 500);
-		setTitle("Neuen Film hinzufügen");
+		setTitle("Neuen Film hinzufuegen");
 		setLayout(new GridLayout(7, 2));
 
 		// Bewertung
@@ -81,12 +81,15 @@ public class FilmFrame extends JFrame {
 
 		// Genre
 		genrePanel = new JPanel();
-		genreLabel = new JLabel("Genre :");
-		genreTextField = new JTextField(10);
 
-		genrePanel.add(genreLabel);
-		genrePanel.add(genreTextField);
+		try {
+			waehleGenre();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 
+		genrePanel.add(genreComboBox);
 		add(genrePanel);
 
 		// Darsteller
@@ -113,14 +116,15 @@ public class FilmFrame extends JFrame {
 				// TODO Auto-generated method stub
 
 				try {
-					String [] spaltennamen = {"bewertung", "titel", "fsk", "genre"};
-					DBQuery.sendInsertIntoQueryID("Film",
-							spaltennamen,
+					// Film einfuegen
+					String[] spaltennamenF = { "bewertung", "titel", "fsk",
+							"genre_name" };
+					DBQuery.sendInsertIntoQueryID("Film", spaltennamenF,
 							bewertungTextField.getText(),
-							titelTextField.getText(),
-							fskTextField.getText(),
-							genreTextField.getText());
-					
+							titelTextField.getText(), fskTextField.getText(),
+							genreComboBox.getSelectedItem().toString());
+
+					// Hauptdarsteller einfuegen
 					String[] alleDarsteller = darstellerTextField.getText()
 							.split(",");
 					for (int i = 0; i < alleDarsteller.length; i++) {
@@ -130,8 +134,25 @@ public class FilmFrame extends JFrame {
 								darstellerName[0].toString());
 					}
 
+					// Film_Hauptdarsteller einfuegen
+					String[] spaltennamenFH = { "hauptdarsteller_name",
+							"hauptdarsteller_vorname" };
+
+					for (int i = 0; i < alleDarsteller.length; i++) {
+						String[] darstellerName = alleDarsteller[i].split(" ");
+						DBQuery.sendInsertIntoQueryID("Film_Hauptdarsteller",
+								spaltennamenFH, darstellerName[1].toString(),
+								darstellerName[0].toString());
+					}
+
 					JOptionPane.showMessageDialog(null,
 							"Film wurde hinzugefuegt!");
+
+					// Zurücksetzten aller Felder
+					bewertungTextField.setText("");
+					titelTextField.setText("");
+					fskTextField.setText("");
+					darstellerTextField.setText("");
 
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -141,9 +162,21 @@ public class FilmFrame extends JFrame {
 							"Fehler!\nFilm konnte nicht hinzugefuegt werden!");
 				}
 
+				// Testausgabe, ob das Einfügen funktioniert hat
 				try {
-					ResultSet rs = DBQuery.sendQuery("SELECT * FROM Film");
-					DBQuery.toString(rs, "bewertung", "titel", "fsk", "genre");
+					ResultSet rs1 = DBQuery.sendQuery("SELECT * FROM Film");
+					DBQuery.toString(rs1, "id", "bewertung", "titel", "fsk",
+							"genre_name");
+
+					ResultSet rs2 = DBQuery
+							.sendQuery("SELECT * FROM Hauptdarsteller");
+					DBQuery.toString(rs2, "name", "vorname");
+
+					ResultSet rs3 = DBQuery
+							.sendQuery("SELECT * FROM Film_Hauptdarsteller");
+					DBQuery.toString(rs3, "film_id", "hauptdarsteller_name",
+							"hauptdarsteller_vorname");
+
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -152,7 +185,6 @@ public class FilmFrame extends JFrame {
 			}
 		});
 
-		add(speichern);
 		abbrechen = new JButton("Abbrechen");
 		abbrechen.addActionListener(new ActionListener() {
 
@@ -160,12 +192,30 @@ public class FilmFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				dispose();
-
 			}
 		});
 
+		add(speichern);
 		add(abbrechen);
 
+	}
+
+	private void waehleGenre() throws SQLException {
+		// TODO Auto-generated method stub
+		genreComboBox = new JComboBox<String>();
+		ResultSet rs = DBQuery.sendQuery("SELECT * FROM genre");
+		while (rs.next()) {
+			genreComboBox.addItem(rs.getString("titel"));
+		}
+	}
+
+	public void update() {
+		try {
+			waehleGenre();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

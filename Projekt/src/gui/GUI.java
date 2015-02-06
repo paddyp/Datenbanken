@@ -37,8 +37,8 @@ public class GUI extends JFrame {
 
 	private JPanel panel;
 
-	private boolean angemeldet = true;
-	private boolean admin = false;
+	private boolean angemeldet = false;
+	private boolean admin = true;
 
 	private JMenuBar menuBar;
 	

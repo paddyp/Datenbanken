@@ -62,7 +62,7 @@ public class KategorieFrame extends JFrame {
 
 		add(preisPanel, BorderLayout.CENTER);
 
-		// Hinzufuegen
+		// Buttons - Speichern
 		speichern = new JButton("Hinzufuegen");
 		speichern.addActionListener(new ActionListener() {
 			@Override
@@ -77,6 +77,7 @@ public class KategorieFrame extends JFrame {
 					JOptionPane.showMessageDialog(null,
 							"Kategorie wurde hinzugefuegt!");
 
+					// Zurücksetzten aller Eingabefelder
 					bezeichnungTextField.setText("");
 					preisTextField.setText("");
 
@@ -89,6 +90,7 @@ public class KategorieFrame extends JFrame {
 									"Fehler!\nKategorie konnte nicht hinzugefuegt werden!");
 				}
 
+				// Testausgabe, ob das Einfügen funktioniert hat
 				try {
 					ResultSet rs = DBQuery
 							.sendQuery("SELECT * FROM Sitzplatzkategorie");

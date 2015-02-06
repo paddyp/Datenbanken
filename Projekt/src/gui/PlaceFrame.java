@@ -19,53 +19,74 @@ import business.DBQuery;
 public class PlaceFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel platz;
+	private JLabel saalLabel;
+	private JComboBox<String> saalComboBox;
+	
+	private JPanel platzPanel;
 	private JLabel reiheLabel;
+	private JTextField reiheTextField;
 	private JLabel nummerLabel;
-	private JTextField reiheTF;
-	private JTextField nummerTF;
-	private JComboBox<String> box;
+	private JTextField nummerTextField;
 	
-	private JButton insert;
+	private JLabel kategorieLabel;
+	private JComboBox<String> kategorieComboBox;
 	
-	private JLabel deletLabel;
-	private JComboBox<String> rheiheCB;
-	private JComboBox<String> platzCB;
-	private JComboBox<String> saalCB;
+	private JButton speichern;
+	private JButton abbrechen;
 	
 	public PlaceFrame(){
 		setSize(300,100);
 		setTitle("Neuen Platz hinzufügen");
 		
-		platz = new JPanel();
-		reiheLabel = new JLabel("Bezeichnung :");
-		reiheTF = new JTextField(5);
-		nummerLabel = new JLabel("Preis :");
-		nummerTF = new JTextField(5);
-		box = new JComboBox<String>();
+		// Saal
+		saalLabel = new JLabel("Saal :");
+		try {
+			waehleSaal();
+		} catch (SQLException e3) {
+			// TODO Auto-generated catch block
+			e3.printStackTrace();
+		}
+		add(saalLabel);
+		add(saalComboBox);
+		
+		// Reihe & Nummer
+		platzPanel = new JPanel();
+		reiheLabel = new JLabel("Reihe :");
+		reiheTextField = new JTextField(5);
+		nummerLabel = new JLabel("Nummer :");
+		nummerTextField = new JTextField(5);
+		
+		platzPanel.add(reiheLabel);
+		platzPanel.add(reiheTextField);
+		platzPanel.add(nummerLabel);
+		platzPanel.add(nummerTextField);
+		
+		// Kategorie
+		kategorieLabel = new JLabel("Kategorie :");
+		kategorieComboBox = new JComboBox<String>();
 		
 		try {
-			ResultSet rs = DBQuery.sendQuery("SELECT * FROM saal");
+			ResultSet rs = DBQuery.sendQuery("SELECT * FROM Sitzplatzkategorie");
 			while(rs.next()){
-				box.addItem(rs.getString("bezeichnung"));
+				kategorieComboBox.addItem(rs.getString("bezeichnung"));
 			}
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 		
-		platz.add(box);
+		platzPanel.add(kategorieComboBox);
 		
 		
-		insert = new JButton("insert");
-		insert.addActionListener(new ActionListener() {
+		speichern = new JButton("Hinzufuegen");
+		speichern.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				
 				try {
-					DBQuery.sendInsertIntoQuery("platz", reiheTF.getText(), nummerTF.getText());
+					DBQuery.sendInsertIntoQuery("platz", reiheTextField.getText(), nummerTextField.getText());
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -74,26 +95,9 @@ public class PlaceFrame extends JFrame {
 			}
 		});
 		
-		platz.add(reiheLabel);
-		platz.add(reiheTF);
-		platz.add(nummerLabel);
-		platz.add(nummerTF);
-		platz.add(insert);
+			
 		
-		// delete Session
-		deletLabel = new JLabel("LÃ¶schen :");
-		try {
-			setReihePlatz();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		platz.add(deletLabel);
-		platz.add(rheiheCB);
-		
-		
-		add(platz);
+		add(platzPanel);
 		
 		addWindowListener(new WindowListener() {
 			
@@ -148,15 +152,24 @@ public class PlaceFrame extends JFrame {
 		
 	}
 	
+	private void waehleSaal() throws SQLException {
+		// TODO Auto-generated method stub
+		saalComboBox = new JComboBox<String>();
+		ResultSet rs = DBQuery.sendQuery("SELECT * FROM Saal");
+		while (rs.next()) {
+			saalComboBox.addItem(rs.getString("bezeichnung"));
+		}
+	}
+
 	private void setReihePlatz() throws SQLException{
 		
 		ResultSet rs = DBQuery.sendQuery("SELECT reihe FROM platz");
-		rheiheCB = new JComboBox<String>();
-		
-		while(rs.next())
-		{
-			rheiheCB.addItem(rs.getString(1));
-		}
+//		reiheCB = new JComboBox<String>();
+//		
+//		while(rs.next())
+//		{
+//			reiheCB.addItem(rs.getString(1));
+//		}
 		
 		
 		

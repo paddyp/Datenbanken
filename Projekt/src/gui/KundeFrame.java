@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,7 +25,6 @@ public class KundeFrame extends JFrame {
 	private JButton speichern;
 	private JButton abbrechen;
 
-
 	private JPanel namePanel;
 	private JLabel nameLabel;
 	private JTextField nameTextField;
@@ -39,37 +37,36 @@ public class KundeFrame extends JFrame {
 	private JLabel emailLabel;
 	private JTextField emailTextField;
 
-	private JPanel passwordPanel;
-	private JLabel passwordLabel;
-	private JPasswordField passwordTextField;
+	private JPanel passwortPanel;
+	private JLabel passwortLabel;
+	private JPasswordField passwortTextField;
 
-	private JPanel birthPanel;
-	private JLabel birthLabel;
-	private JTextField birthdayTextField;
-	private JTextField birthmonthTextField;
-	private JTextField birthyearTextField;
+	private JPanel geburtstagPanel;
+	private JLabel geburtstagLabel;
+	private JTextField geburtsTagTextField;
+	private JTextField geburtsMonatTextField;
+	private JTextField geburtsJahrTextField;
 
 	private JPanel adressPanel;
-	private JLabel placeLabel;
+	private JLabel ortLabel;
 	private JLabel plzLabel;
-	private JLabel streetLabel;
-	private JTextField placeTextField;
+	private JLabel strasseLabel;
+	private JTextField ortTextField;
 	private JTextField plzTextField;
-	private JTextField streetTextField;
+	private JTextField strasseTextField;
 
-	private JPanel contactPanel;
+	private JPanel kontaktPanel;
 	private JLabel mobilLabel;
-	private JLabel phoneLabel;
+	private JLabel telefonLabel;
 	private JTextField mobileTextField;
-	private JTextField phoneTextField;
+	private JTextField telefonTextField;
 
 	public KundeFrame() {
 		setSize(500, 700);
 		setTitle("Neuen Kunden hinzufügen");
 		setLayout(new GridLayout(9, 2));
-		setBackground(new Color(50, 50, 50));
 
-		// Name eingeben
+		// Name
 		namePanel = new JPanel();
 		nameLabel = new JLabel();
 		nameTextField = new JTextField(10);
@@ -81,8 +78,7 @@ public class KundeFrame extends JFrame {
 
 		add(namePanel);
 
-		// Vorname eingeben
-
+		// Vorname
 		vornamePanel = new JPanel();
 		vornameLabel = new JLabel();
 		vornameTextField = new JTextField(10);
@@ -93,9 +89,8 @@ public class KundeFrame extends JFrame {
 		vornamePanel.add(vornameTextField);
 
 		add(vornamePanel);
-		//
-		// email eingeben
 
+		// E-Mail
 		emailPanel = new JPanel();
 		emailLabel = new JLabel("E-mail :");
 		emailTextField = new JTextField(10);
@@ -104,70 +99,68 @@ public class KundeFrame extends JFrame {
 		emailPanel.add(emailTextField);
 
 		add(emailPanel);
-		//
+
 		// Password
-		passwordPanel = new JPanel();
-		passwordLabel = new JLabel("Password :");
-		passwordTextField = new JPasswordField(10);
+		passwortPanel = new JPanel();
+		passwortLabel = new JLabel("Password :");
+		passwortTextField = new JPasswordField(10);
 
-		passwordPanel.add(passwordLabel);
-		passwordPanel.add(passwordTextField);
+		passwortPanel.add(passwortLabel);
+		passwortPanel.add(passwortTextField);
 
-		add(passwordPanel);
-		//
-		// Geburtstag eingeben
+		add(passwortPanel);
 
-		birthPanel = new JPanel();
-		birthLabel = new JLabel();
-		birthdayTextField = new JTextField(2);
-		birthmonthTextField = new JTextField(2);
-		birthyearTextField = new JTextField(4);
+		// Geburtstag
+		geburtstagPanel = new JPanel();
+		geburtstagLabel = new JLabel();
+		geburtsTagTextField = new JTextField(2);
+		geburtsMonatTextField = new JTextField(2);
+		geburtsJahrTextField = new JTextField(4);
 
-		// Limit have to me programmed
+		geburtstagLabel.setText("Geburtstag :");
 
-		birthLabel.setText("Geburtstag :");
+		geburtstagPanel.add(geburtstagLabel);
+		geburtstagPanel.add(geburtsTagTextField);
+		geburtstagPanel.add(geburtsMonatTextField);
+		geburtstagPanel.add(geburtsJahrTextField);
 
-		birthPanel.add(birthLabel);
-		birthPanel.add(birthdayTextField);
-		birthPanel.add(birthmonthTextField);
-		birthPanel.add(birthyearTextField);
-
-		add(birthPanel);
+		add(geburtstagPanel);
 
 		// Adresse
 		adressPanel = new JPanel();
 		adressPanel.setLayout(new GridLayout(2, 2));
 		plzTextField = new JTextField(6);
-		placeTextField = new JTextField(10);
-		streetTextField = new JTextField(10);
+		ortTextField = new JTextField(10);
+		strasseTextField = new JTextField(10);
 		plzLabel = new JLabel("PLZ :");
-		placeLabel = new JLabel("Ort :");
-		streetLabel = new JLabel("Strasse :");
+		ortLabel = new JLabel("Ort :");
+		strasseLabel = new JLabel("Strasse :");
 
-		adressPanel.add(streetLabel);
+		adressPanel.add(strasseLabel);
 		adressPanel.add(plzLabel);
-		adressPanel.add(placeLabel);
+		adressPanel.add(ortLabel);
 
-		adressPanel.add(streetTextField);
+		adressPanel.add(strasseTextField);
 		adressPanel.add(plzTextField);
-		adressPanel.add(placeTextField);
+		adressPanel.add(ortTextField);
 
 		add(adressPanel);
 
-		contactPanel = new JPanel();
-		phoneLabel = new JLabel("Telefon :");
-		phoneTextField = new JTextField(10);
+		// Kontakt
+		kontaktPanel = new JPanel();
+		telefonLabel = new JLabel("Telefon :");
+		telefonTextField = new JTextField(10);
 		mobilLabel = new JLabel("Mobil :");
 		mobileTextField = new JTextField(10);
 
-		contactPanel.add(phoneLabel);
-		contactPanel.add(phoneTextField);
-		contactPanel.add(mobilLabel);
-		contactPanel.add(mobileTextField);
+		kontaktPanel.add(telefonLabel);
+		kontaktPanel.add(telefonTextField);
+		kontaktPanel.add(mobilLabel);
+		kontaktPanel.add(mobileTextField);
 
-		add(contactPanel);
+		add(kontaktPanel);
 
-		//
+		// Buttons - Speichern
 		speichern = new JButton();
 		speichern.setText("Hinzufuegen");
 		speichern.addActionListener(new ActionListener() {
@@ -175,32 +168,37 @@ public class KundeFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				String date = birthyearTextField.getText() + "-"
-						+ birthmonthTextField.getText() + "-"
-						+ birthdayTextField.getText();
+				String date = geburtsTagTextField.getText() + "-"
+						+ geburtsMonatTextField.getText() + "-"
+						+ geburtsJahrTextField.getText();
 
 				try {
 					DBQuery.sendInsertIntoQuery("Kunde",
 							emailTextField.getText(), nameTextField.getText(),
 							vornameTextField.getText(), date.toString(),
-							passwordTextField.getPassword().toString(),
-							plzTextField.getText(), streetTextField.getText(),
-							phoneTextField.getText(), mobileTextField.getText());
+							passwortTextField.getPassword().toString(),
+							plzTextField.getText(), strasseTextField.getText(),
+							telefonTextField.getText(),
+							mobileTextField.getText());
+
+					DBQuery.sendInsertIntoQuery("Ort_PLZ",
+							plzTextField.getText(), ortTextField.getText());
 
 					JOptionPane.showMessageDialog(null,
 							"Kunde wurde hinzugefuegt!");
 
+					// Zurücksetzten aller Eingebefelder
 					emailTextField.setText("");
 					nameTextField.setText("");
 					vornameTextField.setText("");
-					birthdayTextField.setText("");
-					birthmonthTextField.setText("");
-					birthyearTextField.setText("");
-					passwordTextField.setText("");
-					streetTextField.setText("");
+					geburtsTagTextField.setText("");
+					geburtsMonatTextField.setText("");
+					geburtsJahrTextField.setText("");
+					passwortTextField.setText("");
+					strasseTextField.setText("");
 					plzTextField.setText("");
-					placeTextField.setText("");
-					phoneTextField.setText("");
+					ortTextField.setText("");
+					telefonTextField.setText("");
 					mobileTextField.setText("");
 
 				} catch (SQLException e1) {
@@ -211,9 +209,15 @@ public class KundeFrame extends JFrame {
 							"Fehler!\nKunde konnte nicht hinzugefuegt werden!");
 				}
 
+				// Testausgabe, ob das Einfügen funktioniert hat
 				try {
-					ResultSet rs = DBQuery.sendQuery("SELECT * FROM Kunde");
-					DBQuery.toString(rs, "email", "name", "vorname", "passwort");
+					ResultSet rs1 = DBQuery.sendQuery("SELECT * FROM Kunde");
+					DBQuery.toString(rs1, "email", "name", "vorname",
+							"passwort");
+
+					ResultSet rs2 = DBQuery.sendQuery("SELECT * FROM Ort_PLZ");
+					DBQuery.toString(rs2, "plz", "ort");
+
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -221,7 +225,7 @@ public class KundeFrame extends JFrame {
 			}
 		});
 
-		// Kunde hinzufï¿½gen - Abbruch
+		// Buttons - Abbruch
 		abbrechen = new JButton();
 		abbrechen.setText("Abbrechen");
 		abbrechen.addActionListener(new ActionListener() {
