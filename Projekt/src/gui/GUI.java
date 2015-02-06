@@ -42,21 +42,20 @@ public class GUI extends JFrame {
 	private boolean admin = true;
 
 	private JMenuBar menuBar;
-	
+
 	private JPanel[] anzeige;
-	
+
 	private JMenu datei;
 	private JMenu hinzufuegen;
 
-	
 	private Reservieren reservierenPanel = new Reservieren();
 	private Kunden kunde = new Kunden(reservierenPanel);
 	private beliebtheitFilm beliebterFilm = new beliebtheitFilm();
 	private SaalKategorieBelegung saalkategoriebelegung = new SaalKategorieBelegung();
-	private AktuelleVorstellung akvor = new AktuelleVorstellung(saalkategoriebelegung);
+	private AktuelleVorstellung akvor = new AktuelleVorstellung(
+			saalkategoriebelegung);
 	private AktuelleSaalbelegung aktsaalbel = new AktuelleSaalbelegung();
-	
-	
+
 	private JMenuItem einstellungen;
 	private JMenuItem aktualisieren;
 	private JMenuItem neuerKunde;
@@ -65,6 +64,7 @@ public class GUI extends JFrame {
 	private JMenuItem neuerSaal;
 	private JMenuItem neuerPlatz;
 	private JMenuItem neueVorstellung;
+	private JMenuItem neuerPreisaufschlag;
 
 	private JTextField benutzername;
 	private JPasswordField passwort;
@@ -74,7 +74,7 @@ public class GUI extends JFrame {
 
 	private JButton anmelden;
 	private JButton abmelden;
-	
+
 	public GUI() {
 		setSize(new Dimension(1000, 1000));
 		setTitle("Kino Datenbank Benutzungsoberfl�che");
@@ -86,16 +86,17 @@ public class GUI extends JFrame {
 		final KategorieFrame kategorieFrame = new KategorieFrame();
 		final PlaceFrame placeFrame = new PlaceFrame();
 		final PerformanceFrame performanceFrame = new PerformanceFrame();
+		final PreisaufschlagFrame preisaufschlagFrame = new PreisaufschlagFrame();
 
 		// Menu Bar Elemente erzeugen
 		menuBar = new JMenuBar();
-		
+
 		datei = new JMenu("Datei");
 		hinzufuegen = new JMenu("Hinzufuegen");
 		aktualisieren = new JMenuItem("Aktualisieren");
-		
-	aktualisieren.addActionListener(new ActionListener() {
-			
+
+		aktualisieren.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -104,14 +105,12 @@ public class GUI extends JFrame {
 				aktsaalbel.update();
 				kunde.update();
 				beliebterFilm.update();
-				
+
 				revalidate();
-				
+
 			}
 		});
 
-		
-	
 		benutzerLabel = new JLabel("Benutzername :");
 		benutzername = new JTextField(10);
 		passwortLabel = new JLabel("Kennwort :");
@@ -126,9 +125,10 @@ public class GUI extends JFrame {
 		neuerSaal = new JMenuItem("Neuer Saal");
 		neuerPlatz = new JMenuItem("Neuer Platz");
 		neueVorstellung = new JMenuItem("Neue Vorstellung");
+		neuerPreisaufschlag = new JMenuItem("Neuer Preisaufschlag");
 
 		abmelden.setVisible(false);
-		
+
 		anmelden.addActionListener(new ActionListener() {
 
 			@Override
@@ -141,12 +141,12 @@ public class GUI extends JFrame {
 				benutzername.setVisible(false);
 				passwortLabel.setVisible(false);
 				passwort.setVisible(false);
-				
+
 				getContentPane().repaint();
 
 			}
 		});
-		
+
 		abmelden.addActionListener(new ActionListener() {
 
 			@Override
@@ -159,108 +159,97 @@ public class GUI extends JFrame {
 				benutzername.setVisible(true);
 				passwortLabel.setVisible(true);
 				passwort.setVisible(true);
-				
+
 				getContentPane().repaint();
 
 			}
 		});
 
-		
 		// IN RUHE LASSEN PATRIKS
 		panel = new JPanel();
-		panel.setLayout(new GridLayout(3,2));
-		panel.setBackground(new Color(255,255,255));
-		
+		panel.setLayout(new GridLayout(3, 2));
+		panel.setBackground(new Color(255, 255, 255));
+
 		anzeige = new JPanel[6];
-		
-		for(int i = 0; i < anzeige.length; i++)
-		{
+
+		for (int i = 0; i < anzeige.length; i++) {
 			anzeige[i] = new JPanel();
-			anzeige[i].setBackground(new Color(213,213,213));
+			anzeige[i].setBackground(new Color(213, 213, 213));
 			anzeige[i].setBorder(BorderFactory.createLineBorder(Color.black));
-			
+
 		}
-		
-		
+
 		// adminBereich
-		if(admin){
-			
-		
-		JLabel aktuelleVorstellungenLabel = new JLabel("aktuelle Vorstellungen");
-		anzeige[0].setLayout(new BorderLayout());
-		anzeige[0].add(aktuelleVorstellungenLabel,BorderLayout.NORTH);
-		anzeige[0].add(akvor,BorderLayout.CENTER);
-		
-		JLabel saalBelegung = new JLabel("aktuelle Saalbelegung basierend auf der Vorstellung");
-		anzeige[1].setLayout(new BorderLayout());
-		anzeige[1].add(saalBelegung, BorderLayout.NORTH);
-		anzeige[1].add(aktsaalbel,BorderLayout.CENTER);
-		
-		JLabel reservieren = new JLabel("reservieren");
-		anzeige[3].setLayout(new BorderLayout());
-		anzeige[3].add(reservieren, BorderLayout.NORTH);
-		anzeige[3].add(reservierenPanel,BorderLayout.CENTER);
-		
-		JLabel kundeAnzeigen = new JLabel("Kunde suchen");
-		anzeige[2].setLayout(new BorderLayout());
-		anzeige[2].add(kundeAnzeigen, BorderLayout.NORTH);
-		anzeige[2].add(kunde,BorderLayout.CENTER);
-		
-		
-		
-		JLabel beliebtesterFilm = new JLabel("beliebtheitsskala Film");
-		anzeige[4].setLayout(new BorderLayout());
-		anzeige[4].add(beliebtesterFilm,BorderLayout.NORTH);
-	anzeige[4].add(beliebterFilm, BorderLayout.CENTER);
-		
-		JLabel uhrzeit = new JLabel("Kategoriebelegung pro Saal");
-		anzeige[5].setLayout(new BorderLayout());
-		anzeige[5].add(uhrzeit, BorderLayout.NORTH);
-		anzeige[5].add(saalkategoriebelegung, BorderLayout.CENTER);
+		if (admin) {
+
+			JLabel aktuelleVorstellungenLabel = new JLabel(
+					"aktuelle Vorstellungen");
+			anzeige[0].setLayout(new BorderLayout());
+			anzeige[0].add(aktuelleVorstellungenLabel, BorderLayout.NORTH);
+			anzeige[0].add(akvor, BorderLayout.CENTER);
+
+			JLabel saalBelegung = new JLabel(
+					"aktuelle Saalbelegung basierend auf der Vorstellung");
+			anzeige[1].setLayout(new BorderLayout());
+			anzeige[1].add(saalBelegung, BorderLayout.NORTH);
+			anzeige[1].add(aktsaalbel, BorderLayout.CENTER);
+
+			JLabel reservieren = new JLabel("reservieren");
+			anzeige[3].setLayout(new BorderLayout());
+			anzeige[3].add(reservieren, BorderLayout.NORTH);
+			anzeige[3].add(reservierenPanel, BorderLayout.CENTER);
+
+			JLabel kundeAnzeigen = new JLabel("Kunde suchen");
+			anzeige[2].setLayout(new BorderLayout());
+			anzeige[2].add(kundeAnzeigen, BorderLayout.NORTH);
+			anzeige[2].add(kunde, BorderLayout.CENTER);
+
+			JLabel beliebtesterFilm = new JLabel("beliebtheitsskala Film");
+			anzeige[4].setLayout(new BorderLayout());
+			anzeige[4].add(beliebtesterFilm, BorderLayout.NORTH);
+			anzeige[4].add(beliebterFilm, BorderLayout.CENTER);
+
+			JLabel uhrzeit = new JLabel("Kategoriebelegung pro Saal");
+			anzeige[5].setLayout(new BorderLayout());
+			anzeige[5].add(uhrzeit, BorderLayout.NORTH);
+			anzeige[5].add(saalkategoriebelegung, BorderLayout.CENTER);
 		}
 		//
-		//user
-		if(angemeldet)
-		{
-			
+		// user
+		if (angemeldet) {
+
 			JLabel reservierungen = new JLabel("Eigene Reservierungen");
 			anzeige[1].setLayout(new BorderLayout());
-			anzeige[1].add(reservierungen,BorderLayout.NORTH);
-			EigeneReservierungen eigeneReservierungen = new EigeneReservierungen("hans@peter.de");
-			anzeige[1].add(eigeneReservierungen,BorderLayout.CENTER);
-			
+			anzeige[1].add(reservierungen, BorderLayout.NORTH);
+			EigeneReservierungen eigeneReservierungen = new EigeneReservierungen(
+					"hans@peter.de");
+			anzeige[1].add(eigeneReservierungen, BorderLayout.CENTER);
+
 			JLabel updateDaten = new JLabel("Eigene angaben ändern");
 			anzeige[2].setLayout(new BorderLayout());
-			anzeige[2].add(updateDaten,BorderLayout.NORTH);
-			UpdateKundenDaten updatekundendaten = new UpdateKundenDaten("hans@peter.de");
-			anzeige[2].add(updatekundendaten,BorderLayout.CENTER);
-			
+			anzeige[2].add(updateDaten, BorderLayout.NORTH);
+			UpdateKundenDaten updatekundendaten = new UpdateKundenDaten(
+					"hans@peter.de");
+			anzeige[2].add(updatekundendaten, BorderLayout.CENTER);
+
 			JLabel buchen = new JLabel("Buchen");
 			anzeige[3].setLayout(new BorderLayout());
-			anzeige[3].add(buchen,BorderLayout.NORTH);
+			anzeige[3].add(buchen, BorderLayout.NORTH);
 			KundeBuchen kundeBuchen = new KundeBuchen("hans@peter.de");
-			anzeige[3].add(kundeBuchen,BorderLayout.CENTER);
-			
+			anzeige[3].add(kundeBuchen, BorderLayout.CENTER);
+
 			JLabel alleVorstellungen = new JLabel("Alle Vorstellungen");
 			anzeige[0].setLayout(new BorderLayout());
 			anzeige[0].add(alleVorstellungen, BorderLayout.NORTH);
-			AlleVorstellungen alleVorstellungenPanel = new AlleVorstellungen(kundeBuchen);
-			anzeige[0].add(alleVorstellungenPanel,BorderLayout.CENTER);
-			
-			
-			
-		}
-		
-		
-		
+			AlleVorstellungen alleVorstellungenPanel = new AlleVorstellungen(
+					kundeBuchen);
+			anzeige[0].add(alleVorstellungenPanel, BorderLayout.CENTER);
 
-		
-		
-	
-		for(int i = 0; i < anzeige.length; i++)
-		{
+		}
+
+		for (int i = 0; i < anzeige.length; i++) {
 			panel.add(anzeige[i]);
-		}			
+		}
 
 		neuerKunde = new JMenuItem("Kunde");
 		neuerKunde.addActionListener(new ActionListener() {
@@ -337,7 +326,16 @@ public class GUI extends JFrame {
 			}
 		});
 
-		
+		neuerPreisaufschlag = new JMenuItem("Preisaufschlag");
+		neuerPreisaufschlag.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				preisaufschlagFrame.setVisible(true);
+
+			}
+		});
 
 		// Hinzufuegen
 		hinzufuegen.add(neuerKunde);
@@ -346,13 +344,13 @@ public class GUI extends JFrame {
 		hinzufuegen.add(neuerSaal);
 		hinzufuegen.add(neuerPlatz);
 		hinzufuegen.add(neueVorstellung);
-		
+		hinzufuegen.add(neuerPreisaufschlag);
+
 		// Einstellungen
 		datei.add(einstellungen);
 		datei.add(aktualisieren);
 		menuBar.add(datei);
 		menuBar.add(hinzufuegen);
-		
 
 		// Anmeldezeile
 		menuBar.add(benutzerLabel);

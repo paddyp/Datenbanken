@@ -21,6 +21,9 @@ public class FilmFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private JLabel idLabel;
+	private JTextField idTextField;
+	
 	private JLabel bewertungLabel;
 	private JTextField bewertungTextField;
 
@@ -41,8 +44,16 @@ public class FilmFrame extends JFrame {
 	public FilmFrame() {
 		setSize(400, 200);
 		setTitle("Neuen Film hinzufuegen");
-		setLayout(new GridLayout(6, 2));
+		setLayout(new GridLayout(7, 2));
 
+		// ID
+		idLabel = new JLabel("Film-ID :");
+		idTextField = new JTextField(2);
+		
+		add(idLabel);
+		add(idTextField);
+		
+		
 		// Bewertung
 		bewertungLabel = new JLabel("Bewertung :");
 		bewertungTextField = new JTextField(2);
@@ -101,9 +112,8 @@ public class FilmFrame extends JFrame {
 
 				try {
 					// Film einfuegen
-					String[] spaltennamenF = { "bewertung", "titel", "fsk",
-							"genre_name" };
-					DBQuery.sendInsertIntoQueryID("Film", spaltennamenF,
+					DBQuery.sendInsertIntoQuery("Film", 
+							idTextField.getText(),
 							bewertungTextField.getText(),
 							titelTextField.getText(), fskTextField.getText(),
 							genreComboBox.getSelectedItem().toString());

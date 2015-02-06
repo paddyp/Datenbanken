@@ -22,7 +22,7 @@ public class PerformanceFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private JPanel datumPanel;
 	private JLabel datumLabel;
 	private JPanel zeitPanel;
@@ -46,10 +46,10 @@ public class PerformanceFrame extends JFrame {
 		setTitle("Neue Vorstellung hinzuf�gen");
 
 		setLayout(new GridLayout(10, 2));
-		
+
 		// Datum & Zeit
 		datumPanel = new JPanel();
-		datumPanel.setLayout(new GridLayout(1,3));
+		datumPanel.setLayout(new GridLayout(1, 3));
 		datumLabel = new JLabel("Datum:");
 		filmComboBox = new JComboBox<String>();
 		saalComboBox = new JComboBox<String>();
@@ -64,26 +64,26 @@ public class PerformanceFrame extends JFrame {
 
 		waehleDatumComboBox();
 		waehleZeitComboBox();
-		
+
 		add(datumLabel);
-		
+
 		datumPanel.add(tagComboBox);
 		datumPanel.add(monatComboBox);
 		datumPanel.add(jahrComboBox);
-		
+
 		add(datumPanel);
-		
+
 		add(zeitLabel);
-		
+
 		zeitPanel.add(stundeComboBox);
 		zeitPanel.add(minuteComboBox);
-		
+
 		add(zeitPanel);
-		
+
 		// Film & Saal
 		filmLabel = new JLabel("Film :");
 		saalLabel = new JLabel("Saal :");
-		
+
 		try {
 			waehleFilm();
 			waehleSaal();
@@ -91,37 +91,47 @@ public class PerformanceFrame extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		add(filmLabel);
 		add(filmComboBox);
 		add(saalLabel);
 		add(saalComboBox);
-		
-		
+
 		// Buttons - Hinzufuegen
 		speichern = new JButton("Hinzufuegen");
 		speichern.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
-				String timestep = tagComboBox.getSelectedItem().toString() + "-"
-						+ monatComboBox.getSelectedItem().toString() + "-"
-						+ jahrComboBox.getSelectedItem().toString() + " "
+
+				String timestep = tagComboBox.getSelectedItem().toString()
+						+ "-" + monatComboBox.getSelectedItem().toString()
+						+ "-" + jahrComboBox.getSelectedItem().toString() + " "
 						+ stundeComboBox.getSelectedItem().toString() + ":"
 						+ minuteComboBox.getSelectedItem().toString() + ":00";
-				
+
 				try {
 					// Vorstellung einfuegen
 					String[] spaltennamen = { "zeit", "saal_bezeichnung" };
 					DBQuery.sendInsertIntoQueryID("Vorstellung", spaltennamen,
-							timestep.toString(),
-							saalComboBox.getSelectedItem().toString());
+							timestep.toString(), saalComboBox.getSelectedItem()
+									.toString());
 
-//					DBQuery.sendInsertIntoQuery("Vorstellung_Film",
-//							vorstellung_id, film_id);
-					
+					// Vorstellung_Film einfuegen
+					ResultSet rsV = DBQuery
+							.sendQuery("SELECT id FROM vorstellung WHERE zeit = "
+									+ timestep.toString()
+									+ " AND saal_bezeichnung = "
+									+ saalComboBox.getSelectedItem().toString()
+									+ ";");
+					ResultSet rsF = DBQuery
+							.sendQuery("SELECT id FROM film WHERE titel = "
+									+ filmComboBox.getSelectedItem().toString()
+									+ ";");
+					DBQuery.sendInsertIntoQuery("Vorstellung_Film",
+							rsV.toString(), rsF.toString());
+
 					JOptionPane.showMessageDialog(null,
 							"Vorstellung wurde hinzugefuegt!");
 
@@ -129,18 +139,21 @@ public class PerformanceFrame extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 
-					JOptionPane.showMessageDialog(null,
-							"Fehler!\nVorstellung konnte nicht hinzugefuegt werden!");
+					JOptionPane
+							.showMessageDialog(null,
+									"Fehler!\nVorstellung konnte nicht hinzugefuegt werden!");
 				}
 
-				// Testausgabe, ob das Einf�gen funktioniert hat
+				// Testausgabe, ob das Einfuegen funktioniert hat
 				try {
-					ResultSet rs1 = DBQuery.sendQuery("SELECT * FROM Vorstellung");
+					ResultSet rs1 = DBQuery
+							.sendQuery("SELECT * FROM Vorstellung");
 					DBQuery.toString(rs1, "id", "zeit", "saal_bezeichnung");
-					
-					ResultSet rs2 = DBQuery.sendQuery("SELECT * FROM Vorstellung_Film");
+
+					ResultSet rs2 = DBQuery
+							.sendQuery("SELECT * FROM Vorstellung_Film");
 					DBQuery.toString(rs2, "vorstellung_id", "film_id");
-					
+
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -148,7 +161,7 @@ public class PerformanceFrame extends JFrame {
 
 			}
 		});
-		
+
 		// Buttons - Abbruch
 		abbrechen = new JButton("Abbrechen");
 		abbrechen.addActionListener(new ActionListener() {
@@ -162,7 +175,6 @@ public class PerformanceFrame extends JFrame {
 
 		add(speichern);
 		add(abbrechen);
-		
 
 	}
 
@@ -199,7 +211,8 @@ public class PerformanceFrame extends JFrame {
 
 		Calendar kalender = Calendar.getInstance();
 		jahrComboBox.removeAllItems();
-		for (int i = kalender.get(Calendar.YEAR); i < kalender.get(Calendar.YEAR) + 100; i++) {
+		for (int i = kalender.get(Calendar.YEAR); i < kalender
+				.get(Calendar.YEAR) + 100; i++) {
 			jahrComboBox.addItem("" + i);
 		}
 	}
