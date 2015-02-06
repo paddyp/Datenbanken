@@ -129,13 +129,11 @@ public class FilmFrame extends JFrame {
 					}
 
 					// Film_Hauptdarsteller einfuegen
-					String[] spaltennamenFH = { "hauptdarsteller_name",
-							"hauptdarsteller_vorname" };
-
 					for (int i = 0; i < alleDarsteller.length; i++) {
 						String[] darstellerName = alleDarsteller[i].split(" ");
-						DBQuery.sendInsertIntoQueryID("Film_Hauptdarsteller",
-								spaltennamenFH, darstellerName[1].toString(),
+						DBQuery.sendInsertIntoQuery("Film_Hauptdarsteller",
+								idTextField.getText(),
+								darstellerName[1].toString(),
 								darstellerName[0].toString());
 					}
 
