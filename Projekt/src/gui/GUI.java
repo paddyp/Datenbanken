@@ -1,5 +1,7 @@
 package gui;
 
+import guestGUI.AlleVorstell;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -84,7 +86,7 @@ public class GUI extends JFrame {
 
 	public GUI() {
 		setSize(new Dimension(1000, 1000));
-		setTitle("Kino Datenbank Benutzungsoberfl�che");
+		setTitle("Kino Datenbank Benutzungsoberfläche");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		// Erzeugen der einzelnen Frames
@@ -388,12 +390,17 @@ public class GUI extends JFrame {
 	}
 	
 	private void createGuestView(){
-		
+		JLabel alleVorstellungen = new JLabel("Alle Vorstellungen");
+		anzeige[0].setLayout(new BorderLayout());
+		anzeige[0].add(alleVorstellungen, BorderLayout.NORTH);
+		AlleVorstell alleVorstellungenPanel = new AlleVorstell();
+		anzeige[0].add(alleVorstellungenPanel, BorderLayout.CENTER);
 	}
 	
 	private void createUserView(String email){
 		willkommenLabel.setText("Willkommen "+email+"! ");
 		willkommenLabel.setVisible(true);
+		
 		
 		JLabel reservierungen = new JLabel("Eigene Reservierungen");
 		anzeige[1].setLayout(new BorderLayout());
