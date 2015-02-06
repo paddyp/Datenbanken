@@ -22,22 +22,17 @@ public class FilmFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel bewertungPanel;
 	private JLabel bewertungLabel;
 	private JTextField bewertungTextField;
 
-	private JPanel titelPanel;
 	private JLabel titelLabel;
 	private JTextField titelTextField;
 
-	private JPanel fskPanel;
 	private JLabel fskLabel;
 	private JTextField fskTextField;
 
 	private JComboBox<String> genreComboBox;
-	private JPanel genrePanel;
 
-	private JPanel darstellerPanel;
 	private JLabel darstellerLabel;
 	private JTextField darstellerTextField;
 
@@ -45,42 +40,35 @@ public class FilmFrame extends JFrame {
 	private JButton abbrechen;
 
 	public FilmFrame() {
-		setSize(500, 500);
+		setSize(400, 200);
 		setTitle("Neuen Film hinzufuegen");
-		setLayout(new GridLayout(7, 2));
+		setLayout(new GridLayout(6, 2));
 
 		// Bewertung
-		bewertungPanel = new JPanel();
 		bewertungLabel = new JLabel("Bewertung :");
 		bewertungTextField = new JTextField(2);
 
-		bewertungPanel.add(bewertungLabel);
-		bewertungPanel.add(bewertungTextField);
+		add(bewertungLabel);
+		add(bewertungTextField);
 
-		add(bewertungPanel);
 
 		// Titel
-		titelPanel = new JPanel();
 		titelLabel = new JLabel("Titel :");
 		titelTextField = new JTextField(10);
 
-		titelPanel.add(titelLabel);
-		titelPanel.add(titelTextField);
+		add(titelLabel);
+		add(titelTextField);
 
-		add(titelPanel);
 
 		// FSK
-		fskPanel = new JPanel();
 		fskLabel = new JLabel("FSK :");
 		fskTextField = new JTextField(2);
 
-		fskPanel.add(fskLabel);
-		fskPanel.add(fskTextField);
+		add(fskLabel);
+		add(fskTextField);
 
-		add(fskPanel);
 
 		// Genre
-		genrePanel = new JPanel();
 
 		try {
 			waehleGenre();
@@ -89,11 +77,10 @@ public class FilmFrame extends JFrame {
 			e2.printStackTrace();
 		}
 
-		genrePanel.add(genreComboBox);
-		add(genrePanel);
+		add(new JLabel("Genre"));
+		add(genreComboBox);
 
 		// Darsteller
-		darstellerPanel = new JPanel();
 		darstellerLabel = new JLabel("Hauptdarsteller :");
 		darstellerTextField = new JTextField(10);
 
@@ -102,10 +89,9 @@ public class FilmFrame extends JFrame {
 		darstellerTextField
 				.setToolTipText("Mehrere Darstellernamen mit Komma separieren!");
 
-		darstellerPanel.add(darstellerLabel);
-		darstellerPanel.add(darstellerTextField);
+		add(darstellerLabel);
+		add(darstellerTextField);
 
-		add(darstellerPanel);
 
 		// Buttons
 		speichern = new JButton("Hinzufuegen");
@@ -148,7 +134,7 @@ public class FilmFrame extends JFrame {
 					JOptionPane.showMessageDialog(null,
 							"Film wurde hinzugefuegt!");
 
-					// Zurücksetzten aller Felder
+					// Zurï¿½cksetzten aller Felder
 					bewertungTextField.setText("");
 					titelTextField.setText("");
 					fskTextField.setText("");
@@ -162,7 +148,7 @@ public class FilmFrame extends JFrame {
 							"Fehler!\nFilm konnte nicht hinzugefuegt werden!");
 				}
 
-				// Testausgabe, ob das Einfügen funktioniert hat
+				// Testausgabe, ob das Einfï¿½gen funktioniert hat
 				try {
 					ResultSet rs1 = DBQuery.sendQuery("SELECT * FROM Film");
 					DBQuery.toString(rs1, "id", "bewertung", "titel", "fsk",
