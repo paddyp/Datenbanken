@@ -42,7 +42,7 @@ public class GUI extends JFrame {
 	private JPanel panel;
 
 	private boolean angemeldet = false;
-	private boolean admin = true;
+	private boolean admin = false;
 
 	private JMenuBar menuBar;
 
@@ -100,6 +100,7 @@ public class GUI extends JFrame {
 
 		datei = new JMenu("Datei");
 		hinzufuegen = new JMenu("Hinzufuegen");
+		hinzufuegen.setVisible(false);
 		aktualisieren = new JMenuItem("Aktualisieren");
 
 		aktualisieren.addActionListener(new ActionListener() {
@@ -146,6 +147,7 @@ public class GUI extends JFrame {
 					admin = true;
 					angemeldet = false;
 					createView();
+					hinzufuegen.setVisible(true);
 				}else{
 					ResultSet rs;
 					try {
@@ -162,13 +164,7 @@ public class GUI extends JFrame {
 								admin = false;
 								createView();
 								
-								anmelden.setVisible(false);
-								abmelden.setVisible(true);
-	
-								benutzerLabel.setVisible(false);
-								benutzername.setVisible(false);
-								passwortLabel.setVisible(false);
-								GUI.this.passwort.setVisible(false);
+								
 							}else{
 								JOptionPane.showMessageDialog(null, "Das Passwort ist falsch");
 							}
@@ -195,6 +191,9 @@ public class GUI extends JFrame {
 				
 				willkommenLabel.setText("");
 				willkommenLabel.setVisible(false);
+				hinzufuegen.setVisible(false);
+				passwort.setText("");
+				benutzername.setText("");
 
 				benutzerLabel.setVisible(true);
 				benutzername.setVisible(true);
@@ -433,18 +432,23 @@ public class GUI extends JFrame {
 			anzeige[i].removeAll();
 		}
 		
-				if (admin) {
-					createAdminView();
-				
-				}
-				//
-				// user
-				else if (angemeldet) {
-					createUserView(benutzername.getText());
-				
-				}else{
-					//TODO createGuestView
-				}
+		if (admin) {
+			createAdminView();
+		
+		}else if (angemeldet) {
+			createUserView(benutzername.getText());
+		}else{
+			//TODO createGuestView
+		}
+		
+		if(admin || angemeldet){
+			anmelden.setVisible(false);
+			abmelden.setVisible(true);
+			benutzerLabel.setVisible(false);
+			benutzername.setVisible(false);
+			passwortLabel.setVisible(false);
+			GUI.this.passwort.setVisible(false);
+		}
 
 	}
 
