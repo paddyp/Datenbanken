@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import Objekte.VorstellungObjekt;
 import business.DBQuery;
@@ -17,8 +19,10 @@ public class AktuelleVorstellung extends JPanel{
 	
 	private ResultSet rs;
 	private int anzahl;
+	private SaalKategorieBelegung saalkat;
 	
-	public AktuelleVorstellung(){
+	public AktuelleVorstellung(SaalKategorieBelegung saalkat){
+		this.saalkat = saalkat;
 		vorstellungen = new JList<VorstellungObjekt>();
 		setLayout(new BorderLayout());
 		rs = null;
@@ -29,6 +33,16 @@ public class AktuelleVorstellung extends JPanel{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		vorstellungen.addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(!e.getValueIsAdjusting() && vorstellungen.getSelectedValue() != null){
+					AktuelleVorstellung.this.saalkat.update(vorstellungen.getSelectedValue());
+				}
+			}
+		});
 	
 		
 	}

@@ -50,11 +50,11 @@ public class GUI extends JFrame {
 
 	
 	private Reservieren reservierenPanel = new Reservieren();
-	private AktuelleVorstellung akvor = new AktuelleVorstellung();
-	private AktuelleSaalbelegung aktsaalbel = new AktuelleSaalbelegung();
 	private Kunden kunde = new Kunden(reservierenPanel);
 	private beliebtheitFilm beliebterFilm = new beliebtheitFilm();
 	private SaalKategorieBelegung saalkategoriebelegung = new SaalKategorieBelegung();
+	private AktuelleVorstellung akvor = new AktuelleVorstellung(saalkategoriebelegung);
+	private AktuelleSaalbelegung aktsaalbel = new AktuelleSaalbelegung();
 	
 	
 	private JMenuItem einstellungen;
