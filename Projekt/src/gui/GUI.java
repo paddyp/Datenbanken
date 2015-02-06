@@ -190,7 +190,7 @@ public class GUI extends JFrame {
 			anzeige[0].add(akvor, BorderLayout.CENTER);
 
 			JLabel saalBelegung = new JLabel(
-					"aktuelle Saalbelegung basierend auf der Vorstellung");
+					"Saalbelegung");
 			anzeige[1].setLayout(new BorderLayout());
 			anzeige[1].add(saalBelegung, BorderLayout.NORTH);
 			anzeige[1].add(aktsaalbel, BorderLayout.CENTER);
@@ -210,7 +210,7 @@ public class GUI extends JFrame {
 			anzeige[4].add(beliebtesterFilm, BorderLayout.NORTH);
 			anzeige[4].add(beliebterFilm, BorderLayout.CENTER);
 
-			JLabel uhrzeit = new JLabel("Kategoriebelegung pro Saal");
+			JLabel uhrzeit = new JLabel("Kategoriebelegung (Vorstellung wählen) [belegt|gesamt|kategorie]");
 			anzeige[5].setLayout(new BorderLayout());
 			anzeige[5].add(uhrzeit, BorderLayout.NORTH);
 			anzeige[5].add(saalkategoriebelegung, BorderLayout.CENTER);
