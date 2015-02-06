@@ -104,7 +104,7 @@ public class Reservieren extends JPanel{
 					+ "on (vf.vorstellung_id = v.id) "
 						+ "join film f "
 						+ "on (f.id = vf.film_id) "
-				+ "WHERE r.id = "+ id +" ;");
+				+ (id.isEmpty()?"":("WHERE r.id = "+ id)) +" ;");
 ArrayList<ReservierungObjekt> liste= new ArrayList<ReservierungObjekt>();
 		
 		
