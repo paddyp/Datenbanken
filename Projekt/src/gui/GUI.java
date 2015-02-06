@@ -205,7 +205,7 @@ public class GUI extends JFrame {
 			anzeige[2].add(kundeAnzeigen, BorderLayout.NORTH);
 			anzeige[2].add(kunde, BorderLayout.CENTER);
 
-			JLabel beliebtesterFilm = new JLabel("beliebtheitsskala Film");
+			JLabel beliebtesterFilm = new JLabel("Filme nach Beliebtheit sortiert");
 			anzeige[4].setLayout(new BorderLayout());
 			anzeige[4].add(beliebtesterFilm, BorderLayout.NORTH);
 			anzeige[4].add(beliebterFilm, BorderLayout.CENTER);
