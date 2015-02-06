@@ -37,7 +37,7 @@ public class PerformanceFrame extends JFrame {
 	private JLabel saalLabel;
 	private JComboBox<String> filmComboBox;
 	private JComboBox<String> saalComboBox;
-	
+
 	private JLabel preisaufschlagLabel;
 	private JComboBox<String> preisaufschlagComboBox;
 
@@ -109,10 +109,10 @@ public class PerformanceFrame extends JFrame {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-		
+
 		add(preisaufschlagLabel);
 		add(preisaufschlagComboBox);
-		
+
 		// Buttons - Hinzufuegen
 		speichern = new JButton("Hinzufuegen");
 		speichern.addActionListener(new ActionListener() {
@@ -164,10 +164,10 @@ public class PerformanceFrame extends JFrame {
 					JOptionPane.showMessageDialog(null,
 							"Vorstellung wurde hinzugefuegt!");
 				} else {
-					JOptionPane.showMessageDialog(null,
-							"Fehler!\nVorstellung konnte nicht hinzugefuegt werden!");
+					JOptionPane
+							.showMessageDialog(null,
+									"Fehler!\nVorstellung konnte nicht hinzugefuegt werden!");
 				}
-
 
 				// Testausgabe, ob das Einfuegen funktioniert hat
 				try {
