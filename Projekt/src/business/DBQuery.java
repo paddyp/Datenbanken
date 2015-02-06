@@ -44,7 +44,6 @@ public class DBQuery {
 					+ ((i == values.length - 1) ? "" : ",");
 		}
 		query += insertValues + ");";
-		System.out.println(query);
 
 		return stmt.execute(query);
 
@@ -64,7 +63,6 @@ public class DBQuery {
 					+ ((i == values.length - 1) ? "" : ",");
 		}
 		query += ");";
-		System.out.println(query);
 		return stmt.execute(query);
 	}
 	
@@ -116,7 +114,6 @@ public class DBQuery {
 			for (int i = 1; i < collums.length; i++) {
 				if((rs.getString(collums[i]) == null)){
 					sb.append( " | " + "0");
-					System.out.println("da steht null");
 				}else{
 					sb.append(" | " + rs.getString(collums[i]));
 				}

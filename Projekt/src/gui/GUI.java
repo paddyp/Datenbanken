@@ -1,6 +1,8 @@
 package gui;
 
 import guestGUI.AlleVorstell;
+import guestGUI.GuestKunde;
+import guestGUI.GuestReservierung;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -61,6 +63,10 @@ public class GUI extends JFrame {
 			saalkategoriebelegung);
 	private AktuelleSaalbelegung aktsaalbel = new AktuelleSaalbelegung();
 	private EigeneReservierungen eigeneReservierungen;
+	private GuestReservierung guestReservierung = new GuestReservierung();
+	private GuestKunde guestKunde= new GuestKunde(guestReservierung);
+	private AlleVorstell alleVorstell = new AlleVorstell(saalkategoriebelegung,guestKunde);
+
 	
 	private JMenuItem einstellungen;
 	private JMenuItem aktualisieren;
@@ -83,20 +89,20 @@ public class GUI extends JFrame {
 	private JButton anmelden;
 	private JButton abmelden;
 	
-	private String email;
+	// Erzeugen der einzelnen Frames
+	private final FilmFrame movieFrame = new FilmFrame();
+	private final KundeFrame clientFrame = new KundeFrame();
+	private final KategorieFrame kategorieFrame = new KategorieFrame();
+	private final PlaceFrame placeFrame = new PlaceFrame();
+	private final PerformanceFrame performanceFrame = new PerformanceFrame();
+	private final PreisaufschlagFrame preisaufschlagFrame = new PreisaufschlagFrame();
 
 	public GUI() {
 		setSize(new Dimension(1000, 1000));
 		setTitle("Kino Datenbank Benutzungsoberfläche");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		// Erzeugen der einzelnen Frames
-		final FilmFrame movieFrame = new FilmFrame();
-		final KundeFrame clientFrame = new KundeFrame();
-		final KategorieFrame kategorieFrame = new KategorieFrame();
-		final PlaceFrame placeFrame = new PlaceFrame();
-		final PerformanceFrame performanceFrame = new PerformanceFrame();
-		final PreisaufschlagFrame preisaufschlagFrame = new PreisaufschlagFrame();
+	
 
 		// Menu Bar Elemente erzeugen
 		menuBar = new JMenuBar();
@@ -395,12 +401,38 @@ public class GUI extends JFrame {
 		JLabel alleVorstellungen = new JLabel("Alle Vorstellungen");
 		anzeige[0].setLayout(new BorderLayout());
 		anzeige[0].add(alleVorstellungen, BorderLayout.NORTH);
-		anzeige[0].add(akvor, BorderLayout.CENTER);
+		anzeige[0].add(alleVorstell, BorderLayout.CENTER);
 		
 		JLabel uhrzeit = new JLabel("Kategoriebelegung (Vorstellung wählen) [belegt|gesamt|kategorie]");
 		anzeige[1].setLayout(new BorderLayout());
 		anzeige[1].add(uhrzeit, BorderLayout.NORTH);
 		anzeige[1].add(saalkategoriebelegung, BorderLayout.CENTER);
+		
+		JLabel anmeldenLabel = new JLabel("Anmelden:");
+		anzeige[2].setLayout(new BorderLayout());
+		anzeige[2].add(anmeldenLabel,BorderLayout.NORTH);
+		JButton reg = new JButton("Registrieren");
+		reg.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				clientFrame.setVisible(true);
+				
+			}
+		});
+		anzeige[2].add(reg,BorderLayout.CENTER);
+		
+		JLabel guestReservierenLabel = new JLabel("als Gast reservieren");
+		anzeige[3].setLayout(new BorderLayout());
+		anzeige[3].add(guestReservierenLabel,BorderLayout.NORTH);
+		anzeige[3].add(guestKunde,BorderLayout.CENTER);
+		
+		JLabel editPlaetzeLabel = new JLabel("Folgende Plaetze sind ausgewaehlt");
+		anzeige[4].setLayout(new BorderLayout());
+		anzeige[4].add(editPlaetzeLabel,BorderLayout.NORTH);
+		anzeige[4].add(guestReservierung,BorderLayout.CENTER);
+		
 	}
 	
 	private void createUserView(String email){

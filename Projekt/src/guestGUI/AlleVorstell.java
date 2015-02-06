@@ -11,16 +11,23 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import Objekte.VorstellungObjekt;
+import adminGUI.AktuelleVorstellung;
+import adminGUI.SaalKategorieBelegung;
 import business.DBQuery;
 
 
 public class AlleVorstell extends JPanel{
-	private JList<VorstellungObjekt> vorstellungen;
+private JList<VorstellungObjekt> vorstellungen;
 	
 	private ResultSet rs;
 	private int anzahl;
+	private SaalKategorieBelegung saalkat;
+	private GuestKunde guestKunde;
 	
-	public AlleVorstell(){
+	public AlleVorstell(SaalKategorieBelegung saalkat,GuestKunde guestKunde){
+		this.saalkat = saalkat;
+		this.guestKunde = guestKunde;
+		vorstellungen = new JList<VorstellungObjekt>();
 		setLayout(new BorderLayout());
 		rs = null;
 		
@@ -30,32 +37,29 @@ public class AlleVorstell extends JPanel{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		vorstellungen.addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(!e.getValueIsAdjusting() && vorstellungen.getSelectedValue() != null){
+					AlleVorstell.this.saalkat.update(vorstellungen.getSelectedValue());
+					AlleVorstell.this.guestKunde.update(vorstellungen.getSelectedValue());
+				}
+			}
+		});
 	
 		
 	}
 	
 	private void createList() throws SQLException{
 		anzahl = 0;
-		rs = DBQuery.sendQuery("select v.id, v.zeit, v.saal_bezeichnung, f.titel "
-				+ "from vorstellung v "
-				+ "join vorstellung_film vf "
-				+ "on v.id = vf.vorstellung_id "
-				+ "join film f "
-				+ "on vf.film_id = f.id "
-				+ "WHERE zeit>=now() "
-				+ "ORDER by v.zeit;");
-		ArrayList<VorstellungObjekt> liste= new ArrayList<VorstellungObjekt>();
+		rs = DBQuery.sendQuery("select * "
+				+ "from aktuellevorstellungen "
+				+ ";");
 		
-		vorstellungen = new JList<VorstellungObjekt>();
-		vorstellungen.addListSelectionListener(new ListSelectionListener() {
-			
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				if(!e.getValueIsAdjusting()){
-					
-				}
-			}
-		});
+		
+		ArrayList<VorstellungObjekt> liste= new ArrayList<VorstellungObjekt>();
 		
 		while(rs.next())
 		{
@@ -65,6 +69,8 @@ public class AlleVorstell extends JPanel{
 		VorstellungObjekt[] string = liste.toArray(new VorstellungObjekt[0]);
 		
 		vorstellungen.setListData(string);
+	
+		
 		add(vorstellungen,BorderLayout.CENTER);
 	}
 	public void update(){
