@@ -186,19 +186,13 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				angemeldet = false;
+				admin = false;
 				abmelden.setVisible(false);
 				anmelden.setVisible(true);
 				
-				willkommenLabel.setText("");
-				willkommenLabel.setVisible(false);
-				hinzufuegen.setVisible(false);
-				passwort.setText("");
-				benutzername.setText("");
-
-				benutzerLabel.setVisible(true);
-				benutzername.setVisible(true);
-				passwortLabel.setVisible(true);
-				passwort.setVisible(true);
+				
+				
+				createView();
 
 				getContentPane().repaint();
 
@@ -393,6 +387,10 @@ public class GUI extends JFrame {
 		anzeige[5].add(saalkategoriebelegung, BorderLayout.CENTER);
 	}
 	
+	private void createGuestView(){
+		
+	}
+	
 	private void createUserView(String email){
 		willkommenLabel.setText("Willkommen "+email+"! ");
 		willkommenLabel.setVisible(true);
@@ -438,7 +436,7 @@ public class GUI extends JFrame {
 		}else if (angemeldet) {
 			createUserView(benutzername.getText());
 		}else{
-			//TODO createGuestView
+			createGuestView();
 		}
 		
 		if(admin || angemeldet){
@@ -448,6 +446,17 @@ public class GUI extends JFrame {
 			benutzername.setVisible(false);
 			passwortLabel.setVisible(false);
 			GUI.this.passwort.setVisible(false);
+		}else{
+			willkommenLabel.setText("");
+			willkommenLabel.setVisible(false);
+			hinzufuegen.setVisible(false);
+			passwort.setText("");
+			benutzername.setText("");
+
+			benutzerLabel.setVisible(true);
+			benutzername.setVisible(true);
+			passwortLabel.setVisible(true);
+			passwort.setVisible(true);
 		}
 
 	}
