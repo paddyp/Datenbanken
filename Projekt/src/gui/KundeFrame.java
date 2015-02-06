@@ -152,16 +152,16 @@ public class KundeFrame extends JFrame {
 				
 				boolean funktioniert = true;
 				
-				String date = geburtsTagTextField.getText() + "-"
+				String date = geburtsJahrTextField.getText() + "-"
 						+ geburtsMonatTextField.getText() + "-"
-						+ geburtsJahrTextField.getText();
+						+ geburtsTagTextField.getText();
 				
 				// Kunde einfuegen
 				try {
 					DBQuery.sendInsertIntoQuery("Kunde",
 							emailTextField.getText(), nameTextField.getText(),
-							vornameTextField.getText(), date.toString(),
-							passwortTextField.getPassword().toString(),
+							vornameTextField.getText(), date,
+							new String(passwortTextField.getPassword()),
 							plzTextField.getText(), strasseTextField.getText(),
 							telefonTextField.getText(),
 							mobileTextField.getText());
@@ -176,7 +176,6 @@ public class KundeFrame extends JFrame {
 							plzTextField.getText(), ortTextField.getText());
 				} catch (SQLException e2) {
 					e2.printStackTrace();
-					funktioniert = false;
 				}
 				
 				if (funktioniert == true) {
