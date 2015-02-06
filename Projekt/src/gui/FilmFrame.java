@@ -116,6 +116,7 @@ public class FilmFrame extends JFrame {
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					funktioniert = false;
 				}
 				
 				// Hauptdarsteller einfuegen
@@ -154,11 +155,11 @@ public class FilmFrame extends JFrame {
 					funktioniert = false;
 				}
 
-				if (funktioniert = true) {
+				if (funktioniert == true) {
 					JOptionPane.showMessageDialog(null,
 							"Film wurde hinzugefuegt!");
 
-					// Zuruecksetzten aller Eingebafelder
+					// Zuruecksetzten aller Eingabefelder
 					idTextField.setText("");
 					bewertungTextField.setText("");
 					titelTextField.setText("");

@@ -37,15 +37,18 @@ public class PerformanceFrame extends JFrame {
 	private JLabel saalLabel;
 	private JComboBox<String> filmComboBox;
 	private JComboBox<String> saalComboBox;
+	
+	private JLabel preisaufschlagLabel;
+	private JComboBox<String> preisaufschlagComboBox;
 
 	private JButton speichern;
 	private JButton abbrechen;
 
 	public PerformanceFrame() {
 		setSize(400, 300);
-		setTitle("Neue Vorstellung hinzuf�gen");
+		setTitle("Neue Vorstellung hinzufuegen");
 
-		setLayout(new GridLayout(10, 2));
+		setLayout(new GridLayout(6, 2));
 
 		// Datum & Zeit
 		datumPanel = new JPanel();
@@ -61,6 +64,7 @@ public class PerformanceFrame extends JFrame {
 		zeitPanel = new JPanel();
 		zeitPanel.setLayout(new GridLayout(1, 2));
 		zeitLabel = new JLabel("Zeit:");
+		preisaufschlagComboBox = new JComboBox<String>();
 
 		waehleDatumComboBox();
 		waehleZeitComboBox();
@@ -97,6 +101,18 @@ public class PerformanceFrame extends JFrame {
 		add(saalLabel);
 		add(saalComboBox);
 
+		// Preisaufschlag
+		preisaufschlagLabel = new JLabel("Preisaufschlag :");
+		try {
+			waehlePreisaufschlag();
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		add(preisaufschlagLabel);
+		add(preisaufschlagComboBox);
+		
 		// Buttons - Hinzufuegen
 		speichern = new JButton("Hinzufuegen");
 		speichern.addActionListener(new ActionListener() {
@@ -104,6 +120,7 @@ public class PerformanceFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				boolean funktioniert = true;
 
 				String timestep = tagComboBox.getSelectedItem().toString()
 						+ "-" + monatComboBox.getSelectedItem().toString()
@@ -111,14 +128,20 @@ public class PerformanceFrame extends JFrame {
 						+ stundeComboBox.getSelectedItem().toString() + ":"
 						+ minuteComboBox.getSelectedItem().toString() + ":00";
 
+				// Vorstellung einfuegen
 				try {
-					// Vorstellung einfuegen
 					String[] spaltennamen = { "zeit", "saal_bezeichnung" };
 					DBQuery.sendInsertIntoQueryID("Vorstellung", spaltennamen,
 							timestep.toString(), saalComboBox.getSelectedItem()
 									.toString());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					funktioniert = false;
+				}
 
-					// Vorstellung_Film einfuegen
+				// Vorstellung_Film einfuegen
+				try {
 					ResultSet rsV = DBQuery
 							.sendQuery("SELECT id FROM vorstellung WHERE zeit = "
 									+ timestep.toString()
@@ -131,18 +154,20 @@ public class PerformanceFrame extends JFrame {
 									+ ";");
 					DBQuery.sendInsertIntoQuery("Vorstellung_Film",
 							rsV.toString(), rsF.toString());
+				} catch (SQLException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+					funktioniert = false;
+				}
 
+				if (funktioniert == true) {
 					JOptionPane.showMessageDialog(null,
 							"Vorstellung wurde hinzugefuegt!");
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-
-					JOptionPane
-							.showMessageDialog(null,
-									"Fehler!\nVorstellung konnte nicht hinzugefuegt werden!");
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"Fehler!\nVorstellung konnte nicht hinzugefuegt werden!");
 				}
+
 
 				// Testausgabe, ob das Einfuegen funktioniert hat
 				try {
@@ -176,6 +201,14 @@ public class PerformanceFrame extends JFrame {
 		add(speichern);
 		add(abbrechen);
 
+	}
+
+	private void waehlePreisaufschlag() throws SQLException {
+		preisaufschlagComboBox.removeAllItems();
+		ResultSet rs = DBQuery.sendQuery("SELECT * FROM Preisaufschlag");
+		while (rs.next()) {
+			preisaufschlagComboBox.addItem(rs.getString("bezeichnung"));
+		}
 	}
 
 	private void waehleFilm() throws SQLException {

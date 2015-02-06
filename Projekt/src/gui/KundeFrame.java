@@ -149,10 +149,14 @@ public class KundeFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				
+				boolean funktioniert = true;
+				
 				String date = geburtsTagTextField.getText() + "-"
 						+ geburtsMonatTextField.getText() + "-"
 						+ geburtsJahrTextField.getText();
-
+				
+				// Kunde einfuegen
 				try {
 					DBQuery.sendInsertIntoQuery("Kunde",
 							emailTextField.getText(), nameTextField.getText(),
@@ -161,14 +165,25 @@ public class KundeFrame extends JFrame {
 							plzTextField.getText(), strasseTextField.getText(),
 							telefonTextField.getText(),
 							mobileTextField.getText());
-
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+					funktioniert = false;
+				}
+				
+				// Ort_PLZ einfuegen
+				try {
 					DBQuery.sendInsertIntoQuery("Ort_PLZ",
 							plzTextField.getText(), ortTextField.getText());
-
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+					funktioniert = false;
+				}
+				
+				if (funktioniert == true) {
 					JOptionPane.showMessageDialog(null,
 							"Kunde wurde hinzugefuegt!");
 
-					// Zur�cksetzten aller Eingebefelder
+					// Zuruecksetzten aller Eingebefelder
 					emailTextField.setText("");
 					nameTextField.setText("");
 					vornameTextField.setText("");
@@ -181,16 +196,12 @@ public class KundeFrame extends JFrame {
 					ortTextField.setText("");
 					telefonTextField.setText("");
 					mobileTextField.setText("");
-
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-
+				} else {
 					JOptionPane.showMessageDialog(null,
 							"Fehler!\nKunde konnte nicht hinzugefuegt werden!");
 				}
 
-				// Testausgabe, ob das Einf�gen funktioniert hat
+				// Testausgabe, ob das Einfuegen funktioniert hat
 				try {
 					ResultSet rs1 = DBQuery.sendQuery("SELECT * FROM Kunde");
 					DBQuery.toString(rs1, "email", "name", "vorname",
