@@ -33,11 +33,17 @@ public class SaalKategorieBelegung extends JPanel {
 	
 	private void createListe() throws SQLException{
 		if(vorstellungObjekt != null){
-			ResultSet rs = DBQuery.sendQuery("select * "
-					+ "from aktuellevorstellungen "
-					+ ";");
+			ResultSet rs = DBQuery.sendQuery(DBQuery.fillPlaceholders("SELECT plaetzebelegt, "
+					+ "plaetzegesamt, a.kategorie_bezeichnung FROM (SELECT count(*) AS plaetzegesamt,"
+					+ " kategorie_bezeichnung FROM platz WHERE saal_bezeichnung = '%1%' GROUP BY "
+					+ "kategorie_bezeichnung) a LEFT OUTER JOIN (SELECT p.kategorie_bezeichnung ,count(*)"
+					+ " AS plaetzebelegt FROM vorstellung v JOIN platz_reservierung pr ON v.id = reservierung_id "
+					+ "join platz p ON pr.platz_reihe=p.reihe AND pr.platz_nummer=p.nummer"
+					+ " AND pr.platz_saal_bezeichnung = p.saal_bezeichnung WHERE id =%2% GROUP BY "
+					+ "kategorie_bezeichnung) b ON a.kategorie_bezeichnung = b.kategorie_bezeichnung;",
+					vorstellungObjekt.getSaal(), vorstellungObjekt.getId()));
 			
-			jliste.setListData(DBQuery.toString(rs, "titel"));
+			jliste.setListData(DBQuery.toString(rs, "plaetzebelegt", "plaetzegesamt", "kategorie_bezeichnung"));
 		}
 	}
 	
