@@ -16,13 +16,15 @@ import business.DBQuery;
 
 public class AlleVorstellungen extends JPanel{
 	private JList<VorstellungObjekt> vorstellungen;
-	private KundeBuchen kundebuchen;
+	private UserBuchen userbuchen;
+	private UserPlaetze userplaetze;
 	
 	private ResultSet rs;
 	private int anzahl;
 	
-	public AlleVorstellungen(KundeBuchen kundebuchen){
-		this.kundebuchen = kundebuchen;
+	public AlleVorstellungen(UserBuchen userbuchen, UserPlaetze userplaetze){
+		this.userbuchen = userbuchen;
+		this.userplaetze = userplaetze;
 		setLayout(new BorderLayout());
 		rs = null;
 		
@@ -54,7 +56,8 @@ public class AlleVorstellungen extends JPanel{
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if(!e.getValueIsAdjusting() && vorstellungen.getSelectedValue() != null){
-					kundebuchen.update(vorstellungen.getSelectedValue());
+					userbuchen.update(vorstellungen.getSelectedValue());
+					userplaetze.update(vorstellungen.getSelectedValue());
 				}
 			}
 		});

@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Objekte.PlatzObjekt;
 import Objekte.VorstellungObjekt;
 import business.DBQuery;
 
@@ -56,10 +57,8 @@ public class GuestKunde extends JPanel {
 				if(vorstellung != null && 
 						!reihe.getText().isEmpty() &&
 						!nummer.getText().isEmpty()){
-						daten[0] = vorstellung.getId();
-						daten[1] = reihe.getText();
-						daten[2] = nummer.getText();
-						GuestKunde.this.guestReservierung.add(daten);
+						
+						GuestKunde.this.guestReservierung.add(new PlatzObjekt(reihe.getText(), nummer.getText()));
 				}
 			}
 		});

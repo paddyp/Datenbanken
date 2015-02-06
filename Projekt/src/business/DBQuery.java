@@ -80,9 +80,11 @@ public class DBQuery {
 
 	public static boolean sendTransaktion(String query) throws SQLException {
 		query = "BEGIN;" + query + ";COMMIT;";
+		
 		return stmt.execute(query);
 
 	}
+
 
 	/**
 	 * Takes a resultset and formats a string with the given columns on the

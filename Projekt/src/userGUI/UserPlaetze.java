@@ -10,12 +10,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Objekte.PlatzObjekt;
 import Objekte.VorstellungObjekt;
 import business.DBQuery;
 
-public class KundeBuchen extends JPanel {
+public class UserPlaetze extends JPanel {
 
-	private String email;
 	private JLabel hinweis;
 	private JPanel buchunspanel;
 	private JButton buchenbtn;
@@ -24,10 +24,13 @@ public class KundeBuchen extends JPanel {
 	private JLabel reihelbl;
 	private JLabel nummerlbl;
 	private VorstellungObjekt vorstellung;
+	private UserBuchen userBuchen;
+	private String[] daten = new String[3];
 	
 	
-	public KundeBuchen(String email){
-		this.email = email;
+	public UserPlaetze(UserBuchen userBuchen){
+		this.userBuchen = userBuchen;
+		
 		setLayout(new GridLayout(2, 1));
 		
 		hinweis = new JLabel("Bitte eine Vorstellung links oben auswählen", JLabel.CENTER);
@@ -54,14 +57,8 @@ public class KundeBuchen extends JPanel {
 				if(vorstellung != null && 
 						!reihe.getText().isEmpty() &&
 						!nummer.getText().isEmpty()){
-					try {
-						DBQuery.sendTransaktion(DBQuery.fillPlaceholders("INSERT INTO Reservierung VALUES (DEFAULT, '%1%',%2%);"
-								+"INSERT INTO Platz_Reservierung VALUES ((SELECT id FROM Reservierung WHERE kunde_email = '%1%' "
-								+ "AND vorstellung_id = %2%),%3%, %4%, '%5%');", KundeBuchen.this.email, vorstellung.getId(), reihe.getText(), nummer.getText(), vorstellung.getSaal()));
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+						System.out.println(UserPlaetze.this.userBuchen);
+						UserPlaetze.this.userBuchen.add(new PlatzObjekt(reihe.getText(), nummer.getText()));
 				}
 			}
 		});

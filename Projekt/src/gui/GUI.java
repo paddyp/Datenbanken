@@ -29,8 +29,9 @@ import org.postgresql.util.PSQLException;
 
 import userGUI.AlleVorstellungen;
 import userGUI.EigeneReservierungen;
-import userGUI.KundeBuchen;
 import userGUI.UpdateKundenDaten;
+import userGUI.UserBuchen;
+import userGUI.UserPlaetze;
 import adminGUI.AktuelleSaalbelegung;
 import adminGUI.AktuelleVorstellung;
 import adminGUI.Kunden;
@@ -65,7 +66,11 @@ public class GUI extends JFrame {
 	private EigeneReservierungen eigeneReservierungen;
 	private GuestReservierung guestReservierung = new GuestReservierung();
 	private GuestKunde guestKunde= new GuestKunde(guestReservierung);
-	private AlleVorstell alleVorstell = new AlleVorstell(saalkategoriebelegung,guestKunde);
+	private AlleVorstell alleVorstell = new AlleVorstell(saalkategoriebelegung,guestKunde,guestReservierung);
+	
+	//user
+	private UserBuchen userBuchen;
+	private UserPlaetze userPlaetze ;
 
 	
 	private JMenuItem einstellungen;
@@ -121,7 +126,11 @@ public class GUI extends JFrame {
 				aktsaalbel.update();
 				kunde.update();
 				beliebterFilm.update();
-				eigeneReservierungen.update();
+				if(eigeneReservierungen != null)
+				{
+					eigeneReservierungen.update();	
+				}
+				
 
 				revalidate();
 
@@ -457,15 +466,23 @@ public class GUI extends JFrame {
 		JLabel buchen = new JLabel("Platz reservieren");
 		anzeige[3].setLayout(new BorderLayout());
 		anzeige[3].add(buchen, BorderLayout.NORTH);
-		KundeBuchen kundeBuchen = new KundeBuchen(email);
-		anzeige[3].add(kundeBuchen, BorderLayout.CENTER);
+		userBuchen = new UserBuchen(email);
+		userPlaetze = new UserPlaetze(userBuchen);
+		anzeige[3].add(userPlaetze, BorderLayout.CENTER);
 
 		JLabel alleVorstellungen = new JLabel("Alle Vorstellungen");
 		anzeige[0].setLayout(new BorderLayout());
 		anzeige[0].add(alleVorstellungen, BorderLayout.NORTH);
+		
 		AlleVorstellungen alleVorstellungenPanel = new AlleVorstellungen(
-				kundeBuchen);
+				userBuchen, userPlaetze);
 		anzeige[0].add(alleVorstellungenPanel, BorderLayout.CENTER);
+		
+		JLabel userhinzugefuegtLabel = new JLabel("Hinzugefuegte");
+		anzeige[4].setLayout(new BorderLayout());
+		anzeige[4].add(userhinzugefuegtLabel, BorderLayout.NORTH);
+		anzeige[4].add(userBuchen, BorderLayout.CENTER);
+		
 	}
 	
 	private void createView(){

@@ -20,13 +20,14 @@ public class AlleVorstell extends JPanel{
 private JList<VorstellungObjekt> vorstellungen;
 	
 	private ResultSet rs;
-	private int anzahl;
 	private SaalKategorieBelegung saalkat;
 	private GuestKunde guestKunde;
+	private GuestReservierung guestRes;
 	
-	public AlleVorstell(SaalKategorieBelegung saalkat,GuestKunde guestKunde){
+	public AlleVorstell(SaalKategorieBelegung saalkat,GuestKunde guestKunde, GuestReservierung guestRes){
 		this.saalkat = saalkat;
 		this.guestKunde = guestKunde;
+		this.guestRes = guestRes;
 		vorstellungen = new JList<VorstellungObjekt>();
 		setLayout(new BorderLayout());
 		rs = null;
@@ -45,6 +46,7 @@ private JList<VorstellungObjekt> vorstellungen;
 				if(!e.getValueIsAdjusting() && vorstellungen.getSelectedValue() != null){
 					AlleVorstell.this.saalkat.update(vorstellungen.getSelectedValue());
 					AlleVorstell.this.guestKunde.update(vorstellungen.getSelectedValue());
+					AlleVorstell.this.guestRes.update(vorstellungen.getSelectedValue());
 				}
 			}
 		});
@@ -53,7 +55,6 @@ private JList<VorstellungObjekt> vorstellungen;
 	}
 	
 	private void createList() throws SQLException{
-		anzahl = 0;
 		rs = DBQuery.sendQuery("select * "
 				+ "from aktuellevorstellungen "
 				+ ";");

@@ -1,4 +1,4 @@
-package guestGUI;
+package userGUI;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -18,7 +18,7 @@ import business.DBQuery;
 import Objekte.PlatzObjekt;
 import Objekte.VorstellungObjekt;
 
-public class GuestReservierung extends JPanel {
+public class UserBuchen extends JPanel {
 	/**
 	 * 
 	 */
@@ -28,9 +28,11 @@ public class GuestReservierung extends JPanel {
 	private ArrayList<PlatzObjekt> datenListe;
 	private JList<PlatzObjekt> liste;
 	private VorstellungObjekt vorstellung;
+	private String email;
 	
 	private JButton buchen;
-	public GuestReservierung(){
+	public UserBuchen(String email){
+		this.email = email;
 		datenListe = new ArrayList<PlatzObjekt>();
 		setLayout(new BorderLayout());
 		liste = new JList<PlatzObjekt>();
@@ -63,7 +65,7 @@ public class GuestReservierung extends JPanel {
 					ResultSet rs; 
 					String reservierungsID;
 					try {
-						rs = DBQuery.sendQuery(DBQuery.fillPlaceholders("INSERT INTO reservierung (kunde_email,vorstellung_id) VALUES(NULL,%1%) RETURNING id", vorstellung.getId()));
+						rs = DBQuery.sendQuery(DBQuery.fillPlaceholders("INSERT INTO reservierung (kunde_email,vorstellung_id) VALUES('%1%',%2%) RETURNING id",UserBuchen.this.email, vorstellung.getId()));
 						rs.next();
 						reservierungsID = rs.getString("id");
 						System.out.println(reservierungsID);
