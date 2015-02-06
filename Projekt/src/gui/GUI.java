@@ -65,6 +65,7 @@ public class GUI extends JFrame {
 	private JMenuItem neuerPlatz;
 	private JMenuItem neueVorstellung;
 	private JMenuItem neuerPreisaufschlag;
+	private JMenuItem neuesGenre;
 
 	private JTextField benutzername;
 	private JPasswordField passwort;
@@ -126,6 +127,7 @@ public class GUI extends JFrame {
 		neuerPlatz = new JMenuItem("Neuer Platz");
 		neueVorstellung = new JMenuItem("Neue Vorstellung");
 		neuerPreisaufschlag = new JMenuItem("Neuer Preisaufschlag");
+		neuesGenre = new JMenuItem("Neues Genre");
 
 		abmelden.setVisible(false);
 
@@ -165,7 +167,6 @@ public class GUI extends JFrame {
 			}
 		});
 
-		// IN RUHE LASSEN PATRIKS
 		panel = new JPanel();
 		panel.setLayout(new GridLayout(3, 2));
 		panel.setBackground(new Color(255, 255, 255));
@@ -291,10 +292,10 @@ public class GUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				String name = JOptionPane
-						.showInputDialog("Geben sie einen Bezeichnung fuer den neuen Saal ein: ");
+						.showInputDialog("Saal_Bezeichnung :");
 				if (name != null && name != "") {
 					try {
-						DBQuery.sendInsertIntoQuery("saal", name);
+						DBQuery.sendInsertIntoQuery("Saal", name);
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -336,6 +337,26 @@ public class GUI extends JFrame {
 
 			}
 		});
+		
+		neuesGenre = new JMenuItem("Genre");
+		neuesGenre.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				String name = JOptionPane
+						.showInputDialog("Genre-Bezeichnung :");
+				if (name != null && name != "") {
+					try {
+						DBQuery.sendInsertIntoQuery("Genre", name);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+
+			}
+		});
 
 		// Hinzufuegen
 		hinzufuegen.add(neuerKunde);
@@ -345,6 +366,7 @@ public class GUI extends JFrame {
 		hinzufuegen.add(neuerPlatz);
 		hinzufuegen.add(neueVorstellung);
 		hinzufuegen.add(neuerPreisaufschlag);
+		hinzufuegen.add(neuesGenre);
 
 		// Einstellungen
 		datei.add(einstellungen);
