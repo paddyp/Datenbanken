@@ -14,19 +14,19 @@ public class DBConnection {
 		// database
 		// url
 
-// Load Driver or exit Programm
-Driver d = new org.postgresql.Driver();
-try {
-System.out.println("Define URL is " + d.acceptsURL(url));
+		// Load Driver or exit Programm
+		Driver d = new org.postgresql.Driver();
+		try {
+		System.out.println("Define URL is " + d.acceptsURL(url));
+		
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}
 
-} catch (SQLException e) {
-// TODO Auto-generated catch block
-e.printStackTrace();
-}
-
-// connection to database
-try {
-con = DriverManager.getConnection(url, "bring001", "BRdatenbank");
+		// connection to database
+		try {
+			con = DriverManager.getConnection(url, "bring001", "BRdatenbank");
 			System.out.println("--- connection success ---");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

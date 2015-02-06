@@ -115,7 +115,7 @@ public class GUI extends JFrame {
 				aktsaalbel.update();
 				kunde.update();
 				beliebterFilm.update();
-				
+				eigeneReservierungen.update();
 
 				revalidate();
 
@@ -422,7 +422,7 @@ public class GUI extends JFrame {
 				email);
 		anzeige[2].add(updatekundendaten, BorderLayout.CENTER);
 
-		JLabel buchen = new JLabel("Buchen");
+		JLabel buchen = new JLabel("Platz reservieren");
 		anzeige[3].setLayout(new BorderLayout());
 		anzeige[3].add(buchen, BorderLayout.NORTH);
 		KundeBuchen kundeBuchen = new KundeBuchen(email);
